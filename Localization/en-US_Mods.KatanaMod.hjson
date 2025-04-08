@@ -1,0 +1,42 @@
+# This file will automatically update with entries for new content after a build and reload.
+
+Items: {
+	EmptySheath: {
+		DisplayName: Empty Sheath
+		Tooltip:
+			'''
+			A beginning for any samurai.
+			It's snowing on Mt.Fuji
+			'''
+	}
+
+	SheathedKatana: {
+		Tooltip: A shogun's's only true companion. Call upon your troops to fire flaming arrow on your strike.
+		DisplayName: Sheathed Katana
+	}
+
+	ImbuedKatana: {
+		Tooltip: Unsheating the blade opens a new path, You can either return the blade to its sheath relying on your troops support or continue down this path.
+		DisplayName: Imbued Katana
+	}
+
+	LeafSpirit: {
+		Tooltip: Imitates the powers of the leaf spirit
+		DisplayName: Leaf Spirit
+	}
+
+	CactusSpirit: {
+		Tooltip: ""
+		DisplayName: Cactus Spirit
+	}
+
+	SlimeSpirit: {
+		DisplayName: Slime Spirit
+		Tooltip: ""
+	}
+}
+
+NPCs: {
+	GoldSlime.DisplayName: Gold Slime
+	FastSlime.DisplayName: Fast Slime
+}
