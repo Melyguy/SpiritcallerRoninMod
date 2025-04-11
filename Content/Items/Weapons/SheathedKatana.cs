@@ -49,7 +49,7 @@ namespace KatanaMod.Content.Items.Weapons
             if (linetochange != null)
             {
                 string[] splittext = linetochange.Text.Split(' ');
-                linetochange.Text = splittext.First() + " Shogun " + splittext.Last();
+                linetochange.Text = splittext.First() + " Ronin " + splittext.Last();
             }
         }
 		        public override void ModifyWeaponDamage(Player player, ref StatModifier damage)

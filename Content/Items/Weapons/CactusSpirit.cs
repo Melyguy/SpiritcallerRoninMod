@@ -13,7 +13,7 @@ namespace KatanaMod.Content.Items.Weapons
 			// DefaultToStaff handles setting various Item values that magic staff weapons use.
 			// Hover over DefaultToStaff in Visual Studio to read the documentation!
 			// Shoot a black bolt, also known as the projectile shot from the onyx blaster.
-			Item.DefaultToStaff(ProjectileID.RollingCactus, 7, 20, 11);
+			Item.DefaultToStaff(ProjectileID.RollingCactus, 7, 15, 10);
 			Item.width = 34;
 			Item.height = 40;
 			Item.UseSound = SoundID.Item71;

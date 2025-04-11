@@ -14,8 +14,8 @@ namespace KatanaMod.Content.Items.Weapons
 		{
 			Item.damage = 5;
 			Item.DamageType = DamageClass.Melee;
-			Item.width = 40;
-			Item.height = 40;
+			Item.width = 60;
+			Item.height = 60;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.Thrust;

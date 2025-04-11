@@ -16,7 +16,7 @@ Items: {
 	}
 
 	ImbuedKatana: {
-		Tooltip: Unsheating the blade opens a new path, You can either return the blade to its sheath relying on your troops support or continue down this path.
+		Tooltip: Unsheating the blade gives you power.
 		DisplayName: Imbued Katana
 	}
 
@@ -34,9 +34,16 @@ Items: {
 		DisplayName: Slime Spirit
 		Tooltip: ""
 	}
+
+	ForestSpiritRobe: {
+		Tooltip: ""
+		DisplayName: Forest Spirit Robe
+	}
 }
 
 NPCs: {
 	GoldSlime.DisplayName: Gold Slime
 	FastSlime.DisplayName: Fast Slime
 }
+
+Projectiles.ImbuedKatanaSlash.DisplayName: Imbued Katana Slash

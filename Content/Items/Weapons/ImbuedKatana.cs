@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using KatanaMod.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -16,13 +17,18 @@ namespace KatanaMod.Content.Items.Weapons
 	public class ImbuedKatana : ModItem
 	{
 		public override void SetDefaults() {
-			Item.width = 26;
-			Item.height = 58;
-
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.useTime = 20;
-			Item.useAnimation = 20;
+			Item.width = 50;
+			Item.height = 50;
+			
+			//Item.holdStyle = ItemHoldStyleID.HoldGuitar;
+			//Item.noUseGraphic = false;
+			Item.useStyle = ItemUseStyleID.Shoot;
+			
+			Item.useTime = 15;
+			Item.useAnimation = 15;
 			Item.autoReuse = true;
+			
+
 
 			Item.DamageType = DamageClass.Melee;
 			Item.damage = 30;
@@ -33,8 +39,8 @@ namespace KatanaMod.Content.Items.Weapons
 			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item1;
 
-			Item.shoot = ProjectileID.Excalibur; // ID of the projectiles the sword will shoot
-			Item.shootSpeed = 8f; // Speed of the projectiles the sword will shoot
+			Item.shoot = ModContent.ProjectileType<ImbuedKatanaSlash>(); // ID of the projectiles the sword will shoot
+			Item.shootSpeed = 16f; // Speed of the projectiles the sword will shoot
 
 			// If you want melee speed to only affect the swing speed of the weapon and not the shoot speed (not recommended)
 			// Item.attackSpeedOnlyAffectsWeaponAnimation = true;
@@ -56,7 +62,10 @@ namespace KatanaMod.Content.Items.Weapons
         {
             damage += player.GetModPlayer<GlobalPlayer>().RoninDamage;
         }
-
+		public override Vector2? HoldoutOffset()
+		{
+			return new Vector2(-20,5); // X=0 for no horizontal offset, Y=-20 to move the hold point up
+		}
         
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
