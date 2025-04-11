@@ -24,14 +24,16 @@ namespace KatanaMod.Content.Items.Weapons
 			//Item.noUseGraphic = false;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			
-			Item.useTime = 15;
-			Item.useAnimation = 15;
+			Item.useTime = 8; // Faster attack speed
+			Item.useAnimation = 8;
 			Item.autoReuse = true;
 			
-
-
+			Item.damage = 35;
+			Item.knockBack = 3; // Lower knockback for faster hits
+			
+			Item.UseSound = SoundID.Item60; // More swooshy sound
 			Item.DamageType = DamageClass.Melee;
-			Item.damage = 30;
+			Item.damage = 20;
 			Item.knockBack = 6;
 			Item.crit = 6;
 
@@ -68,12 +70,54 @@ namespace KatanaMod.Content.Items.Weapons
 		}
         
 
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			float adjustedItemScale = player.GetAdjustedItemScale(Item); // Get the melee scale of the player and item.
-			Projectile.NewProjectile(source, player.MountedCenter, new Vector2(player.direction, 0f), type, damage, knockback, player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax, adjustedItemScale);
-			NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, player.whoAmI); // Sync the changes in multiplayer.
+		// Add this field at class level
+		private int dashCooldown = 0;
 
-			return base.Shoot(player, source, position, velocity, type, damage, knockback);
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			float adjustedItemScale = player.GetAdjustedItemScale(Item);
+			
+			// Create afterimages
+			for (int i = 0; i < 3; i++) {
+				Vector2 offset = new Vector2(player.direction * i * -5, 0);
+				Dust.NewDustPerfect(player.MountedCenter + offset, DustID.BlueTorch, Vector2.Zero, 100, Color.White, 1.5f);
+			}
+
+			// Dash mechanic
+			if (player.controlDown && dashCooldown <= 0) {
+				player.velocity.X = player.direction * 12f;
+				dashCooldown = 45; // Set cooldown to 45 ticks (3/4 second)
+				
+				// Dash effect
+				for (int i = 0; i < 20; i++) {
+					Dust.NewDustPerfect(player.Center, DustID.BlueTorch, 
+						new Vector2(Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-2f, 2f)), 
+						100, Color.White, 1f);
+				}
+			}
+			
+			// Multiple slashes
+			for (int i = 0; i < 2; i++) {
+				Vector2 perturbedSpeed = new Vector2(player.direction, 0f).RotatedBy(MathHelper.ToRadians(Main.rand.Next(-15, 15)));
+				Projectile.NewProjectile(source, player.MountedCenter, perturbedSpeed, type, damage, knockback, 
+					player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax, adjustedItemScale);
+			}
+
+			if (dashCooldown > 0)
+				dashCooldown--;
+
+			return false; // Don't fire the original projectile
+		}
+
+		public override void HoldItem(Player player) {
+			// Decrease dash cooldown
+			if (dashCooldown > 0)
+				dashCooldown--;
+				
+			// Add floating dust effect when holding
+			if (Main.rand.NextBool(20)) {
+				Dust.NewDustPerfect(player.Center + new Vector2(player.direction * 20, 0), 
+					DustID.BlueTorch, new Vector2(0, -1f), 100, Color.White, 0.8f);
+			}
 		}
 
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.

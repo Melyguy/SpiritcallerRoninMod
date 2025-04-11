@@ -1,4 +1,6 @@
 
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
@@ -29,5 +31,20 @@ namespace KatanaMod.Content.Items.Weapons
 			// Set rarity and value
 			Item.SetShopValues(ItemRarityColor.Green2, 10000);
 		}
+
+				        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            var linetochange = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.Mod == "Terraria");
+            if (linetochange != null)
+            {
+                string[] splittext = linetochange.Text.Split(' ');
+                linetochange.Text = splittext.First() + " SpiritCaller " + splittext.Last();
+            }
+        }
+		        public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
+        {
+            damage += player.GetModPlayer<GlobalPlayer>().SpiritCallerDamage;
+        }
+		
 	}
 }

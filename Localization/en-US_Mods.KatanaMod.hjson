@@ -39,11 +39,29 @@ Items: {
 		Tooltip: ""
 		DisplayName: Forest Spirit Robe
 	}
+
+	ForestGuardianBag: {
+		DisplayName: Forest Guardian Bag
+		Tooltip: ""
+	}
+
+	ForestGuardianRelic: {
+		DisplayName: Forest Guardian Relic
+		Tooltip: ""
+	}
+
+	ForestGuardianTrophy: {
+		DisplayName: Forest Guardian Trophy
+		Tooltip: ""
+	}
 }
 
 NPCs: {
 	GoldSlime.DisplayName: Gold Slime
 	FastSlime.DisplayName: Fast Slime
+	ForestGuardianBody.DisplayName: Forest Guardian Body
+	ForestGuardianMinion.DisplayName: Forest Guardian Minion
+	ForestGuardian.DisplayName: Forest Guardian
 }
 
 Projectiles.ImbuedKatanaSlash.DisplayName: Imbued Katana Slash
