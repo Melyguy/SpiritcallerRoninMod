@@ -14,7 +14,7 @@ namespace KatanaMod.Content.Items.Weapons
 	///     See Source code for Star Wrath projectile to see how it passes through tiles.
 	///     For a detailed sword guide see <see cref="ExampleSword" />
 	/// </summary>
-	public class ImbuedKatana : ModItem
+	public class DemoniteInfusedKatana : ModItem
 	{
 		// Add this field at class level
 		private bool alternateSlash;
@@ -31,12 +31,11 @@ namespace KatanaMod.Content.Items.Weapons
 			Item.useAnimation = 10;
 			Item.autoReuse = true;
 			
-			Item.damage = 35;
+			Item.damage = 40;
 			Item.knockBack = 3; // Lower knockback for faster hits
 			
-			Item.UseSound = SoundID.Item71; // More swooshy sound
+			Item.UseSound = SoundID.Item60;
 			Item.DamageType = DamageClass.Melee;
-			Item.damage = 20;
 			Item.knockBack = 6;
 			Item.crit = 6;
 
@@ -87,8 +86,8 @@ namespace KatanaMod.Content.Items.Weapons
 			
 			// Alternate between slash types
 			int projectileType = alternateSlash ? 
-				ModContent.ProjectileType<ImbuedKatanaSlash2>() : 
-				ModContent.ProjectileType<ImbuedKatanaSlash>();
+				ModContent.ProjectileType<DemoniteInfusedSlash2 >() : 
+				ModContent.ProjectileType<DemoniteInfusedSlash>();
 			
 			// Multiple slashes
 			for (int i = 0; i < 2; i++) {
@@ -114,14 +113,16 @@ namespace KatanaMod.Content.Items.Weapons
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient<SheathedKatana>();
-			recipe.AddIngredient(ItemID.GoldBar, 10);
+			recipe.AddIngredient<EvilSealingSheath>();
+			recipe.AddIngredient(ItemID.DemoniteBar, 10);
+            recipe.AddIngredient(ItemID.FallenStar, 10);
+            recipe.AddIngredient(ItemID.RottenChunk, 10);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
-
+		
 			recipe = CreateRecipe();
-			recipe.AddIngredient<SheathedKatana>();
-			recipe.AddIngredient(ItemID.PlatinumBar, 10);
+			recipe.AddIngredient<CrimtaneInfusedKatana>();
+            recipe.AddIngredient(ItemID.FallenStar, 30);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 namespace KatanaMod.Content.Projectiles
 {
 	// This is a copy of the Excalibur's projectile
-	public class ImbuedKatanaSlash : ModProjectile
+	public class DemoniteInfusedSlash : ModProjectile
 	{
 		// We could use a vanilla texture if we want instead of supplying our own.
 		// public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Excalibur;
@@ -86,16 +86,16 @@ namespace KatanaMod.Content.Projectiles
 			Vector2 dustPosition = Projectile.Center + dustRotation.ToRotationVector2() * 84f * Projectile.scale;
 			Vector2 dustVelocity = (dustRotation + Projectile.ai[0] * MathHelper.PiOver2).ToRotationVector2();
 			if (Main.rand.NextFloat() * 2f < Projectile.Opacity) {
-				// Original Excalibur color: Color.Gold, Color.White
-				Color dustColor = Color.Lerp(Color.SkyBlue, Color.White, Main.rand.NextFloat() * 0.3f);
+				// Original Excalibur color: Color.Gold, Color.Purple
+				Color dustColor = Color.Lerp(Color.Purple, Color.Purple, Main.rand.NextFloat() * 0.3f);
 				Dust coloredDust = Dust.NewDustPerfect(Projectile.Center + dustRotation.ToRotationVector2() * (Main.rand.NextFloat() * 80f * Projectile.scale + 20f * Projectile.scale), DustID.FireworksRGB, dustVelocity * 1f, 100, dustColor, 0.4f);
 				coloredDust.fadeIn = 0.4f + Main.rand.NextFloat() * 0.15f;
 				coloredDust.noGravity = true;
 			}
 
 			if (Main.rand.NextFloat() * 1.5f < Projectile.Opacity) {
-				// Original Excalibur color: Color.White
-				Dust.NewDustPerfect(dustPosition, DustID.TintableDustLighted, dustVelocity, 100, Color.SkyBlue * Projectile.Opacity, 1.2f * Projectile.Opacity);
+				// Original Excalibur color: Color.Purple
+				Dust.NewDustPerfect(dustPosition, DustID.TintableDustLighted, dustVelocity, 100, Color.Purple * Projectile.Opacity, 1.2f * Projectile.Opacity);
 			}
 
 			Projectile.scale *= Projectile.ai[2]; // Set the scale of the projectile to the scale of the item.
@@ -202,9 +202,9 @@ namespace KatanaMod.Content.Projectiles
 			Color middleMediumColor = new Color(80, 255, 255); // Original Excalibur color: Color(255, 255, 80)
 			Color frontLightColor = new Color(150, 240, 255); // Original Excalibur color: Color(255, 240, 150)
 
-			Color whiteTimesLerpTime = Color.White * lerpTime * 0.5f;
-			whiteTimesLerpTime.A = (byte)(whiteTimesLerpTime.A * (1f - lightingColor));
-			Color faintLightingColor = whiteTimesLerpTime * lightingColor * 0.5f;
+			Color PinkTimesLerpTime = Color.Purple * lerpTime * 0.5f;
+			PinkTimesLerpTime.A = (byte)(PinkTimesLerpTime.A * (1f - lightingColor));
+			Color faintLightingColor = PinkTimesLerpTime * lightingColor * 0.5f;
 			faintLightingColor.G = (byte)(faintLightingColor.G * lightingColor);
 			faintLightingColor.B = (byte)(faintLightingColor.R * (0.25f + lightingColor * 0.75f));
 
@@ -217,11 +217,11 @@ namespace KatanaMod.Content.Projectiles
 			// Front part
 			Main.EntitySpriteDraw(texture, position, sourceRectangle, frontLightColor * lightingColor * lerpTime * 0.5f, Projectile.rotation, origin, scale * 0.975f, spriteEffects, 0f);
 			// Thin top line (final frame)
-			Main.EntitySpriteDraw(texture, position, texture.Frame(1, 4, 0, 3), Color.White * 0.6f * lerpTime, Projectile.rotation + Projectile.ai[0] * 0.01f, origin, scale, spriteEffects, 0f);
+			Main.EntitySpriteDraw(texture, position, texture.Frame(1, 4, 0, 3), Color.Purple * 0.6f * lerpTime, Projectile.rotation + Projectile.ai[0] * 0.01f, origin, scale, spriteEffects, 0f);
 			// Thin middle line (final frame)
-			Main.EntitySpriteDraw(texture, position, texture.Frame(1, 4, 0, 3), Color.White * 0.5f * lerpTime, Projectile.rotation + Projectile.ai[0] * -0.05f, origin, scale * 0.8f, spriteEffects, 0f);
+			Main.EntitySpriteDraw(texture, position, texture.Frame(1, 4, 0, 3), Color.Purple * 0.5f * lerpTime, Projectile.rotation + Projectile.ai[0] * -0.05f, origin, scale * 0.8f, spriteEffects, 0f);
 			// Thin bottom line (final frame)
-			Main.EntitySpriteDraw(texture, position, texture.Frame(1, 4, 0, 3), Color.White * 0.4f * lerpTime, Projectile.rotation + Projectile.ai[0] * -0.1f, origin, scale * 0.6f, spriteEffects, 0f);
+			Main.EntitySpriteDraw(texture, position, texture.Frame(1, 4, 0, 3), Color.Purple * 0.4f * lerpTime, Projectile.rotation + Projectile.ai[0] * -0.1f, origin, scale * 0.6f, spriteEffects, 0f);
 
 			// This draws some sparkles around the circumference of the swing.
 			for (float i = 0f; i < 8f; i += 1f) {

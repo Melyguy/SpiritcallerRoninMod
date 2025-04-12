@@ -26,7 +26,7 @@ Items: {
 	}
 
 	CactusSpirit: {
-		Tooltip: ""
+		Tooltip: The spirit of the deserted trees lends you her power
 		DisplayName: Cactus Spirit
 	}
 
@@ -57,14 +57,29 @@ Items: {
 
 	EvilSealingSheath: {
 		DisplayName: Evil Sealing Sheath
+		Tooltip: The spirit of the forest guardian rests in the sheath.
+	}
+
+	CrimtaneInfusedKatana: {
+		DisplayName: Crimtane Infused Katana
+		Tooltip: Containing the evil is no easy feat. Will you prosper, or go down the path of evil
+	}
+
+	DemoniteInfusedKatana: {
+		Tooltip: Containing the evil is no easy feat. Will you prosper, or go down it's path
+		DisplayName: Demonite Infused Katana
+	}
+
+	KatanaOfEvil: {
 		Tooltip: ""
+		DisplayName: Katana Of Evil
 	}
 }
 
 NPCs: {
 	GoldSlime.DisplayName: Gold Slime
 	FastSlime.DisplayName: Fast Slime
-	ForestGuardianBody.DisplayName: Forest Guardian Body
+	ForestGuardianBody.DisplayName: Forest Guardian
 	ForestGuardianMinion.DisplayName: Forest Guardian Minion
 	ForestGuardian.DisplayName: Forest Guardian
 }
@@ -72,4 +87,8 @@ NPCs: {
 Projectiles: {
 	ImbuedKatanaSlash.DisplayName: Imbued Katana Slash
 	ImbuedKatanaSlash2.DisplayName: Imbued Katana Slash2
+	CrimtaneKatanaSlash.DisplayName: Crimtane Katana Slash
+	CrimtaneKatanaSlash2.DisplayName: Crimtane Katana Slash2
+	DemoniteInfusedSlash2.DisplayName: Demonite Infused Slash2
+	DemoniteInfusedSlash.DisplayName: Demonite Infused Slash
 }

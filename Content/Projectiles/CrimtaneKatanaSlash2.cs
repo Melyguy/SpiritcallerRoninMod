@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 namespace KatanaMod.Content.Projectiles
 {
 	// This is a copy of the Excalibur's projectile
-	public class ImbuedKatanaSlash : ModProjectile
+	public class CrimtaneKatanaSlash2 : ModProjectile
 	{
 		// We could use a vanilla texture if we want instead of supplying our own.
 		// public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Excalibur;
@@ -67,8 +67,8 @@ namespace KatanaMod.Content.Projectiles
 			Player player = Main.player[Projectile.owner];
 			float percentageOfLife = Projectile.localAI[0] / Projectile.ai[1]; // The current time over the max time.
 			float direction = Projectile.ai[0];
-			float velocityRotation = Projectile.velocity.ToRotation();
-			float adjustedRotation = MathHelper.Pi * direction * percentageOfLife + velocityRotation + direction * MathHelper.Pi + player.fullRotation;
+			float velocityRotation = -Projectile.velocity.ToRotation(); // Invert the velocity rotation
+			float adjustedRotation = -(MathHelper.Pi * direction * percentageOfLife + velocityRotation + direction * MathHelper.Pi) + player.fullRotation; // Invert the rotation calculation
 			Projectile.rotation = adjustedRotation; // Set the rotation to our to the new rotation we calculated.
 
 			float scaleMulti = 0.6f; // Excalibur, Terra Blade, and The Horseman's Blade is 0.6f; True Excalibur is 1f; default is 0.2f 
@@ -87,7 +87,7 @@ namespace KatanaMod.Content.Projectiles
 			Vector2 dustVelocity = (dustRotation + Projectile.ai[0] * MathHelper.PiOver2).ToRotationVector2();
 			if (Main.rand.NextFloat() * 2f < Projectile.Opacity) {
 				// Original Excalibur color: Color.Gold, Color.White
-				Color dustColor = Color.Lerp(Color.SkyBlue, Color.White, Main.rand.NextFloat() * 0.3f);
+				Color dustColor = Color.Lerp(Color.Red, Color.Pink, Main.rand.NextFloat() * 0.3f);
 				Dust coloredDust = Dust.NewDustPerfect(Projectile.Center + dustRotation.ToRotationVector2() * (Main.rand.NextFloat() * 80f * Projectile.scale + 20f * Projectile.scale), DustID.FireworksRGB, dustVelocity * 1f, 100, dustColor, 0.4f);
 				coloredDust.fadeIn = 0.4f + Main.rand.NextFloat() * 0.15f;
 				coloredDust.noGravity = true;
@@ -95,7 +95,7 @@ namespace KatanaMod.Content.Projectiles
 
 			if (Main.rand.NextFloat() * 1.5f < Projectile.Opacity) {
 				// Original Excalibur color: Color.White
-				Dust.NewDustPerfect(dustPosition, DustID.TintableDustLighted, dustVelocity, 100, Color.SkyBlue * Projectile.Opacity, 1.2f * Projectile.Opacity);
+				Dust.NewDustPerfect(dustPosition, DustID.TintableDustLighted, dustVelocity, 100, Color.Red * Projectile.Opacity, 1.2f * Projectile.Opacity);
 			}
 
 			Projectile.scale *= Projectile.ai[2]; // Set the scale of the projectile to the scale of the item.

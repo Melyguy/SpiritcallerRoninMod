@@ -16,7 +16,7 @@ namespace KatanaMod.Content.Items.Weapons
 			Item.DefaultToStaff(ProjectileID.BladeOfGrass, 7, 10, 10);
 			Item.width = 34;
 			Item.height = 40;
-			Item.UseSound = SoundID.Item71;
+			Item.UseSound = SoundID.NPCHit54;
 
 			// A special method that sets the damage, knockback, and bonus critical strike chance.
 			// This weapon has a crit of 32% which is added to the players default crit chance of 4%

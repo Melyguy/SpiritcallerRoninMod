@@ -101,8 +101,8 @@ namespace KatanaMod.Content.Projectiles
 			Projectile.scale *= Projectile.ai[2]; // Set the scale of the projectile to the scale of the item.
 
 			// If the projectile is as old as the max animation time, kill the projectile.
-			if (Projectile.localAI[0] >= Projectile.ai[1]) {
-				Projectile.Kill();
+			if (Projectile.localAI[0] >= Projectile.ai[1] + 12) { // Added 12 ticks (0.2 seconds) to the lifetime
+			    Projectile.Kill();
 			}
 
 			// This for loop spawns the visuals when using Flasks (weapon imbues)
