@@ -25,13 +25,5 @@ namespace KatanaMod.Content.Items.Weapons
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
 		}
-
-		public override void AddRecipes()
-		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.Wood, 15);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
-		}
 	}
 }

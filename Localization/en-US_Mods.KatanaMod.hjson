@@ -54,6 +54,11 @@ Items: {
 		DisplayName: Forest Guardian Trophy
 		Tooltip: ""
 	}
+
+	EvilSealingSheath: {
+		DisplayName: Evil Sealing Sheath
+		Tooltip: ""
+	}
 }
 
 NPCs: {
@@ -64,4 +69,7 @@ NPCs: {
 	ForestGuardian.DisplayName: Forest Guardian
 }
 
-Projectiles.ImbuedKatanaSlash.DisplayName: Imbued Katana Slash
+Projectiles: {
+	ImbuedKatanaSlash.DisplayName: Imbued Katana Slash
+	ImbuedKatanaSlash2.DisplayName: Imbued Katana Slash2
+}

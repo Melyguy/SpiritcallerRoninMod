@@ -16,6 +16,9 @@ namespace KatanaMod.Content.Items.Weapons
 	/// </summary>
 	public class ImbuedKatana : ModItem
 	{
+		// Add this field at class level
+		private bool alternateSlash;
+
 		public override void SetDefaults() {
 			Item.width = 50;
 			Item.height = 50;
@@ -24,14 +27,14 @@ namespace KatanaMod.Content.Items.Weapons
 			//Item.noUseGraphic = false;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			
-			Item.useTime = 8; // Faster attack speed
-			Item.useAnimation = 8;
+			Item.useTime = 10; // Faster attack speed
+			Item.useAnimation = 10;
 			Item.autoReuse = true;
 			
 			Item.damage = 35;
 			Item.knockBack = 3; // Lower knockback for faster hits
 			
-			Item.UseSound = SoundID.Item60; // More swooshy sound
+			Item.UseSound = SoundID.Item71; // More swooshy sound
 			Item.DamageType = DamageClass.Melee;
 			Item.damage = 20;
 			Item.knockBack = 6;
@@ -41,8 +44,8 @@ namespace KatanaMod.Content.Items.Weapons
 			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item1;
 
-			Item.shoot = ModContent.ProjectileType<ImbuedKatanaSlash>(); // ID of the projectiles the sword will shoot
-			Item.shootSpeed = 16f; // Speed of the projectiles the sword will shoot
+			Item.shoot = ModContent.ProjectileType<ImbuedKatanaSlash>(); // Default slash projectile
+			Item.shootSpeed = 16f;
 
 			// If you want melee speed to only affect the swing speed of the weapon and not the shoot speed (not recommended)
 			// Item.attackSpeedOnlyAffectsWeaponAnimation = true;
@@ -71,7 +74,8 @@ namespace KatanaMod.Content.Items.Weapons
         
 
 		// Add this field at class level
-		private int dashCooldown = 0;
+		// Remove the dashCooldown field
+		// private int dashCooldown = 0;
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			float adjustedItemScale = player.GetAdjustedItemScale(Item);
@@ -81,38 +85,26 @@ namespace KatanaMod.Content.Items.Weapons
 				Vector2 offset = new Vector2(player.direction * i * -5, 0);
 				Dust.NewDustPerfect(player.MountedCenter + offset, DustID.BlueTorch, Vector2.Zero, 100, Color.White, 1.5f);
 			}
-
-			// Dash mechanic
-			if (player.controlDown && dashCooldown <= 0) {
-				player.velocity.X = player.direction * 12f;
-				dashCooldown = 45; // Set cooldown to 45 ticks (3/4 second)
-				
-				// Dash effect
-				for (int i = 0; i < 20; i++) {
-					Dust.NewDustPerfect(player.Center, DustID.BlueTorch, 
-						new Vector2(Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-2f, 2f)), 
-						100, Color.White, 1f);
-				}
-			}
+			
+			// Alternate between slash types
+			int projectileType = alternateSlash ? 
+				ModContent.ProjectileType<ImbuedKatanaSlash2>() : 
+				ModContent.ProjectileType<ImbuedKatanaSlash>();
 			
 			// Multiple slashes
 			for (int i = 0; i < 2; i++) {
 				Vector2 perturbedSpeed = new Vector2(player.direction, 0f).RotatedBy(MathHelper.ToRadians(Main.rand.Next(-15, 15)));
-				Projectile.NewProjectile(source, player.MountedCenter, perturbedSpeed, type, damage, knockback, 
+				Projectile.NewProjectile(source, player.MountedCenter, perturbedSpeed, projectileType, damage, knockback, 
 					player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax, adjustedItemScale);
 			}
 
-			if (dashCooldown > 0)
-				dashCooldown--;
+			// Toggle the slash type for next shot
+			alternateSlash = !alternateSlash;
 
 			return false; // Don't fire the original projectile
 		}
 
 		public override void HoldItem(Player player) {
-			// Decrease dash cooldown
-			if (dashCooldown > 0)
-				dashCooldown--;
-				
 			// Add floating dust effect when holding
 			if (Main.rand.NextBool(20)) {
 				Dust.NewDustPerfect(player.Center + new Vector2(player.direction * 20, 0), 
