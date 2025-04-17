@@ -11,7 +11,7 @@ namespace KatanaMod.Content.Items.Armor
 	public class ForestSpiritRobe : ModItem
 	{
 		public static readonly int MaxManaIncrease = 20;
-		public static readonly float SpiritCallerDamageIncrease = 1.2f;
+		public static readonly float SpiritCallerDamageIncrease = 1.1f;
 
 		public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(MaxManaIncrease, SpiritCallerDamageIncrease);
 

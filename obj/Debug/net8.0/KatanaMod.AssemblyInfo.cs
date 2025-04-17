@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KatanaMod")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+28cb8dc7704d8ca138353a2c1e9ec2b6ac1ceea7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bc52305045687891bf0cfe0d5fb2f2c48d6764a7")]
 [assembly: System.Reflection.AssemblyProductAttribute("KatanaMod")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KatanaMod")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

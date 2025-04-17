@@ -27,8 +27,8 @@ namespace KatanaMod.Content.Items.Weapons
 			//Item.noUseGraphic = false;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			
-			Item.useTime = 8; // Faster attack speed
-			Item.useAnimation = 8;
+			Item.useTime = 9; // Faster attack speed
+			Item.useAnimation = 9;
 			Item.autoReuse = true;
 			
 			Item.damage = 80;

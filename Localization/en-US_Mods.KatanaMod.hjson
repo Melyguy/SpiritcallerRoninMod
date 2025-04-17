@@ -74,6 +74,21 @@ Items: {
 		Tooltip: ""
 		DisplayName: Katana Of Evil
 	}
+
+	JungleSpirit: {
+		Tooltip: ""
+		DisplayName: Jungle Spirit
+	}
+
+	WaterSpirit: {
+		Tooltip: ""
+		DisplayName: Water Spirit
+	}
+
+	GuardiansLeaf: {
+		Tooltip: "Summons the Forest Guardian"
+		DisplayName: Guardians Leaf
+	}
 }
 
 NPCs: {
