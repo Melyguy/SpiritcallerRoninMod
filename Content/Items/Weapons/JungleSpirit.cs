@@ -13,7 +13,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			// DefaultToStaff handles setting various Item values that magic staff weapons use.
 			// Hover over DefaultToStaff in Visual Studio to read the documentation!
 			// Shoot a black bolt, also known as the projectile shot from the onyx blaster.
-			Item.DefaultToStaff(ProjectileID.PoisonDart, 7, 10, 15);
+			Item.DefaultToStaff(ProjectileID.PoisonDartBlowgun, 7, 10, 15);
 			Item.width = 34;
 			Item.height = 40;
 			Item.UseSound = SoundID.Item17;

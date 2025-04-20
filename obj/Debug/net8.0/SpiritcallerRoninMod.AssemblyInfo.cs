@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SpiritcallerRoninMod")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+79870510ce2f7bdbdca48e73291ab335b3ddc0eb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b6ebc90b3046cc6f91bb402c64ae4fdad05de7f1")]
 [assembly: System.Reflection.AssemblyProductAttribute("SpiritcallerRoninMod")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SpiritcallerRoninMod")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

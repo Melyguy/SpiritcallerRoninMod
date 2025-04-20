@@ -10,10 +10,8 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 	public class CactusSpirit : ModItem
 	{
 		public override void SetDefaults() {
-			// DefaultToStaff handles setting various Item values that magic staff weapons use.
-			// Hover over DefaultToStaff in Visual Studio to read the documentation!
-			// Shoot a black bolt, also known as the projectile shot from the onyx blaster.
-			Item.DefaultToStaff(ProjectileID.RollingCactus, 7, 15, 10);
+			// Change this line to use your custom projectile
+			Item.DefaultToStaff(ModContent.ProjectileType<Projectiles.CactusProjectile>(), 7, 15, 10);
 			Item.width = 34;
 			Item.height = 40;
 			Item.UseSound = SoundID.Item71;
