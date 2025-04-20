@@ -2,14 +2,14 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace KatanaMod.Content.Items.Weapons
+namespace SpiritcallerRoninMod.Content.Items.Weapons
 { 
 	// This is a basic item template.
 	// Please see tModLoader's ExampleMod for every other example:
 	// https://github.com/tModLoader/tModLoader/tree/stable/ExampleMod
 	public class EvilSealingSheath : ModItem
 	{
-		// The Display Name and Tooltip of this item can be edited in the 'Localization/en-US_Mods.KatanaMod.hjson' file.
+		// The Display Name and Tooltip of this item can be edited in the 'Localization/en-US_Mods.SpiritcallerRoninMod.hjson' file.
 		public override void SetDefaults()
 		{
 			Item.damage = 5;

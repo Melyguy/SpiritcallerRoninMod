@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 
-namespace KatanaMod{
+namespace SpiritcallerRoninMod{
     public class GlobalPlayer : ModPlayer{
         public float ShogunDamage = 0f;
         public float RoninDamage = 0f;

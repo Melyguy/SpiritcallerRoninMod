@@ -5,7 +5,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace KatanaMod.Content.Bosses.ForestGuardian
+namespace SpiritcallerRoninMod.Content.Bosses.ForestGuardian
 {
 	// The minions spawned when the body spawns
 	// Please read ForestGuardianBody.cs first for important comments, they won't be explained here again

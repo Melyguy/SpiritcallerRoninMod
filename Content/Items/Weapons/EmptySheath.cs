@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace KatanaMod.Content.Items.Weapons
+namespace SpiritcallerRoninMod.Content.Items.Weapons
 { 
 	// This is a basic item template.
 	// Please see tModLoader's ExampleMod for every other example:

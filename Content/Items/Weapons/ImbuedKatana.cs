@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
-using KatanaMod.Content.Projectiles;
+using SpiritcallerRoninMod.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace KatanaMod.Content.Items.Weapons
+namespace SpiritcallerRoninMod.Content.Items.Weapons
 {
 	/// <summary>
 	///     Star Wrath/Starfury style weapon. Spawn projectiles from sky that aim towards mouse.

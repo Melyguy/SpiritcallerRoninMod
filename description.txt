@@ -1,1 +1,7 @@
-Modify this file with a description of your mod.
+Start a new journey as a mystic samurai or a powerful spiritcaller. In this Japanese-themed mod you can use magic spiritcaller weapons with different nature themed attacks or different katanas with a variety of slashes or attacks. Other features include:
+• New NPC: Meet Sekiro from the fromsoftware game, a mysterious shinobi merchant who sells powerful eastern weapons
+
+
+Heavily inspired by Sekiro: Shadows Die Twice and traditional samurai culture.
+
+GitHub Repo: https://github.com/Melyguy/SpiritCallerRonin-Mod

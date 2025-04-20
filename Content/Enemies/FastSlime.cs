@@ -4,7 +4,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader.Utilities;
 
-namespace KatanaMod.Content.Enemies
+namespace SpiritcallerRoninMod.Content.Enemies
 {
     public class FastSlime : ModNPC
     {

@@ -86,8 +86,29 @@ Items: {
 	}
 
 	GuardiansLeaf: {
-		Tooltip: "Summons the Forest Guardian"
+		Tooltip: Summons the Forest Guardian
 		DisplayName: Guardians Leaf
+	}
+
+	RoninHelmet: {
+		Tooltip: ""
+		DisplayName: Ronin Helmet
+		SetBonus: Mods.KatanaMod.Items.RoninHelmet.SetBonus
+	}
+
+	RoninChestplate: {
+		Tooltip: ""
+		DisplayName: Ronin Chestplate
+	}
+
+	RoninLeggings: {
+		Tooltip: ""
+		DisplayName: Ronin Leggings
+	}
+
+	mortalBlade: {
+		Tooltip: An odachi capable of slaying the Undying.
+		DisplayName: mortal Blade
 	}
 }
 
@@ -97,6 +118,51 @@ NPCs: {
 	ForestGuardianBody.DisplayName: Forest Guardian
 	ForestGuardianMinion.DisplayName: Forest Guardian Minion
 	ForestGuardian.DisplayName: Forest Guardian
+
+	Sekiro: {
+		DisplayName: Sekiro
+
+		TownNPCMood: {
+			Content: I am content.
+			NoHome: I hate not having a home.
+			FarFromHome: I am too far from home.
+			LoveSpace: I love having so much space.
+			DislikeCrowded: I dislike how crowded I am.
+			HateCrowded: I hate how crowded I am.
+			LikeNPC_Princess: I like {NPCName}.
+			Princess_LovesNPC: I like {NPCName}.
+		}
+	}
+
+	Wolf: {
+		DisplayName: Wolf
+
+		TownNPCMood: {
+			Content: I am content.
+			NoHome: I hate not having a home.
+			FarFromHome: I am too far from home.
+			LoveSpace: I love having so much space.
+			DislikeCrowded: I dislike how crowded I am.
+			HateCrowded: I hate how crowded I am.
+			LikeNPC_Princess: I like {NPCName}.
+			Princess_LovesNPC: I like {NPCName}.
+		}
+	}
+
+	Shinobi: {
+		DisplayName: Shinobi
+
+		TownNPCMood: {
+			Content: I am content.
+			NoHome: I hate not having a home.
+			FarFromHome: I am too far from home.
+			LoveSpace: I love having so much space.
+			DislikeCrowded: I dislike how crowded I am.
+			HateCrowded: I hate how crowded I am.
+			LikeNPC_Princess: I like {NPCName}.
+			Princess_LovesNPC: I like {NPCName}.
+		}
+	}
 }
 
 Projectiles: {
@@ -106,4 +172,5 @@ Projectiles: {
 	CrimtaneKatanaSlash2.DisplayName: Crimtane Katana Slash2
 	DemoniteInfusedSlash2.DisplayName: Demonite Infused Slash2
 	DemoniteInfusedSlash.DisplayName: Demonite Infused Slash
+	MortalBladeSlash.DisplayName: Mortal Blade Slash
 }

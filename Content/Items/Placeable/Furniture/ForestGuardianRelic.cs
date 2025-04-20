@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace KatanaMod.Content.Items.Placeable.Furniture
+namespace SpiritcallerRoninMod.Content.Items.Placeable.Furniture
 {
 	public class ForestGuardianRelic : ModItem
 	{

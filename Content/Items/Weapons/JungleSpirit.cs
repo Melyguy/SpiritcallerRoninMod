@@ -5,7 +5,7 @@ using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace KatanaMod.Content.Items.Weapons
+namespace SpiritcallerRoninMod.Content.Items.Weapons
 {
 	public class JungleSpirit : ModItem
 	{

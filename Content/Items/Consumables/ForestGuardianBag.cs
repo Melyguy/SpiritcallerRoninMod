@@ -1,12 +1,12 @@
 
-using KatanaMod.Content.Bosses.ForestGuardian;
-using KatanaMod.Content.Items.Weapons;
+using SpiritcallerRoninMod.Content.Bosses.ForestGuardian;
+using SpiritcallerRoninMod.Content.Items.Weapons;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace KatanaMod.Content.Items.Consumables
+namespace SpiritcallerRoninMod.Content.Items.Consumables
 {
 	// Basic code for a boss treasure bag
 	public class ForestGuardianBag : ModItem
@@ -39,6 +39,7 @@ namespace KatanaMod.Content.Items.Consumables
 
 			//itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<ForestGuardianMask>(), 7));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<EvilSealingSheath>(), 1));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<LeafSpirit>(), 1));
 			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<ForestGuardian>()));
 		}
 	}

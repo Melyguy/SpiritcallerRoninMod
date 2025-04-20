@@ -5,7 +5,7 @@ using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace KatanaMod.Content.Items.Weapons
+namespace SpiritcallerRoninMod.Content.Items.Weapons
 {
 	public class WaterSpirit : ModItem
 	{
@@ -40,8 +40,8 @@ namespace KatanaMod.Content.Items.Weapons
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.RichMahogany, 10);
-			recipe.AddIngredient(ItemID.JungleSpores,2);
+			recipe.AddIngredient(ItemID.BottledWater, 10);
+			recipe.AddIngredient(ItemID.SharkFin,2);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.Register();
 		}

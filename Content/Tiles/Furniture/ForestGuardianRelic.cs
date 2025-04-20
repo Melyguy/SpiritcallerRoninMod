@@ -10,7 +10,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace KatanaMod.Content.Tiles.Furniture
+namespace SpiritcallerRoninMod.Content.Tiles.Furniture
 {
 	// Common code for a Master Mode boss relic
 	// Supports optional Item.placeStyle handling if you wish to add more relics but use the same tile type (then it would be wise to name this class something more generic like BossRelic)
@@ -26,10 +26,10 @@ namespace KatanaMod.Content.Tiles.Furniture
 
 		// Every relic has its own extra floating part, should be 50x50. Optional: Expand this sheet if you want to add more, stacked vertically
 		// If you do not use the Item.placeStyle approach, and you extend from this class, you can override this to point to a different texture
-		public virtual string RelicTextureName => "KatanaMod/Content/Tiles/Furniture/ForestGuardianRelic";
+		public virtual string RelicTextureName => "SpiritcallerRoninMod/Content/Tiles/Furniture/ForestGuardianRelic";
 
 		// All relics use the same pedestal texture, this one is copied from vanilla
-		public override string Texture => "KatanaMod/Content/Tiles/Furniture/RelicPedestal";
+		public override string Texture => "SpiritcallerRoninMod/Content/Tiles/Furniture/RelicPedestal";
 
 		public override void Load() {
 			// Cache the extra texture displayed on the pedestal

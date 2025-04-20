@@ -1,8 +1,8 @@
-using KatanaMod.Common.Systems;
-using KatanaMod.Content.Items;
-using KatanaMod.Content.Items.Consumables;
-using KatanaMod.Content.Items.Weapons;
-using KatanaMod.Content.Projectiles;
+using SpiritcallerRoninMod.Common.Systems;
+using SpiritcallerRoninMod.Content.Items;
+using SpiritcallerRoninMod.Content.Items.Consumables;
+using SpiritcallerRoninMod.Content.Items.Weapons;
+using SpiritcallerRoninMod.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace KatanaMod.Content.Bosses.ForestGuardian
+namespace SpiritcallerRoninMod.Content.Bosses.ForestGuardian
 {
 	// The main part of the boss, usually referred to as "body"
 	[AutoloadBossHead] // This attribute looks for a texture called "ClassName_Head_Boss" and automatically registers it as the NPC boss head icon
@@ -181,6 +181,18 @@ namespace KatanaMod.Content.Bosses.ForestGuardian
 			// All the Classic Mode drops here are based on "not expert", meaning we use .OnSuccess() to add them into the rule, which then gets added
 			LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
 
+			// Add your new drops here
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<EvilSealingSheath>(), 1)); // 100% drop chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<LeafSpirit>(), 1)); // 100% drop chance
+			
+			// Add some materials with different drop chances
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.Wood, 1, 15, 30)); // Drops 15-30 Wood
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.LeafWand, 3)); // 33% chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.LivingWoodWand, 3)); // 33% chance
+			
+			// You can also add coins
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.GoldCoin, 1, 3, 5)); // Drops 3-5 Gold Coins
+
 			// Notice we use notExpertRule.OnSuccess instead of npcLoot.Add so it only applies in normal mode
 			// Boss masks are spawned with 1/7 chance
 			//notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ForestGuardianMask>(), 7));
@@ -189,6 +201,8 @@ namespace KatanaMod.Content.Bosses.ForestGuardian
 			// We make 12-15 ExampleItems spawn randomly in all directions, like the lunar pillar fragments. Hereby we need the DropOneByOne rule,
 			// which requires these parameters to be defined
 			int itemType = ModContent.ItemType<EvilSealingSheath>();
+			int itemType2 = ModContent.ItemType<LeafSpirit>();
+			
 			var parameters = new DropOneByOne.Parameters() {
 				ChanceNumerator = 1,
 				ChanceDenominator = 1,

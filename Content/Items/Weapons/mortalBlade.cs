@@ -14,24 +14,24 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 	///     See Source code for Star Wrath projectile to see how it passes through tiles.
 	///     For a detailed sword guide see <see cref="ExampleSword" />
 	/// </summary>
-	public class CrimtaneInfusedKatana : ModItem
+	public class mortalBlade : ModItem
 	{
 		// Add this field at class level
 		private bool alternateSlash;
 
 		public override void SetDefaults() {
-			Item.width = 50;
-			Item.height = 50;
+			Item.width = 100;
+			Item.height = 100;
 			
 			//Item.holdStyle = ItemHoldStyleID.HoldGuitar;
 			//Item.noUseGraphic = false;
-			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.useStyle = ItemUseStyleID.Swing;
 			
 			Item.useTime = 10; // Faster attack speed
 			Item.useAnimation = 10;
 			Item.autoReuse = true;
 			
-			Item.damage = 40;
+			Item.damage = 200;
 			Item.knockBack = 3; // Lower knockback for faster hits
 			
 			Item.UseSound = SoundID.Item60;
@@ -39,7 +39,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			Item.knockBack = 6;
 			Item.crit = 6;
 
-			Item.value = Item.buyPrice(gold: 5);
+			Item.value = Item.buyPrice(platinum: 1);
 			Item.rare = ItemRarityID.Pink;
 
 			Item.shoot = ModContent.ProjectileType<ImbuedKatanaSlash>(); // Default slash projectile
@@ -65,10 +65,10 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
         {
             damage += player.GetModPlayer<GlobalPlayer>().RoninDamage;
         }
-		public override Vector2? HoldoutOffset()
+		/*public override Vector2? HoldoutOffset()
 		{
 			return new Vector2(-20,5); // X=0 for no horizontal offset, Y=-20 to move the hold point up
-		}
+		}*/
         
 
 		// Add this field at class level
@@ -79,15 +79,9 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			float adjustedItemScale = player.GetAdjustedItemScale(Item);
 			
 			// Create afterimages
-			for (int i = 0; i < 3; i++) {
-				Vector2 offset = new Vector2(player.direction * i * -5, 0);
-				Dust.NewDustPerfect(player.MountedCenter + offset, DustID.BlueTorch, Vector2.Zero, 100, Color.White, 1.5f);
-			}
 			
 			// Alternate between slash types
-			int projectileType = alternateSlash ? 
-				ModContent.ProjectileType<CrimtaneKatanaSlash2>() : 
-				ModContent.ProjectileType<CrimtaneKatanaSlash>();
+			int projectileType =  ModContent.ProjectileType<CrimtaneKatanaSlash>();
 			
 			// Multiple slashes
 			for (int i = 0; i < 2; i++) {
@@ -102,29 +96,8 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			return false; // Don't fire the original projectile
 		}
 
-		public override void HoldItem(Player player) {
-			// Add floating dust effect when holding
-			if (Main.rand.NextBool(20)) {
-				Dust.NewDustPerfect(player.Center + new Vector2(player.direction * 20, 0), 
-					DustID.BlueTorch, new Vector2(0, -1f), 100, Color.White, 0.8f);
-			}
-		}
+
 
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
-		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient<EvilSealingSheath>();
-			recipe.AddIngredient(ItemID.CrimtaneBar, 10);
-            recipe.AddIngredient(ItemID.FallenStar, 10);
-            recipe.AddIngredient(ItemID.Vertebrae, 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
-
-			recipe = CreateRecipe();
-			recipe.AddIngredient<DemoniteInfusedKatana>();
-            recipe.AddIngredient(ItemID.FallenStar, 30);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
-		}
 	}
 }

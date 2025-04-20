@@ -5,7 +5,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace KatanaMod.Content.Tiles.Furniture
+namespace SpiritcallerRoninMod.Content.Tiles.Furniture
 {
 	// Simple 3x3 tile that can be placed on a wall
 	public class ForestGuardianTrophy : ModTile

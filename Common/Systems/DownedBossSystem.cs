@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
-namespace KatanaMod.Common.Systems
+namespace SpiritcallerRoninMod.Common.Systems
 {
 	// Acts as a container for "downed boss" flags.
 	// Set a flag like this in your bosses OnKill hook:

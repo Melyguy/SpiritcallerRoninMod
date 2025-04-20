@@ -1,11 +1,11 @@
-using KatanaMod.Content.Bosses.ForestGuardian;
-using KatanaMod.Content.Items.Weapons;
+using SpiritcallerRoninMod.Content.Bosses.ForestGuardian;
+using SpiritcallerRoninMod.Content.Items.Weapons;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace KatanaMod.Content.Items.Consumables
+namespace SpiritcallerRoninMod.Content.Items.Consumables
 {
 	// This is the item used to summon a boss, in this case the modded Minion Boss from Example Mod. For vanilla boss summons, see comments in SetStaticDefaults
 	public class GuardiansLeaf : ModItem

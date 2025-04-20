@@ -1,0 +1,143 @@
+Mods: {
+	SpiritcallerRoninMod: {
+		Items: {
+			RoninHelmet: {
+				SetBonus: Mods.SpiritcallerRoninMod.Items.RoninHelmet.SetBonus
+				DisplayName: Ronin Helmet
+				Tooltip: ""
+			}
+
+			ForestSpiritRobe: {
+				DisplayName: Forest Spirit Robe
+				Tooltip: ""
+			}
+
+			RoninChestplate: {
+				DisplayName: Ronin Chestplate
+				Tooltip: ""
+			}
+
+			RoninLeggings: {
+				DisplayName: Ronin Leggings
+				Tooltip: ""
+			}
+
+			ForestGuardianBag: {
+				DisplayName: Forest Guardian Bag
+				Tooltip: ""
+			}
+
+			GuardiansLeaf: {
+				DisplayName: Guardians Leaf
+				Tooltip: ""
+			}
+
+			ForestGuardianRelic: {
+				DisplayName: Forest Guardian Relic
+				Tooltip: ""
+			}
+
+			ForestGuardianTrophy: {
+				DisplayName: Forest Guardian Trophy
+				Tooltip: ""
+			}
+
+			CactusSpirit: {
+				DisplayName: Cactus Spirit
+				Tooltip: ""
+			}
+
+			CrimtaneInfusedKatana: {
+				DisplayName: Crimtane Infused Katana
+				Tooltip: ""
+			}
+
+			DemoniteInfusedKatana: {
+				DisplayName: Demonite Infused Katana
+				Tooltip: ""
+			}
+
+			EmptySheath: {
+				DisplayName: Empty Sheath
+				Tooltip: ""
+			}
+
+			EvilSealingSheath: {
+				DisplayName: Evil Sealing Sheath
+				Tooltip: ""
+			}
+
+			ImbuedKatana: {
+				DisplayName: Imbued Katana
+				Tooltip: ""
+			}
+
+			JungleSpirit: {
+				DisplayName: Jungle Spirit
+				Tooltip: ""
+			}
+
+			KatanaOfEvil: {
+				DisplayName: Katana Of Evil
+				Tooltip: ""
+			}
+
+			LeafSpirit: {
+				DisplayName: Leaf Spirit
+				Tooltip: ""
+			}
+
+			mortalBlade: {
+				DisplayName: mortal Blade
+				Tooltip: ""
+			}
+
+			SheathedKatana: {
+				DisplayName: Sheathed Katana
+				Tooltip: ""
+			}
+
+			SlimeSpirit: {
+				DisplayName: Slime Spirit
+				Tooltip: ""
+			}
+
+			WaterSpirit: {
+				DisplayName: Water Spirit
+				Tooltip: ""
+			}
+		}
+
+		NPCs: {
+			ForestGuardian.DisplayName: Forest Guardian
+			ForestGuardianMinion.DisplayName: Forest Guardian Minion
+			FastSlime.DisplayName: Fast Slime
+			GoldSlime.DisplayName: Gold Slime
+
+			Shinobi: {
+				DisplayName: Shinobi
+
+				TownNPCMood: {
+					Content: I am content.
+					NoHome: I hate not having a home.
+					FarFromHome: I am too far from home.
+					LoveSpace: I love having so much space.
+					DislikeCrowded: I dislike how crowded I am.
+					HateCrowded: I hate how crowded I am.
+					LikeNPC_Princess: I like {NPCName}.
+					Princess_LovesNPC: I like {NPCName}.
+				}
+			}
+		}
+
+		Projectiles: {
+			CrimtaneKatanaSlash.DisplayName: Crimtane Katana Slash
+			CrimtaneKatanaSlash2.DisplayName: Crimtane Katana Slash2
+			DemoniteInfusedSlash.DisplayName: Demonite Infused Slash
+			DemoniteInfusedSlash2.DisplayName: Demonite Infused Slash2
+			ImbuedKatanaSlash.DisplayName: Imbued Katana Slash
+			ImbuedKatanaSlash2.DisplayName: Imbued Katana Slash2
+			MortalBladeSlash.DisplayName: Mortal Blade Slash
+		}
+	}
+}

@@ -1,1 +1,28 @@
-This description will show up on the steam page, check out https://steamcommunity.com/comment/Guide/formattinghelp.
+[h1] Spiritcaller Ronin Mod [/h1]
+
+[h2]Begin your journey as a mystical warrior![/h2]
+
+Start a new journey as a mystic samurai or a powerful spiritcaller. In this Japanese-themed mod you can use magic spiritcaller weapons with different nature themed attacks or different katanas with a variety of slashes or attacks.
+
+[h3]Features:[/h3]
+[list]
+[*] New NPC: Meet Sekiro from the fromsoftware game, a mysterious shinobi merchant who sells powerful eastern weapons
+[*] Unique Katanas: Each with distinct combat styles and special attacks
+[*] Spiritcaller Magic: Harness the power of nature with themed magical weapons
+[*] Eastern Combat System: Experience fluid combat with various slash combinations
+[/list]
+
+[hr][/hr]
+
+[i]Heavily inspired by Sekiro: Shadows Die Twice and traditional samurai culture.[/i]
+
+[hr][/hr]
+[h3]Updates & Support[/h3]
+[list]
+[*] Regular updates and bug fixes
+[*] Feel free to leave feedback and suggestions in the comments
+[*] Report any issues you encounter
+[/list]
+
+[h3]Credits[/h3]
+Mod created by 3XMelly

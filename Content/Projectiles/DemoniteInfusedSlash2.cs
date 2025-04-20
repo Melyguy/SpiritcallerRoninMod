@@ -7,7 +7,7 @@ using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace KatanaMod.Content.Projectiles
+namespace SpiritcallerRoninMod.Content.Projectiles
 {
 	// This is a copy of the Excalibur's projectile
 	public class DemoniteInfusedSlash2 : ModProjectile
