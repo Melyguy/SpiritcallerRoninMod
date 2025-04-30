@@ -38,13 +38,6 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
             damage += player.GetModPlayer<GlobalPlayer>().SpiritCallerDamage;
         }
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
-		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.Wood, 10);
-			recipe.AddIngredient(ItemID.Acorn,2);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
-		}
 
 		public override void ModifyManaCost(Player player, ref float reduce, ref float mult) {
 			// We can use ModifyManaCost to dynamically adjust the mana cost of this item, similar to how Space Gun works with the Meteor armor set.
