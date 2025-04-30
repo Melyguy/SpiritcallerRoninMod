@@ -106,6 +106,7 @@ namespace SpiritcallerRoninMod.NPCs
         {
             NPCShop Sekiroshop = new NPCShop(Type, "Shop")
                 .Add(ModContent.ItemType<Content.Items.Weapons.mortalBlade>(), Condition.DownedPlantera)
+                .Add(ModContent.ItemType<Content.Items.Weapons.blackmortalBlade>(), Condition.DownedCultist)
                 .Add(ItemID.Shuriken, Condition.Hardmode)
                 .Add(ItemID.Katana, Condition.Hardmode)
                 .Add(ItemID.Muramasa, Condition.DownedSkeletron)

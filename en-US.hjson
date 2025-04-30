@@ -116,6 +116,16 @@ Mods: {
 				DisplayName: blackmortal Blade
 				Tooltip: ""
 			}
+
+			DesertSpiritBag: {
+				DisplayName: Desert Spirit Bag
+				Tooltip: ""
+			}
+
+			DesertSpiritsHead: {
+				DisplayName: Desert Spirits Head
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -138,6 +148,9 @@ Mods: {
 					Princess_LovesNPC: I like {NPCName}.
 				}
 			}
+
+			DesertSpirit.DisplayName: Desert Spirit
+			DesertSpiritHand.DisplayName: Desert Spirit Hand
 		}
 
 		Projectiles: {

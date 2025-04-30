@@ -1,4 +1,5 @@
 
+using SpiritcallerRoninMod.Content.Bosses.DesertSpirit;
 using SpiritcallerRoninMod.Content.Bosses.ForestGuardian;
 using SpiritcallerRoninMod.Content.Items.Weapons;
 using Terraria;
@@ -9,7 +10,7 @@ using Terraria.ModLoader;
 namespace SpiritcallerRoninMod.Content.Items.Consumables
 {
 	// Basic code for a boss treasure bag
-	public class ForestGuardianBag : ModItem
+	public class DesertSpiritBag : ModItem
 	{
 		public override void SetStaticDefaults() {
 			// This set is one that every boss bag should have.
@@ -36,18 +37,16 @@ namespace SpiritcallerRoninMod.Content.Items.Consumables
 
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			// Guaranteed expert drops
-			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<EvilSealingSheath>(), 1));
-			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<LeafSpirit>(), 1));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<DesertSpiritsHead>(), 1));
 			
 			// Chance-based drops (33% chance each)
-			itemLoot.Add(ItemDropRule.Common(ItemID.LivingWoodWand, 3));
-			itemLoot.Add(ItemDropRule.Common(ItemID.LeafWand, 3));
+			itemLoot.Add(ItemDropRule.Common(ItemID.DungeonDesertKey, 3));
 			
 			// Wood drops (5-15 pieces, guaranteed)
-			itemLoot.Add(ItemDropRule.Common(ItemID.Wood, 1, 5, 15));
+			itemLoot.Add(ItemDropRule.Common(ItemID.SandBlock, 1, 5, 15));
 			
 			// Add coins based on NPC value
-			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<ForestGuardian>()));
+			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<DesertSpirit>()));
 		}
 	}
 }

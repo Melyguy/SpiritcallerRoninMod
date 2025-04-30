@@ -14,10 +14,12 @@ namespace SpiritcallerRoninMod.Common.Systems
 	public class DownedBossSystem : ModSystem
 	{
 		public static bool downedForestGuardian = false;
+		public static bool downedDesertSpirit = false;
 		// public static bool downedOtherBoss = false;
 
 		public override void ClearWorld() {
 			downedForestGuardian = false;
+			downedDesertSpirit = false;
 			// downedOtherBoss = false;
 		}
 
@@ -27,6 +29,9 @@ namespace SpiritcallerRoninMod.Common.Systems
 			if (downedForestGuardian) {
 				tag["downedForestGuardian"] = true;
 			}
+			if (downedDesertSpirit) {
+				tag["downedDesertSpirit"] = true;
+			}
 
 			// if (downedOtherBoss) {
 			//	tag["downedOtherBoss"] = true;
@@ -35,12 +40,14 @@ namespace SpiritcallerRoninMod.Common.Systems
 
 		public override void LoadWorldData(TagCompound tag) {
 			downedForestGuardian = tag.ContainsKey("downedForestGuardian");
+			downedForestGuardian = tag.ContainsKey("downedDesertSpirit");
 			// downedOtherBoss = tag.ContainsKey("downedOtherBoss");
 		}
 
 		public override void NetSend(BinaryWriter writer) {
 			// Order of parameters is important and has to match that of NetReceive
 			writer.WriteFlags(downedForestGuardian/*, downedOtherBoss*/);
+			writer.WriteFlags(downedDesertSpirit/*, downedOtherBoss*/);
 			// WriteFlags supports up to 8 entries, if you have more than 8 flags to sync, call WriteFlags again.
 
 			// If you need to send a large number of flags, such as a flag per item type or something similar, BitArray can be used to efficiently send them. See Utils.SendBitArray documentation.
@@ -49,6 +56,7 @@ namespace SpiritcallerRoninMod.Common.Systems
 		public override void NetReceive(BinaryReader reader) {
 			// Order of parameters is important and has to match that of NetSend
 			reader.ReadFlags(out downedForestGuardian/*, out downedOtherBoss*/);
+			reader.ReadFlags(out downedDesertSpirit/*, out downedOtherBoss*/);
 			// ReadFlags supports up to 8 entries, if you have more than 8 flags to sync, call ReadFlags again.
 		}
 	}

@@ -132,7 +132,7 @@ namespace SpiritcallerRoninMod.Content.Bosses.ForestGuardian
 			NPC.damage = 12;
 			NPC.defense = 10;
 			NPC.lifeMax = 3000;
-			NPC.HitSound = SoundID.Dig;
+			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath3;
 			NPC.knockBackResist = 0f;
 			NPC.noGravity = true;
@@ -158,13 +158,6 @@ namespace SpiritcallerRoninMod.Content.Bosses.ForestGuardian
 			}
 		}
 
-		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			// Sets the description of this NPC that is listed in the bestiary
-			bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
-				new MoonLordPortraitBackgroundProviderBestiaryInfoElement(), // Plain black background
-				new FlavorTextBestiaryInfoElement("Mods.ExampleMod.Bestiary.ForestGuardian")
-			});
-		}
 
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			// Do NOT misuse the ModifyNPCLoot and OnKill hooks: the former is only used for registering drops, the latter for everything else
