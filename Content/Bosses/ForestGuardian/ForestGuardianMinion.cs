@@ -124,6 +124,14 @@ namespace SpiritcallerRoninMod.Content.Bosses.ForestGuardian
 			}
 		}
 
+		// Add these fields at the top of the class with other fields
+		private const int CHARGE_COOLDOWN = 180; // 3 seconds between charges
+		private const float CHARGE_SPEED = 16f; // Speed of the charge attack
+		private const int CHARGE_DURATION = 45; // How long the charge lasts
+		private int chargeTimer = 0;
+		private int chargeCooldown = 60; // Start with a shorter cooldown for first attack
+		private bool isCharging = false;
+
 		public override void AI() {
 			if (Despawn()) {
 				return;
@@ -131,9 +139,45 @@ namespace SpiritcallerRoninMod.Content.Bosses.ForestGuardian
 
 			FadeIn();
 
-			MoveInFormation();
+			// Only move in formation when not charging
+			if (!isCharging) {
+				MoveInFormation();
+				HandleChargeAttack();
+			}
+			else {
+				UpdateCharge();
+			}
 		}
 
+		private void HandleChargeAttack() {
+			chargeCooldown--;
+			if (chargeCooldown <= 0) {
+				// Start a charge attack
+				isCharging = true;
+				chargeTimer = CHARGE_DURATION;
+				chargeCooldown = CHARGE_COOLDOWN;
+
+				// Target the nearest player
+				Player target = Main.player[Player.FindClosest(NPC.position, NPC.width, NPC.height)];
+				if (target.active && !target.dead) {
+					Vector2 direction = (target.Center - NPC.Center).SafeNormalize(Vector2.Zero);
+					NPC.velocity = direction * CHARGE_SPEED;
+				}
+			}
+		}
+
+		private void UpdateCharge() {
+			chargeTimer--;
+			if (chargeTimer <= 0) {
+				isCharging = false;
+				NPC.velocity *= 0.5f; // Slow down after charge
+			}
+			else {
+				// Create dust trail while charging
+				Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.GreenTorch, 
+					NPC.velocity.X * 0.2f, NPC.velocity.Y * 0.2f, 100, default, 1.5f);
+			}
+		}
 		private bool Despawn() {
 			if (Main.netMode != NetmodeID.MultiplayerClient &&
 				(!HasParent || !Main.npc[ParentIndex].active || Main.npc[ParentIndex].type != BodyType())) {

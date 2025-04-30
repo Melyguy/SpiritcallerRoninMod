@@ -131,9 +131,9 @@ namespace SpiritcallerRoninMod.Content.Bosses.ForestGuardian
 			NPC.height = 110;
 			NPC.damage = 12;
 			NPC.defense = 10;
-			NPC.lifeMax = 2000;
-			NPC.HitSound = SoundID.NPCHit1;
-			NPC.DeathSound = SoundID.NPCDeath1;
+			NPC.lifeMax = 3000;
+			NPC.HitSound = SoundID.Dig;
+			NPC.DeathSound = SoundID.NPCDeath3;
 			NPC.knockBackResist = 0f;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
@@ -152,9 +152,9 @@ namespace SpiritcallerRoninMod.Content.Bosses.ForestGuardian
 			// Custom boss bar
 			//NPC.BossBar = ModContent.GetInstance<ForestGuardianBossBar>();
 
-			// The following code assigns a music track to the boss in a simple way.
+			// Change music to Plantera's theme
 			if (!Main.dedServ) {
-				Music = MusicLoader.GetMusicSlot(Mod, "Assets/Music/Ropocalypse2");
+				Music = MusicID.Boss4; // Plantera's theme
 			}
 		}
 
