@@ -111,6 +111,11 @@ Mods: {
 				DisplayName: Star Sealed Katana
 				Tooltip: ""
 			}
+
+			blackmortalBlade: {
+				DisplayName: blackmortal Blade
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -146,6 +151,7 @@ Mods: {
 			StarSlash.DisplayName: Star Slash
 			StarSlash2.DisplayName: Star Slash2
 			CactusProjectile.DisplayName: Cactus Projectile
+			blackmortalSlash.DisplayName: blackmortal Slash
 		}
 	}
 }

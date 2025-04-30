@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 namespace SpiritcallerRoninMod.Content.Projectiles
 {
 	// This is a copy of the Excalibur's projectile
-	public class ImbuedKatanaSlash : ModProjectile
+	public class blackmortalSlash : ModProjectile
 	{
 		// We could use a vanilla texture if we want instead of supplying our own.
 		// public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Excalibur;
@@ -86,16 +86,16 @@ namespace SpiritcallerRoninMod.Content.Projectiles
 			Vector2 dustPosition = Projectile.Center + dustRotation.ToRotationVector2() * 84f * Projectile.scale;
 			Vector2 dustVelocity = (dustRotation + Projectile.ai[0] * MathHelper.PiOver2).ToRotationVector2();
 			if (Main.rand.NextFloat() * 2f < Projectile.Opacity) {
-				// Original Excalibur color: Color.Gold, Color.White
-				Color dustColor = Color.Lerp(Color.SkyBlue, Color.White, Main.rand.NextFloat() * 0.3f);
+				// Original Excalibur color: Color.White, Color.Black
+				Color dustColor = Color.Lerp(Color.White, Color.Black, Main.rand.NextFloat() * 0.3f);
 				Dust coloredDust = Dust.NewDustPerfect(Projectile.Center + dustRotation.ToRotationVector2() * (Main.rand.NextFloat() * 80f * Projectile.scale + 20f * Projectile.scale), DustID.FireworksRGB, dustVelocity * 1f, 100, dustColor, 0.4f);
 				coloredDust.fadeIn = 0.4f + Main.rand.NextFloat() * 0.15f;
 				coloredDust.noGravity = true;
 			}
 
 			if (Main.rand.NextFloat() * 1.5f < Projectile.Opacity) {
-				// Original Excalibur color: Color.White
-				Dust.NewDustPerfect(dustPosition, DustID.TintableDustLighted, dustVelocity, 100, Color.SkyBlue * Projectile.Opacity, 1.2f * Projectile.Opacity);
+				// Original Excalibur color: Color.Black
+				Dust.NewDustPerfect(dustPosition, DustID.TintableDustLighted, dustVelocity, 100, Color.White * Projectile.Opacity, 1.2f * Projectile.Opacity);
 			}
 
 			Projectile.scale *= Projectile.ai[2]; // Set the scale of the projectile to the scale of the item.
@@ -141,7 +141,7 @@ namespace SpiritcallerRoninMod.Content.Projectiles
 				float coneRotation2 = coneRotation - MathHelper.PiOver4 * Projectile.ai[0] * backOfTheSwing;
 
 				// Uncomment this line for a visual representation of the cone. The dusts are not perfect, but it gives a general idea.
-				// Dust.NewDustPerfect(Projectile.Center + coneRotation2.ToRotationVector2() * coneLength, DustID.Enchanted_Pink, Vector2.Zero);
+				// Dust.NewDustPerfect(Projectile.Center + coneRotation2.ToRotationVector2() * coneLength, DustID.Enchanted_White, Vector2.Zero);
 				// Dust.NewDustPerfect(Projectile.Center, DustID.BlueFairy, new Vector2((float)Math.Cos(backOfTheSwing) * -Projectile.ai[0], (float)Math.Sin(backOfTheSwing)) * 5f); // Assumes collisionRotation was not changed
 
 				if (targetHitbox.IntersectsConeSlowMoreAccurate(Projectile.Center, coneLength, coneRotation2, maximumAngle)) {
@@ -198,13 +198,13 @@ namespace SpiritcallerRoninMod.Content.Projectiles
 			float lightingColor = Lighting.GetColor(Projectile.Center.ToTileCoordinates()).ToVector3().Length() / (float)Math.Sqrt(3.0);
 			lightingColor = Utils.Remap(lightingColor, 0.2f, 1f, 0f, 1f);
 
-			Color backDarkColor = new Color(60, 160, 180); // Original Excalibur color: Color(180, 160, 60)
-			Color middleMediumColor = new Color(80, 255, 255); // Original Excalibur color: Color(255, 255, 80)
-			Color frontLightColor = new Color(150, 240, 255); // Original Excalibur color: Color(255, 240, 150)
+			Color backDarkColor = new Color(000, 000, 000); // Original Excalibur color: Color(180, 160, 60)
+			Color middleMediumColor = new Color(000, 000, 000); // Original Excalibur color: Color(255, 255, 80)
+			Color frontLightColor = new Color(255, 255, 255); // Original Excalibur color: Color(255, 240, 150)
 
-			Color whiteTimesLerpTime = Color.White * lerpTime * 0.5f;
-			whiteTimesLerpTime.A = (byte)(whiteTimesLerpTime.A * (1f - lightingColor));
-			Color faintLightingColor = whiteTimesLerpTime * lightingColor * 0.5f;
+			Color BlackTimesLerpTime = Color.Black * lerpTime * 0.5f;
+			BlackTimesLerpTime.A = (byte)(BlackTimesLerpTime.A * (1f - lightingColor));
+			Color faintLightingColor = BlackTimesLerpTime * lightingColor * 0.5f;
 			faintLightingColor.G = (byte)(faintLightingColor.G * lightingColor);
 			faintLightingColor.B = (byte)(faintLightingColor.R * (0.25f + lightingColor * 0.75f));
 
@@ -217,11 +217,11 @@ namespace SpiritcallerRoninMod.Content.Projectiles
 			// Front part
 			Main.EntitySpriteDraw(texture, position, sourceRectangle, frontLightColor * lightingColor * lerpTime * 0.5f, Projectile.rotation, origin, scale * 0.975f, spriteEffects, 0f);
 			// Thin top line (final frame)
-			Main.EntitySpriteDraw(texture, position, texture.Frame(1, 4, 0, 3), Color.White * 0.6f * lerpTime, Projectile.rotation + Projectile.ai[0] * 0.01f, origin, scale, spriteEffects, 0f);
+			Main.EntitySpriteDraw(texture, position, texture.Frame(1, 4, 0, 3), Color.Black * 0.6f * lerpTime, Projectile.rotation + Projectile.ai[0] * 0.01f, origin, scale, spriteEffects, 0f);
 			// Thin middle line (final frame)
-			Main.EntitySpriteDraw(texture, position, texture.Frame(1, 4, 0, 3), Color.White * 0.5f * lerpTime, Projectile.rotation + Projectile.ai[0] * -0.05f, origin, scale * 0.8f, spriteEffects, 0f);
+			Main.EntitySpriteDraw(texture, position, texture.Frame(1, 4, 0, 3), Color.Black * 0.5f * lerpTime, Projectile.rotation + Projectile.ai[0] * -0.05f, origin, scale * 0.8f, spriteEffects, 0f);
 			// Thin bottom line (final frame)
-			Main.EntitySpriteDraw(texture, position, texture.Frame(1, 4, 0, 3), Color.White * 0.4f * lerpTime, Projectile.rotation + Projectile.ai[0] * -0.1f, origin, scale * 0.6f, spriteEffects, 0f);
+			Main.EntitySpriteDraw(texture, position, texture.Frame(1, 4, 0, 3), Color.Black * 0.4f * lerpTime, Projectile.rotation + Projectile.ai[0] * -0.1f, origin, scale * 0.6f, spriteEffects, 0f);
 
 			// This draws some sparkles around the circumference of the swing.
 			for (float i = 0f; i < 8f; i += 1f) {

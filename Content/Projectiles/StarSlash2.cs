@@ -34,7 +34,7 @@ namespace SpiritcallerRoninMod.Content.Projectiles
 			Projectile.localNPCHitCooldown = -1;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
-			Projectile.ownerHitCheck = true; // A line of sight check so the projectile can't deal damage through tiles.
+			Projectile.ownerHitCheck = false; // A line of sight check so the projectile can't deal damage through tiles.
 			Projectile.ownerHitCheckDistance = 300f; // The maximum range that the projectile can hit a target. 300 pixels is 18.75 tiles.
 			Projectile.usesOwnerMeleeHitCD = true; // This will make the projectile apply the standard number of immunity frames as normal melee attacks.
 			// Normally, projectiles die after they have hit all the enemies they can.
