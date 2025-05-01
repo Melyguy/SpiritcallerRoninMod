@@ -27,21 +27,21 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			//Item.noUseGraphic = false;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			
-			Item.useTime = 10; // Faster attack speed
-			Item.useAnimation = 10;
+			Item.useTime = 8; // Reduced from 10
+			Item.useAnimation = 8; // Reduced from 10
 			Item.autoReuse = true;
 			
-			Item.damage = 80;
+			Item.damage = 70;
 			Item.knockBack = 3; // Lower knockback for faster hits
 			
-			Item.UseSound = SoundID.Item71; // More swooshy sound
+			Item.UseSound = SoundID.Item109; // More swooshy sound
 			Item.DamageType = DamageClass.Melee;
 
 			Item.value = Item.buyPrice(gold: 5);
 			Item.rare = ItemRarityID.Pink;
 
 			Item.shoot = ModContent.ProjectileType<StarSlash>(); // Default slash projectile
-			Item.shootSpeed = 16f;
+			Item.shootSpeed = 24f; // Increased from 16f for faster projectiles
 
 			// If you want melee speed to only affect the swing speed of the weapon and not the shoot speed (not recommended)
 			// Item.attackSpeedOnlyAffectsWeaponAnimation = true;
@@ -88,7 +88,8 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 				ModContent.ProjectileType<StarSlash2>();
 			
 			for (int i = 0; i < 2; i++) {
-				Vector2 perturbedSpeed = new Vector2(player.direction, 0f).RotatedBy(MathHelper.ToRadians(Main.rand.Next(-15, 15)));
+				Vector2 perturbedSpeed = new Vector2(player.direction, 0f).RotatedBy(MathHelper.ToRadians(Main.rand.Next(-10, 10))); // Reduced spread
+				perturbedSpeed *= 1.5f; // Increase slash speed multiplier
 				Projectile.NewProjectile(source, player.MountedCenter, perturbedSpeed, projectileType, damage, knockback, 
 					player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax, adjustedItemScale);
 			}

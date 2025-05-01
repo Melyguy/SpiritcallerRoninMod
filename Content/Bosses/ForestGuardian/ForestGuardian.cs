@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
@@ -110,7 +109,6 @@ namespace SpiritcallerRoninMod.Content.Bosses.ForestGuardian
 			// Add this in for bosses that have a summon item, requires corresponding code in the item (See ForestGuardianSummonItem.cs)
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			// Automatically group with other bosses
-			NPCID.Sets.BossBestiaryPriority.Add(Type);
 
 			// Specify the debuffs it is immune to. Most NPCs are immune to Confused.
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
@@ -118,12 +116,6 @@ namespace SpiritcallerRoninMod.Content.Bosses.ForestGuardian
 			// This boss also becomes immune to OnFire and all buffs that inherit OnFire immunity during the second half of the fight. See the ApplySecondStageBuffImmunities method.
 
 			// Influences how the NPC looks in the Bestiary
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				CustomTexturePath = "ExampleMod/Assets/Textures/Bestiary/ForestGuardian_Preview",
-				PortraitScale = 0.6f, // Portrait refers to the full picture when clicking on the icon in the bestiary
-				PortraitPositionYOverride = 0f,
-			};
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
 		}
 
 		public override void SetDefaults() {

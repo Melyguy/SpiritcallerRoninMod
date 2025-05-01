@@ -45,9 +45,11 @@ public class DesertSpirit : ModNPC
         NPC.noTileCollide = true;
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath3;
+			NPC.value = Item.buyPrice(gold: 10);
         NPC.boss = true;
         NPC.aiStyle = -1; // Custom AI
         Music = MusicID.Boss5;
+		NPC.npcSlots = 10f; // Take up open spawn slots, preventing random NPCs from spawning during the fight
     }
     		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			// Do NOT misuse the ModifyNPCLoot and OnKill hooks: the former is only used for registering drops, the latter for everything else
@@ -104,7 +106,7 @@ public class DesertSpirit : ModNPC
 			npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<DesertSpiritBag>()));
 
 			// ItemDropRule.MasterModeCommonDrop for the relic
-			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Placeable.Furniture.ForestGuardianRelic>()));
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Placeable.Furniture.DesertSpiritRelic>()));
 
 			// ItemDropRule.MasterModeDropOnAllPlayers for the pet
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemID.SandBlock, 10)); //CHANGE THIS LATER!!!

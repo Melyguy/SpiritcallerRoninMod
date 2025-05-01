@@ -27,14 +27,14 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			//Item.noUseGraphic = false;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			
-			Item.useTime = 9; // Faster attack speed
-			Item.useAnimation = 9;
+			Item.useTime = 8; // Faster attack speed
+			Item.useAnimation = 8;
 			Item.autoReuse = true;
 			
 			Item.damage = 80;
 			Item.knockBack = 3; // Lower knockback for faster hits
 			
-			Item.UseSound = SoundID.Item119;
+			Item.UseSound = SoundID.Item103;
 			Item.DamageType = DamageClass.Melee;
 			Item.knockBack = 6;
 			Item.crit = 6;
@@ -43,7 +43,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			Item.rare = ItemRarityID.Pink;
 
 			Item.shoot = ModContent.ProjectileType<ImbuedKatanaSlash>(); // Default slash projectile
-			Item.shootSpeed = 16f;
+			Item.shootSpeed = 24f;
 
 			// If you want melee speed to only affect the swing speed of the weapon and not the shoot speed (not recommended)
 			// Item.attackSpeedOnlyAffectsWeaponAnimation = true;

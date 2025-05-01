@@ -126,6 +126,31 @@ Mods: {
 				DisplayName: Desert Spirits Head
 				Tooltip: ""
 			}
+
+			EvilSealedKatana: {
+				DisplayName: Evil Sealed Katana
+				Tooltip: ""
+			}
+
+			DesertSpiritRelic: {
+				DisplayName: Desert Spirit Relic
+				Tooltip: ""
+			}
+
+			PiercedCactusheart: {
+				DisplayName: Pierced Cactusheart
+				Tooltip: ""
+			}
+
+			KatanaOfOrder: {
+				DisplayName: Katana Of Order
+				Tooltip: ""
+			}
+
+			KatanaOfPureEvil: {
+				DisplayName: Katana Of Pure Evil
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
