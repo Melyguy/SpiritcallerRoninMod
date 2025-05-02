@@ -151,6 +151,21 @@ Mods: {
 				DisplayName: Katana Of Pure Evil
 				Tooltip: ""
 			}
+
+			KatanaOfTrueVirtue: {
+				DisplayName: Katana Of True Virtue
+				Tooltip: ""
+			}
+
+			KatanaOfTrueOrder: {
+				DisplayName: Katana Of True Order
+				Tooltip: ""
+			}
+
+			FragmentOfThePhoenix: {
+				DisplayName: Fragment Of The Phoenix
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -190,6 +205,11 @@ Mods: {
 			StarSlash2.DisplayName: Star Slash2
 			CactusProjectile.DisplayName: Cactus Projectile
 			blackmortalSlash.DisplayName: blackmortal Slash
+			VirtueSlash.DisplayName: Virtue Slash
+			VirtueSlash2.DisplayName: Virtue Slash2
+			ShroomiteSlash.DisplayName: Shroomite Slash
+			PhoenixSlash.DisplayName: Phoenix Slash
+			PhoenixSlash2.DisplayName: Phoenix Slash2
 		}
 	}
 }

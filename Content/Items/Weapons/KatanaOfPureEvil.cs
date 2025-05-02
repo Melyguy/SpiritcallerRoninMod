@@ -142,6 +142,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
             recipe.AddIngredient(ItemID.SoulofFright, 10);
             recipe.AddIngredient(ItemID.SoulofSight, 10);
             recipe.AddIngredient(ItemID.SoulofMight, 10);
+            recipe.AddIngredient(ItemID.DarkShard, 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
             

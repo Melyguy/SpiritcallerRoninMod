@@ -14,7 +14,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 	///     See Source code for Star Wrath projectile to see how it passes through tiles.
 	///     For a detailed sword guide see <see cref="ExampleSword" />
 	/// </summary>
-	public class KatanaOfOrder : ModItem
+	public class KatanaOfTrueVirtue : ModItem
 	{
 		// Add this field at class level
 		private bool alternateSlash;
@@ -28,16 +28,17 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			//Item.noUseGraphic = false;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			
-			Item.useTime = 8; // Faster attack speed
-			Item.useAnimation = 8;
+			Item.useTime = 7; // Extremely fast attack speed
+			Item.useAnimation = 7;
 			Item.autoReuse = true;
 			
-			Item.damage = 150; // Increased damage to reflect combined power
-			Item.useTime = 12; // Slightly slower but more powerful
-			Item.useAnimation = 12;
-			Item.knockBack = 3; // Lower knockback for faster hits
+			Item.damage = 100; // Higher base damage against evil
+			Item.useTime = 10; // Slightly slower but more impactful
+			Item.useAnimation = 10;
+			Item.knockBack = 8; // Increased knockback to represent purifying force
 			
-			Item.UseSound = SoundID.Item117;
+			Item.UseSound = SoundID.Item29; // Divine sound (similar to Excalibur)
+			Item.rare = ItemRarityID.Yellow; // More prestigious rarity
 			Item.DamageType = DamageClass.Melee;
 			Item.knockBack = 6;
 			Item.crit = 6;
@@ -75,9 +76,9 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			for (int i = 0; i < 3; i++) {
 				Vector2 offset = new Vector2(player.direction * i * -5, 0);
 				// Light dust
-				Dust.NewDustPerfect(player.MountedCenter + offset, DustID.HallowedWeapons, Vector2.Zero, 100, Color.White, 1.5f);
+				Dust.NewDustPerfect(player.MountedCenter + offset, DustID.HallowedWeapons, Vector2.Zero, 100, Color.Red, 1.8f);
 				// Dark dust
-				Dust.NewDustPerfect(player.MountedCenter + offset, DustID.ShadowbeamStaff, Vector2.Zero, 100, Color.Purple, 1.5f);
+				Dust.NewDustPerfect(player.MountedCenter + offset, DustID.ShadowbeamStaff, Vector2.Zero, 100, Color.Purple, 1.7f);
 			}
 			
 			// Get mouse position and calculate direction
@@ -92,20 +93,12 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			
 			// Four-part cycle representing different aspects of order
 			switch (slashCounter) {
-				case 0: // Holy Light
-					projectileType = ModContent.ProjectileType<StarSlash2>();
-					extraProjectileType = ProjectileID.FallingStar;
+				case 0: // Corruption's Strength
+					projectileType = ModContent.ProjectileType<VirtueSlash2>();
+					extraProjectileType = ProjectileID.RainbowRodBullet;
 					break;
-				case 1: // Corruption's Strength
-					projectileType = ModContent.ProjectileType<DemoniteInfusedSlash2>();
-					extraProjectileType = ProjectileID.CursedFlameFriendly;
-					break;
-				case 2: // Crimson's Power
-					projectileType = ModContent.ProjectileType<CrimtaneKatanaSlash>();
-					extraProjectileType = ProjectileID.IchorSplash;
-					break;
-				default: // Pure Order
-					projectileType = ModContent.ProjectileType<StarSlash>();
+				default: // Crimson's Power
+					projectileType = ModContent.ProjectileType<VirtueSlash>();
 					extraProjectileType = ProjectileID.RainbowRodBullet;
 					break;
 			}
@@ -126,7 +119,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 				}
 			}
 
-			slashCounter = (slashCounter + 1) % 4;
+			slashCounter = (slashCounter + 1) % 2;
 			return false;
 		}
 
@@ -145,18 +138,14 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient<KatanaOfEvil>();
 			recipe.AddIngredient<EvilSealedKatana>();
-			recipe.AddIngredient<ImbuedKatana>();
 			recipe.AddIngredient(ItemID.HallowedBar, 10);
             recipe.AddIngredient(ItemID.FallenStar, 20);
-            recipe.AddIngredient(ItemID.SoulofNight, 10);
-            recipe.AddIngredient(ItemID.SoulofLight, 10);
+            recipe.AddIngredient(ItemID.SoulofLight, 20);
             recipe.AddIngredient(ItemID.SoulofFright, 10);
             recipe.AddIngredient(ItemID.SoulofSight, 10);
             recipe.AddIngredient(ItemID.SoulofMight, 10);
             recipe.AddIngredient(ItemID.LightShard, 1);
-            recipe.AddIngredient(ItemID.DarkShard, 1);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
             
