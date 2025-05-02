@@ -28,11 +28,18 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			//Item.noUseGraphic = false;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			
-			Item.useTime = 4; // Faster attack speed
-			Item.useAnimation = 4;
+			Item.useTime = 8; // Balanced attack speed
+			Item.useAnimation = 8;
 			Item.autoReuse = true;
 			
-			Item.damage = 250; // Increased damage to reflect combined power
+			Item.damage = 300; // Significantly increased base damage
+			Item.knockBack = 8;
+			Item.crit = 15; // Higher crit chance
+			
+			Item.UseSound = SoundID.Item73; // More phoenix-like sound
+			Item.DamageType = DamageClass.Melee;
+			Item.rare = ItemRarityID.Red; // Increased rarity
+			
 			Item.useTime = 12; // Slightly slower but more powerful
 			Item.useAnimation = 12;
 			Item.knockBack = 3; // Lower knockback for faster hits
@@ -140,17 +147,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			return false;
 		}
 
-		public override void HoldItem(Player player) {
-			// Balanced light and dark effects
-			if (Main.rand.NextBool(20)) {
-				// Light essence
-				Dust.NewDustPerfect(player.Center + new Vector2(player.direction * 20, 0), 
-					DustID.HallowedTorch, new Vector2(0, -1f), 100, Color.White, 0.8f);
-				// Dark essence
-				Dust.NewDustPerfect(player.Center + new Vector2(player.direction * -20, 0), 
-					DustID.ShadowbeamStaff, new Vector2(0, -1f), 100, Color.Purple, 0.8f);
-			}
-		}
+
 
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
 		public override void AddRecipes() {

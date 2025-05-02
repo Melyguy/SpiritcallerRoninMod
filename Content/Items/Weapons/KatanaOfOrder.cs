@@ -43,7 +43,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			Item.crit = 6;
 
 			Item.value = Item.buyPrice(gold: 5);
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.White;
 
 			Item.shoot = ModContent.ProjectileType<ImbuedKatanaSlash>(); // Default slash projectile
 			Item.shootSpeed = 12f; // Reset to normal speed as we'll multiply in Shoot method

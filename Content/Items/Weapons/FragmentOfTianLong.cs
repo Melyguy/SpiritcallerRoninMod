@@ -14,7 +14,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 	///     See Source code for Star Wrath projectile to see how it passes through tiles.
 	///     For a detailed sword guide see <see cref="ExampleSword" />
 	/// </summary>
-	public class KatanaOfPureEvil : ModItem
+	public class FragmentOfTianlong : ModItem
 	{
 		// Add this field at class level
 		private bool alternateSlash;
@@ -28,20 +28,28 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			//Item.noUseGraphic = false;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			
-			Item.useTime = 7; // Extremely fast attack speed
-			Item.useAnimation = 7;
+			Item.useTime = 5; // Faster attack speed
+			Item.useAnimation = 5;
 			Item.autoReuse = true;
 			
-			Item.damage = 100; // Slightly lower base damage to balance the extreme speed
-			Item.knockBack = 2; // Lower knockback for rapid hits
+			Item.damage = 225; // Increased damage to reflect combined power
+			Item.useTime = 8; // Balanced attack speed for a divine weapon
+			Item.useAnimation = 8;
+			Item.autoReuse = true;
 			
-			Item.UseSound = SoundID.Item119; // More chaotic sound
+			Item.damage = 280; // Increased for divine dragon power
+			Item.knockBack = 4; // Moderate knockback
+			
+			Item.UseSound = SoundID.Item84; // More divine sound
 			Item.DamageType = DamageClass.Melee;
+			Item.crit = 10; // Higher crit for divine weapon
+			
+			Item.rare = ItemRarityID.Blue; // More fitting rarity for azure theme
 			Item.knockBack = 6;
 			Item.crit = 6;
 
 			Item.value = Item.buyPrice(gold: 5);
-			Item.rare = ItemRarityID.Purple;
+			Item.rare = ItemRarityID.Orange;
 
 			Item.shoot = ModContent.ProjectileType<ImbuedKatanaSlash>(); // Default slash projectile
 			Item.shootSpeed = 12f; // Reset to normal speed as we'll multiply in Shoot method
@@ -69,81 +77,101 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 		private int slashCounter = 0;
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			// Create balanced light/dark afterimages
+			// Create azure dragon effects
 			for (int i = 0; i < 3; i++) {
 				Vector2 offset = new Vector2(player.direction * i * -5, 0);
-				// Light dust
-				Dust.NewDustPerfect(player.MountedCenter + offset, DustID.HallowedWeapons, Vector2.Zero, 100, Color.Red, 1.8f);
-				// Dark dust
-				Dust.NewDustPerfect(player.MountedCenter + offset, DustID.ShadowbeamStaff, Vector2.Zero, 100, Color.Purple, 1.7f);
+				// Azure essence
+				Dust.NewDustPerfect(player.MountedCenter + offset, DustID.Electric, Vector2.Zero, 100, Color.Cyan, 1.5f);
+				// Divine trail
+				Dust.NewDustPerfect(player.MountedCenter + offset, DustID.BlueTorch, Vector2.Zero, 100, Color.LightBlue, 1.5f);
 			}
 			
-			// Get mouse position and calculate direction
 			Vector2 mousePosition = Main.MouseWorld;
 			Vector2 direction = mousePosition - player.MountedCenter;
 			direction.Normalize();
 			
-			// Declare the projectile type variables
 			int projectileType;
 			int extraProjectileType;
 			bool shootExtra = true;
 			
-			// Four-part cycle representing different aspects of order
+			// Cycle representing the materials used
 			switch (slashCounter) {
-				case 0: // Corruption's Strength
-					projectileType = ModContent.ProjectileType<DemoniteInfusedSlash2>();
-					extraProjectileType = ProjectileID.CursedFlameFriendly;
+				case 0: // Chlorophyte's Nature
+					projectileType = ModContent.ProjectileType<StarSlash2>();
+					extraProjectileType = ProjectileID.RainbowRodBullet;
 					break;
-				default: // Crimson's Power
-					projectileType = ModContent.ProjectileType<CrimtaneKatanaSlash>();
-					extraProjectileType = ProjectileID.IchorSplash;
+				case 1: // Spectre's Spirit
+					projectileType = ModContent.ProjectileType<StarSlash>();
+					extraProjectileType = ProjectileID.RainFriendly;
+					break;
+				case 2: // Shroomite's Precision
+					projectileType = ModContent.ProjectileType<StarSlash2>();
+					extraProjectileType = ProjectileID.IceSickle; // Shroomite-like precision
+					break;
+                case 3: // Shroomite's Precision
+					projectileType = ModContent.ProjectileType<StarSlash>();
+					extraProjectileType = ProjectileID.StarCannonStar; // Shroomite-like precision
+					break;
+                
+				default: // Ectoplasm's Power
+					projectileType = ModContent.ProjectileType<StarSlash2>();
+					extraProjectileType = ProjectileID.DD2PhoenixBowShot;
 					break;
 			}
 			
-			// Balanced dual projectile system
+			// Enhanced projectile system
 			for (int i = 0; i < 2; i++) {
-				// Main slash with perfect aim
+				// Main slash
 				Vector2 slashSpeed = direction.RotatedBy(MathHelper.ToRadians(i == 0 ? -10 : 10)) * 24f;
 				Projectile.NewProjectile(source, player.MountedCenter, slashSpeed, projectileType, damage, knockback, 
-					player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax, 1.5f);
-					
-				// Complementary projectile
+					player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax, 1.8f);
+				
+				// Material-themed projectiles
 				if (shootExtra) {
+					// First extra projectile
 					Vector2 extraSpeed = direction.RotatedBy(MathHelper.ToRadians(i == 0 ? 5 : -5)) * 20f;
-					int oppositeDamage = (int)(damage * 0.75f); // More balanced damage ratio
-					Projectile.NewProjectile(source, player.MountedCenter, extraSpeed, extraProjectileType, oppositeDamage, knockback, 
+					Projectile.NewProjectile(source, player.MountedCenter, extraSpeed, extraProjectileType, damage * 3/4, knockback, 
 						player.whoAmI);
+					
+					// Spectral homing projectile (represents souls)
+					if (Main.rand.NextBool(2)) {
+						Vector2 spectralSpeed = direction.RotatedBy(MathHelper.ToRadians(Main.rand.Next(-30, 31))) * 16f;
+						Projectile.NewProjectile(source, player.MountedCenter, spectralSpeed, ProjectileID.LostSoulFriendly, 
+							damage / 2, knockback / 2, player.whoAmI);
+					}
 				}
 			}
 
-			slashCounter = (slashCounter + 1) % 2;
+			slashCounter = (slashCounter + 1) % 5;
 			return false;
 		}
 
 		public override void HoldItem(Player player) {
-			// Balanced light and dark effects
 			if (Main.rand.NextBool(20)) {
-				// Light essence
+				// Azure essence
 				Dust.NewDustPerfect(player.Center + new Vector2(player.direction * 20, 0), 
-					DustID.HallowedTorch, new Vector2(0, -1f), 100, Color.White, 0.8f);
-				// Dark essence
+					DustID.Electric, new Vector2(0, -1f), 100, Color.Cyan, 1f);
+				// Celestial essence
 				Dust.NewDustPerfect(player.Center + new Vector2(player.direction * -20, 0), 
-					DustID.ShadowbeamStaff, new Vector2(0, -1f), 100, Color.Purple, 0.8f);
+					DustID.BlueTorch, new Vector2(0, -1f), 100, Color.LightBlue, 1f);
 			}
 		}
 
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient<KatanaOfEvil>();
+			recipe.AddIngredient<KatanaOfTrueVirtue>();
+			recipe.AddIngredient<KatanaOfOrder>();
+			recipe.AddIngredient(ItemID.ChlorophyteBar, 10);
 			recipe.AddIngredient(ItemID.HallowedBar, 10);
-            recipe.AddIngredient(ItemID.FallenStar, 20);
-            recipe.AddIngredient(ItemID.SoulofNight, 20);
+			recipe.AddIngredient(ItemID.SpectreBar, 10);
+            recipe.AddIngredient(ItemID.Ectoplasm, 30);
+            recipe.AddIngredient(ItemID.SoulofLight, 20);
+            recipe.AddIngredient(ItemID.SoulofFlight, 20);
             recipe.AddIngredient(ItemID.SoulofFright, 10);
             recipe.AddIngredient(ItemID.SoulofSight, 10);
             recipe.AddIngredient(ItemID.SoulofMight, 10);
-            recipe.AddIngredient(ItemID.DarkShard, 1);
-			recipe.AddTile(TileID.Anvils);
+			recipe.AddTile(TileID.LunarCraftingStation);
 			recipe.Register();
             
 		}

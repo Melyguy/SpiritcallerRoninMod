@@ -29,7 +29,7 @@ Mods: {
 
 			GuardiansLeaf: {
 				DisplayName: Guardians Leaf
-				Tooltip: ""
+				Tooltip: Summons the Forest Guardian.
 			}
 
 			ForestGuardianRelic: {
@@ -49,27 +49,31 @@ Mods: {
 
 			CrimtaneInfusedKatana: {
 				DisplayName: Crimtane Infused Katana
-				Tooltip: ""
+				Tooltip: Containing the evil is no easy feat. Will you prosper, or go down the path of evil
 			}
 
 			DemoniteInfusedKatana: {
 				DisplayName: Demonite Infused Katana
-				Tooltip: ""
+				Tooltip: Containing the evil is no easy feat. Will you prosper, or go down it's path
 			}
 
 			EmptySheath: {
 				DisplayName: Empty Sheath
-				Tooltip: ""
+				Tooltip:
+					'''
+					A beginning for any samurai.
+					It's snowing on Mt.Fuji
+					'''
 			}
 
 			EvilSealingSheath: {
 				DisplayName: Evil Sealing Sheath
-				Tooltip: ""
+				Tooltip: The spirit of the forest guardian rests in the sheath.
 			}
 
 			ImbuedKatana: {
 				DisplayName: Imbued Katana
-				Tooltip: ""
+				Tooltip: Unsheating the blade gives you power
 			}
 
 			JungleSpirit: {
@@ -79,7 +83,7 @@ Mods: {
 
 			KatanaOfEvil: {
 				DisplayName: Katana Of Evil
-				Tooltip: ""
+				Tooltip: Treading deeper into evil is a step in the wrong direction...
 			}
 
 			LeafSpirit: {
@@ -89,7 +93,7 @@ Mods: {
 
 			mortalBlade: {
 				DisplayName: mortal Blade
-				Tooltip: ""
+				Tooltip: An odachi capable of slaying the Undying.
 			}
 
 			SheathedKatana: {
@@ -109,12 +113,12 @@ Mods: {
 
 			StarSealedKatana: {
 				DisplayName: Star Sealed Katana
-				Tooltip: ""
+				Tooltip: A katana forged through the sealing of evil forces, its blade resonates with protective energy
 			}
 
 			blackmortalBlade: {
 				DisplayName: blackmortal Blade
-				Tooltip: ""
+				Tooltip: An odachi capable of slaying the Undying.
 			}
 
 			DesertSpiritBag: {
@@ -129,7 +133,7 @@ Mods: {
 
 			EvilSealedKatana: {
 				DisplayName: Evil Sealed Katana
-				Tooltip: ""
+				Tooltip: A katana imbued with sealed evil energy, its dark power contained but not destroyed...
 			}
 
 			DesertSpiritRelic: {
@@ -139,22 +143,22 @@ Mods: {
 
 			PiercedCactusheart: {
 				DisplayName: Pierced Cactusheart
-				Tooltip: ""
+				Tooltip: Summons the desert spirit
 			}
 
 			KatanaOfOrder: {
 				DisplayName: Katana Of Order
-				Tooltip: ""
+				Tooltip: A weapon forged by the meeting of two great forces
 			}
 
 			KatanaOfPureEvil: {
 				DisplayName: Katana Of Pure Evil
-				Tooltip: ""
+				Tooltip: A blade consumed by darkness, its corrupted essence represents the ultimate manifestation of evil.
 			}
 
 			KatanaOfTrueVirtue: {
 				DisplayName: Katana Of True Virtue
-				Tooltip: ""
+				Tooltip: A blade of pure virtue, its radiant energy represents the triumph of good over evil.
 			}
 
 			KatanaOfTrueOrder: {
@@ -164,7 +168,17 @@ Mods: {
 
 			FragmentOfThePhoenix: {
 				DisplayName: Fragment Of The Phoenix
-				Tooltip: ""
+				Tooltip: A fragment born from the fusion of light and darkness, representing the fiery eternal dance between good and evil. The true order.
+			}
+
+			FragmentOfTheOni: {
+				DisplayName: Fragment Of The Oni
+				Tooltip: A fragment embodying the dark forces of chaos and destruction, representing the eternal struggle between order and mayhem. The essence of evil.
+			}
+
+			FragmentOfTianlong: {
+				DisplayName: Fragment Of Tianlong
+				Tooltip: A fragment embodying the celestial forces of virtue and righteousness, representing the eternal light that banishes darkness. The essence of good.
 			}
 		}
 
@@ -184,8 +198,8 @@ Mods: {
 					LoveSpace: I love having so much space.
 					DislikeCrowded: I dislike how crowded I am.
 					HateCrowded: I hate how crowded I am.
-					LikeNPC_Princess: I like {NPCName}.
-					Princess_LovesNPC: I like {NPCName}.
+					LikeNPC_Princess: I can tolerate {NPCName}.
+					Princess_LovesNPC: I enjoy {NPCName}'s presence.
 				}
 			}
 
