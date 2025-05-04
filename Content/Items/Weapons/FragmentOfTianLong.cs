@@ -162,6 +162,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient<KatanaOfTrueVirtue>();
 			recipe.AddIngredient<KatanaOfOrder>();
+			recipe.AddIngredient<FrozenKatana>();
 			recipe.AddIngredient(ItemID.ChlorophyteBar, 10);
 			recipe.AddIngredient(ItemID.HallowedBar, 10);
 			recipe.AddIngredient(ItemID.SpectreBar, 10);

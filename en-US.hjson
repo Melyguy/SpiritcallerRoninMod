@@ -180,6 +180,31 @@ Mods: {
 				DisplayName: Fragment Of Tianlong
 				Tooltip: A fragment embodying the celestial forces of virtue and righteousness, representing the eternal light that banishes darkness. The essence of good.
 			}
+
+			CryoWraithBag: {
+				DisplayName: Cryo Wraith Bag
+				Tooltip: ""
+			}
+
+			FrozenKatana: {
+				DisplayName: Frozen Katana
+				Tooltip: ""
+			}
+
+			CryoWraithRelic: {
+				DisplayName: Cryo Wraith Relic
+				Tooltip: ""
+			}
+
+			CryoHeart: {
+				DisplayName: Cryo Heart
+				Tooltip: ""
+			}
+
+			CryoWraithStaff: {
+				DisplayName: Cryo Wraith Staff
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -205,6 +230,7 @@ Mods: {
 
 			DesertSpirit.DisplayName: Desert Spirit
 			DesertSpiritHand.DisplayName: Desert Spirit Hand
+			CryoWraith.DisplayName: Cryo Wraith
 		}
 
 		Projectiles: {

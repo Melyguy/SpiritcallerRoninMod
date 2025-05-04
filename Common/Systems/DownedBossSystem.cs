@@ -15,11 +15,13 @@ namespace SpiritcallerRoninMod.Common.Systems
 	{
 		public static bool downedForestGuardian = false;
 		public static bool downedDesertSpirit = false;
+		public static bool downedCryoWraith = false;
 		// public static bool downedOtherBoss = false;
 
 		public override void ClearWorld() {
 			downedForestGuardian = false;
 			downedDesertSpirit = false;
+			downedCryoWraith = false;
 			// downedOtherBoss = false;
 		}
 
@@ -32,6 +34,9 @@ namespace SpiritcallerRoninMod.Common.Systems
 			if (downedDesertSpirit) {
 				tag["downedDesertSpirit"] = true;
 			}
+			if(downedCryoWraith) {
+				tag["downedCryoWraith"] = true;
+			}
 
 			// if (downedOtherBoss) {
 			//	tag["downedOtherBoss"] = true;
@@ -41,6 +46,7 @@ namespace SpiritcallerRoninMod.Common.Systems
 		public override void LoadWorldData(TagCompound tag) {
 			downedForestGuardian = tag.ContainsKey("downedForestGuardian");
 			downedForestGuardian = tag.ContainsKey("downedDesertSpirit");
+			downedForestGuardian = tag.ContainsKey("downedCryoWraith");
 			// downedOtherBoss = tag.ContainsKey("downedOtherBoss");
 		}
 
@@ -48,6 +54,7 @@ namespace SpiritcallerRoninMod.Common.Systems
 			// Order of parameters is important and has to match that of NetReceive
 			writer.WriteFlags(downedForestGuardian/*, downedOtherBoss*/);
 			writer.WriteFlags(downedDesertSpirit/*, downedOtherBoss*/);
+			writer.WriteFlags(downedCryoWraith/*, downedOtherBoss*/);
 			// WriteFlags supports up to 8 entries, if you have more than 8 flags to sync, call WriteFlags again.
 
 			// If you need to send a large number of flags, such as a flag per item type or something similar, BitArray can be used to efficiently send them. See Utils.SendBitArray documentation.
@@ -57,6 +64,7 @@ namespace SpiritcallerRoninMod.Common.Systems
 			// Order of parameters is important and has to match that of NetSend
 			reader.ReadFlags(out downedForestGuardian/*, out downedOtherBoss*/);
 			reader.ReadFlags(out downedDesertSpirit/*, out downedOtherBoss*/);
+			reader.ReadFlags(out downedCryoWraith/*, out downedOtherBoss*/);
 			// ReadFlags supports up to 8 entries, if you have more than 8 flags to sync, call ReadFlags again.
 		}
 	}

@@ -161,7 +161,6 @@ namespace SpiritcallerRoninMod.Content.Bosses.ForestGuardian
 			// 4. Master Mode (relic first, pet last, everything else inbetween)
 
 			// Trophies are spawned with 1/10 chance
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Placeable.Furniture.ForestGuardianTrophy>(), 10));
 
 			// All the Classic Mode drops here are based on "not expert", meaning we use .OnSuccess() to add them into the rule, which then gets added
 			LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());

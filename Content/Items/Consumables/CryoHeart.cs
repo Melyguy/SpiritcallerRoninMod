@@ -1,4 +1,4 @@
-using SpiritcallerRoninMod.Content.Bosses.ForestGuardian;
+using SpiritcallerRoninMod.Content.Bosses.CryoWraith;
 using SpiritcallerRoninMod.Content.Items.Weapons;
 using Terraria;
 using Terraria.Audio;
@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace SpiritcallerRoninMod.Content.Items.Consumables
 {
 	// This is the item used to summon a boss, in this case the modded Minion Boss from Example Mod. For vanilla boss summons, see comments in SetStaticDefaults
-	public class GuardiansLeaf : ModItem
+	public class CryoHeart : ModItem
 	{
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 3;
@@ -37,22 +37,21 @@ namespace SpiritcallerRoninMod.Content.Items.Consumables
 		}
 
 		public override bool CanUseItem(Player player) {
-			// Check if player is in forest biome and no Forest Guardian exists
-			bool isInForest = player.ZoneForest;
+			bool isInForest = player.ZoneSnow;
 			if (!isInForest) {
-				Main.NewText("The Guardian can only be summoned in the forest.", 250, 150, 50);
+				Main.NewText("I can only be summoned in the Tundra.", 250, 150, 50);
 				return false;
 			}
-			return !NPC.AnyNPCs(ModContent.NPCType<ForestGuardian>());
+			return !NPC.AnyNPCs(ModContent.NPCType<CryoWraith>()); // Removed extra parenthesis
 		}
 
 		public override bool? UseItem(Player player) {
 			if (player.whoAmI == Main.myPlayer) {
 				// If the player using the item is the client
 				// (explicitly excluded serverside here)
-				SoundEngine.PlaySound(SoundID.Roar, player.position);
+				SoundEngine.PlaySound(SoundID.Zombie105, player.position);
 
-				int type = ModContent.NPCType<ForestGuardian>();
+				int type = ModContent.NPCType<CryoWraith>();
 
 				if (Main.netMode != NetmodeID.MultiplayerClient) {
 					// If the player is not in multiplayer, spawn directly
@@ -71,7 +70,9 @@ namespace SpiritcallerRoninMod.Content.Items.Consumables
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
 		public override void AddRecipes() {
 			CreateRecipe()
-				.AddIngredient<LeafSpirit>()
+				.AddIngredient(ItemID.IceBlock, 30)
+				.AddIngredient(ItemID.SnowBlock, 30)
+                .AddIngredient(ItemID.ThrowingKnife, 1)
 				.AddTile(TileID.DemonAltar)
 				.Register();
 		}

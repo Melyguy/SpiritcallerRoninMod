@@ -38,9 +38,11 @@ namespace SpiritcallerRoninMod.Content.Items.Consumables
 		}
 
 		public override bool CanUseItem(Player player) {
-			// If you decide to use the below UseItem code, you have to include !NPC.AnyNPCs(id), as this is also the check the server does when receiving MessageID.SpawnBoss.
-			// If you want more constraints for the summon item, combine them as boolean expressions:
-			//    return !Main.IsItDay() && !NPC.AnyNPCs(ModContent.NPCType<MinionBossBody>()); would mean "not daytime and no MinionBossBody currently alive"
+			bool isInForest = player.ZoneDesert;
+			if (!isInForest) {
+				Main.NewText("The spirit can only be summoned in the Desert.", 250, 150, 50);
+				return false;
+			}
 			return !NPC.AnyNPCs(ModContent.NPCType<DesertSpirit>());
 		}
 
