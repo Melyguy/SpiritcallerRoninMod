@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader.Utilities;
 using Terraria.GameContent.Creative;
+using Terraria.GameContent.Personalities;
 
 namespace SpiritcallerRoninMod.NPCs
 {
@@ -38,6 +39,16 @@ namespace SpiritcallerRoninMod.NPCs
              NPCID.Sets.AttackAverageChance[NPC.type] = 30;
              NPCID.Sets.HatOffsetY[NPC.type] = 4;
             AnimationType = 22;
+        NPC.Happiness
+        .SetBiomeAffection<ForestBiome>(AffectionLevel.Love)
+        .SetBiomeAffection<UndergroundBiome>(AffectionLevel.Like)
+        .SetBiomeAffection<DesertBiome>(AffectionLevel.Dislike)
+        .SetNPCAffection(NPCID.Merchant, AffectionLevel.Like)
+        .SetNPCAffection(NPCID.Guide, AffectionLevel.Love)
+        .SetNPCAffection(NPCID.Angler, AffectionLevel.Like)
+         .SetNPCAffection(NPCID.Nurse, AffectionLevel.Dislike)
+         .SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Hate)
+        .SetNPCAffection(NPCID.ArmsDealer, AffectionLevel.Dislike);
 
         }
 
@@ -47,6 +58,9 @@ namespace SpiritcallerRoninMod.NPCs
                 Player player = Main.player[i];
                 foreach (Item item in player.inventory){
                     if (item.type == ModContent.ItemType<Content.Items.Weapons.KatanaOfEvil>()){
+                        return true;
+                    }
+                    else if(item.type == ModContent.ItemType<Content.Items.Weapons.EvilSealedKatana>()){
                         return true;
                     }
                 }
@@ -64,6 +78,7 @@ namespace SpiritcallerRoninMod.NPCs
                 "Shura"
            };
         }
+        
     
 
     public override void SetChatButtons(ref string button, ref string button2)
@@ -71,6 +86,7 @@ namespace SpiritcallerRoninMod.NPCs
         button = "Shop";
         button2 = "";
     }
+    
     public override void OnChatButtonClicked(bool firstButton, ref string shop)
     {
         if (firstButton)
@@ -170,3 +186,4 @@ namespace SpiritcallerRoninMod.NPCs
 
 
 }
+

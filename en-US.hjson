@@ -205,6 +205,46 @@ Mods: {
 				DisplayName: Cryo Wraith Staff
 				Tooltip: ""
 			}
+
+			CryoWraithTalon: {
+				DisplayName: Cryo Wraith Talon
+				Tooltip: ""
+			}
+
+			MagmaGhoulRelic: {
+				DisplayName: Magma Ghoul Relic
+				Tooltip: ""
+			}
+
+			MagmaGhoulStaff: {
+				DisplayName: Magma Ghoul Staff
+				Tooltip: ""
+			}
+
+			MagmaGhoulBag: {
+				DisplayName: Magma Ghoul Bag
+				Tooltip: ""
+			}
+
+			MagmaHeart: {
+				DisplayName: Magma Heart
+				Tooltip: ""
+			}
+
+			MoltenKatana: {
+				DisplayName: Molten Katana
+				Tooltip: ""
+			}
+
+			EyeOftheGhoul: {
+				DisplayName: Eye Ofthe Ghoul
+				Tooltip: ""
+			}
+
+			EyeOfTheGhoul: {
+				DisplayName: Eye Of The Ghoul
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -220,17 +260,25 @@ Mods: {
 					Content: I am content.
 					NoHome: I might be used to being a nomad, but i would prefer to have a home.
 					FarFromHome: I am still searching for lord Kuro.
-					LoveSpace: I love having so much space. Helps me focus on my mission.
+					LoveSpace: I enjoy having so much space. Helps me focus on my mission.
 					DislikeCrowded: I dislike how crowded it is.
 					HateCrowded: I hate how crowded it is.
 					LikeNPC_Princess: I can tolerate {NPCName}.
 					Princess_LovesNPC: I enjoy {NPCName}'s presence.
+					LoveBiome: I find {BiomeName} relaxing.
+					LikeBiome: I enjoy {BiomeName}.
+					DislikeBiome: I dislike {BiomeName}.
+					LoveNPC: I enjoy {NPCName}'s presence.
+					LikeNPC: I can tolerate {NPCName}.
+					DislikeNPC: I dislike {NPCName}'s presence.
+					HateNPC: I want to get rid off {NPCName}. For lord Kuro.
 				}
 			}
 
 			DesertSpirit.DisplayName: Desert Spirit
 			DesertSpiritHand.DisplayName: Desert Spirit Hand
 			CryoWraith.DisplayName: Cryo Wraith
+			MagmaGhoul.DisplayName: Magma Ghoul
 		}
 
 		Projectiles: {

@@ -16,12 +16,14 @@ namespace SpiritcallerRoninMod.Common.Systems
 		public static bool downedForestGuardian = false;
 		public static bool downedDesertSpirit = false;
 		public static bool downedCryoWraith = false;
+		public static bool downedMagmaGhoul = false;
 		// public static bool downedOtherBoss = false;
 
 		public override void ClearWorld() {
 			downedForestGuardian = false;
 			downedDesertSpirit = false;
 			downedCryoWraith = false;
+			downedMagmaGhoul = false;
 			// downedOtherBoss = false;
 		}
 
@@ -37,6 +39,9 @@ namespace SpiritcallerRoninMod.Common.Systems
 			if(downedCryoWraith) {
 				tag["downedCryoWraith"] = true;
 			}
+			if(downedMagmaGhoul) {
+				tag["downedMagmaGhoul"] = true;	
+			}
 
 			// if (downedOtherBoss) {
 			//	tag["downedOtherBoss"] = true;
@@ -47,6 +52,7 @@ namespace SpiritcallerRoninMod.Common.Systems
 			downedForestGuardian = tag.ContainsKey("downedForestGuardian");
 			downedForestGuardian = tag.ContainsKey("downedDesertSpirit");
 			downedForestGuardian = tag.ContainsKey("downedCryoWraith");
+			downedForestGuardian = tag.ContainsKey("downedMagmaGhoul");
 			// downedOtherBoss = tag.ContainsKey("downedOtherBoss");
 		}
 
@@ -55,6 +61,7 @@ namespace SpiritcallerRoninMod.Common.Systems
 			writer.WriteFlags(downedForestGuardian/*, downedOtherBoss*/);
 			writer.WriteFlags(downedDesertSpirit/*, downedOtherBoss*/);
 			writer.WriteFlags(downedCryoWraith/*, downedOtherBoss*/);
+			writer.WriteFlags(downedMagmaGhoul/*, downedOtherBoss*/);
 			// WriteFlags supports up to 8 entries, if you have more than 8 flags to sync, call WriteFlags again.
 
 			// If you need to send a large number of flags, such as a flag per item type or something similar, BitArray can be used to efficiently send them. See Utils.SendBitArray documentation.
@@ -65,6 +72,7 @@ namespace SpiritcallerRoninMod.Common.Systems
 			reader.ReadFlags(out downedForestGuardian/*, out downedOtherBoss*/);
 			reader.ReadFlags(out downedDesertSpirit/*, out downedOtherBoss*/);
 			reader.ReadFlags(out downedCryoWraith/*, out downedOtherBoss*/);
+			reader.ReadFlags(out downedMagmaGhoul/*, out downedOtherBoss*/);
 			// ReadFlags supports up to 8 entries, if you have more than 8 flags to sync, call ReadFlags again.
 		}
 	}

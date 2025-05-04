@@ -1,4 +1,4 @@
-using SpiritcallerRoninMod.Content.Bosses.CryoWraith;
+using SpiritcallerRoninMod.Content.Bosses.MagmaGhoul;
 using SpiritcallerRoninMod.Content.Items.Weapons;
 using Terraria;
 using Terraria.Audio;
@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace SpiritcallerRoninMod.Content.Items.Consumables
 {
 	// This is the item used to summon a boss, in this case the modded Minion Boss from Example Mod. For vanilla boss summons, see comments in SetStaticDefaults
-	public class CryoHeart : ModItem
+	public class MagmaHeart : ModItem
 	{
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 3;
@@ -37,12 +37,12 @@ namespace SpiritcallerRoninMod.Content.Items.Consumables
 		}
 
 		public override bool CanUseItem(Player player) {
-			bool isInForest = player.ZoneSnow;
+			bool isInForest = player.ZoneUnderworldHeight;
 			if (!isInForest) {
-				Main.NewText("I can only be summoned in the Tundra.", 250, 150, 50);
+				Main.NewText("I can only be summoned in the Underworld.", 250, 150, 50);
 				return false;
 			}
-			return !NPC.AnyNPCs(ModContent.NPCType<CryoWraith>()); // Removed extra parenthesis
+			return !NPC.AnyNPCs(ModContent.NPCType<MagmaGhoul>()); // Removed extra parenthesis
 		}
 
 		public override bool? UseItem(Player player) {
@@ -51,7 +51,7 @@ namespace SpiritcallerRoninMod.Content.Items.Consumables
 				// (explicitly excluded serverside here)
 				SoundEngine.PlaySound(SoundID.Zombie105, player.position);
 
-				int type = ModContent.NPCType<CryoWraith>();
+				int type = ModContent.NPCType<MagmaGhoul>();
 
 				if (Main.netMode != NetmodeID.MultiplayerClient) {
 					// If the player is not in multiplayer, spawn directly
@@ -70,8 +70,8 @@ namespace SpiritcallerRoninMod.Content.Items.Consumables
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
 		public override void AddRecipes() {
 			CreateRecipe()
-				.AddIngredient(ItemID.IceBlock, 30)
-				.AddIngredient(ItemID.SnowBlock, 30)
+				.AddIngredient(ItemID.HellstoneBar, 30)
+				.AddIngredient(ItemID.Obsidian, 30)
                 .AddIngredient(ItemID.ThrowingKnife, 1)
                 .AddIngredient(ItemID.SoulofNight, 10)
                 .AddIngredient(ItemID.SoulofLight, 10)

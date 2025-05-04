@@ -8,20 +8,20 @@ using Terraria.ModLoader;
 
 namespace SpiritcallerRoninMod.Content.Items.Weapons
 {
-	public class CryoWraithStaff : ModItem
+	public class CryoWraithTalon : ModItem
 	{
 		public override void SetDefaults() {
 			// DefaultToStaff handles setting various Item values that magic staff weapons use.
 			// Hover over DefaultToStaff in Visual Studio to read the documentation!
 			// Shoot a black bolt, also known as the projectile shot from the onyx blaster.
-			Item.DefaultToStaff(ProjectileID.IceBolt, 15, 10, 30);
-			Item.width = 34;
-			Item.height = 40;
+			Item.DefaultToStaff(ProjectileID.SkyFracture, 15, 10, 30);
+			Item.width = 20;
+			Item.height = 20;
 			Item.UseSound = SoundID.NPCHit55;
 
 			// A special method that sets the damage, knockback, and bonus critical strike chance.
 			// This weapon has a crit of 32% which is added to the players default crit chance of 4%
-			Item.SetWeaponValues(150, 6, 32);
+			Item.SetWeaponValues(100, 6, 32);
 
 			Item.SetShopValues(ItemRarityColor.LightRed4, 10000);
 		}

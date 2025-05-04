@@ -8,21 +8,27 @@ using Terraria.ModLoader;
 
 namespace SpiritcallerRoninMod.Content.Items.Weapons
 {
-	public class CryoWraithStaff : ModItem
+	public class EyeOfTheGhoul : ModItem
 	{
 		public override void SetDefaults() {
 			// DefaultToStaff handles setting various Item values that magic staff weapons use.
 			// Hover over DefaultToStaff in Visual Studio to read the documentation!
 			// Shoot a black bolt, also known as the projectile shot from the onyx blaster.
-			Item.DefaultToStaff(ProjectileID.IceBolt, 15, 10, 30);
-			Item.width = 34;
-			Item.height = 40;
+			Item.DefaultToStaff(ProjectileID.MonkStaffT2Ghast, 15, 10, 30);
+			
+			// Adjust the item's physical size
+			Item.width = 20;  // Smaller width for an eyeball
+			Item.height = 20; // Smaller height for an eyeball
 			Item.UseSound = SoundID.NPCHit55;
-
-			// A special method that sets the damage, knockback, and bonus critical strike chance.
-			// This weapon has a crit of 32% which is added to the players default crit chance of 4%
-			Item.SetWeaponValues(150, 6, 32);
-
+			
+			// Add scale for the held sprite
+			Item.scale = 0.5f; // Adjust this value between 0.1 and 1.0 to get the desired size
+			
+			// Adjust hold style for better positioning
+			Item.holdStyle = ItemHoldStyleID.HoldGuitar;
+			Item.noUseGraphic = false;
+			
+			Item.SetWeaponValues(125, 6, 32);
 			Item.SetShopValues(ItemRarityColor.LightRed4, 10000);
 		}
 		        public override void ModifyTooltips(List<TooltipLine> tooltips)

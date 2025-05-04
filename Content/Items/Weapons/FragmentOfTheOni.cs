@@ -119,11 +119,6 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 						player.whoAmI);
 					
 					// Spectral homing projectile (represents souls)
-					if (Main.rand.NextBool(2)) {
-						Vector2 spectralSpeed = direction.RotatedBy(MathHelper.ToRadians(Main.rand.Next(-30, 31))) * 16f;
-						Projectile.NewProjectile(source, player.MountedCenter, spectralSpeed, ProjectileID.LostSoulFriendly, 
-							damage / 2, knockback / 2, player.whoAmI);
-					}
 				}
 			}
 
@@ -147,6 +142,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient<KatanaOfPureEvil>();
 			recipe.AddIngredient<KatanaOfOrder>();
+			recipe.AddIngredient<MoltenKatana>();
 			recipe.AddIngredient(ItemID.ChlorophyteBar, 10);
 			recipe.AddIngredient(ItemID.HallowedBar, 10);
 			recipe.AddIngredient(ItemID.SpectreBar, 10);

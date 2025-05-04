@@ -13,9 +13,9 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
-namespace SpiritcallerRoninMod.Content.Bosses.CryoWraith;
-
-public class CryoWraith : ModNPC
+namespace SpiritcallerRoninMod.Content.Bosses.MagmaGhoul;
+[AutoloadBossHead]
+public class MagmaGhoul : ModNPC
 {
 public override void SetStaticDefaults()
 {
@@ -67,14 +67,14 @@ public override void SetDefaults()
     NPC.height = 80;
     NPC.damage = 50;
     NPC.defense = 30;
-    NPC.lifeMax = 50000;
+    NPC.lifeMax = 45000;
     NPC.HitSound = SoundID.NPCHit55;
     NPC.DeathSound = SoundID.NPCDeath55;
     NPC.value = Item.buyPrice(0, 20, 0, 0);
     NPC.knockBackResist = 0f;
     NPC.aiStyle = -1; // Custom AI
     NPC.noTileCollide = true;
-        Music = MusicID.OtherworldlyIce;
+        Music = MusicID.OtherworldlyUnderworld;
     NPC.noGravity = true;
     NPC.boss = true;
 }
@@ -93,14 +93,14 @@ public override void SetDefaults()
 			LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
 
 			// Add your new drops here
-			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FrozenKatana>(), 1)); // 100% drop chance
-			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CryoWraithStaff>(), 2)); // 100% drop chance
-			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CryoWraithTalon>(), 3)); // 100% drop chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<MoltenKatana>(), 1)); // 100% drop chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<MagmaGhoulStaff>(), 2));
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<EyeOfTheGhoul>(), 3));
 			
 			// Add some materials with different drop chances
-			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.IceBlock, 1, 15, 30)); // Drops 15-30 Wood
-			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.IceBow, 3)); // 33% chance
-			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.IceFeather, 3)); // 33% chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.HellstoneBar, 1, 15, 30)); // Drops 15-30 Wood
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.LavaWaders, 3)); // 33% chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.BoneFeather, 3)); // 33% chance
 			
 			// You can also add coins
 			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.GoldCoin, 1, 3, 5)); // Drops 3-5 Gold Coins
@@ -131,10 +131,10 @@ public override void SetDefaults()
 			npcLoot.Add(notExpertRule);
 
 			// Add the treasure bag using ItemDropRule.BossBag (automatically checks for expert mode)
-			npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<CryoWraithBag>()));
+			npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<MagmaGhoulBag>()));
 
 			// ItemDropRule.MasterModeCommonDrop for the relic
-			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Placeable.Furniture.CryoWraithRelic>()));
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Placeable.Furniture.MagmaGhoulRelic>()));
 
 			// ItemDropRule.MasterModeDropOnAllPlayers for the pet
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemID.IceBlock, 10)); //CHANGE THIS LATER!!!
@@ -150,7 +150,7 @@ public override void SetDefaults()
 			// The first time this boss is killed, spawn ExampleOre into the world. This code is above SetEventFlagCleared because that will set downedForestGuardian to true.
 
 			// This sets downedForestGuardian to true, and if it was false before, it initiates a lantern night
-			NPC.SetEventFlagCleared(ref DownedBossSystem.downedCryoWraith, -1);
+			NPC.SetEventFlagCleared(ref DownedBossSystem.downedMagmaGhoul, -1);
 
 			// Since this hook is only ran in singleplayer and serverside, we would have to sync it manually.
 			// Thankfully, vanilla sends the MessageID.WorldData packet if a BOSS was killed automatically, shortly after this hook is ran
@@ -184,25 +184,6 @@ public override void SetDefaults()
 		}
         
             // Add this method after your other methods
-            private void ManageBlizzard()
-            {
-                // Force blizzard weather while the boss is alive
-                Main.windSpeedTarget = 0.8f * NPC.direction; // Strong wind in the direction the boss is facing
-                Main.maxRaining = 1f; // Maximum rain intensity
-                Main.raining = true;
-                Main.rainTime = 2; // Keep rain active
-                Main.cloudAlpha = 1f; // Full cloud coverage
-                
-                // Create snow particles
-                if (Main.rand.NextBool(2)) // 50% chance each frame
-                {
-                    int snowDust = Dust.NewDust(NPC.position, Main.screenWidth, 10, DustID.Snow, 
-                        Main.windSpeedTarget * 5f, 2f, 0, default, 1.2f);
-                    Main.dust[snowDust].noGravity = true;
-                    Main.dust[snowDust].velocity.X *= 2f;
-                }
-            }
-
             private void Movement(Player player)
             {
                 // Base hover position
@@ -245,7 +226,6 @@ public override void SetDefaults()
                 Player player = Main.player[NPC.target];
 
                 // Add blizzard effect
-                ManageBlizzard();
 
                 // Add movement
                 Movement(player);
@@ -332,10 +312,11 @@ public override void SetDefaults()
                         NPC.GetSource_FromAI(), 
                         NPC.Center, 
                         perturbedDirection * speed, 
-                        ProjectileID.CultistBossIceMist, 
+                        ProjectileID.CultistBossFireBall, 
                         40, 
                         1f, 
                         Main.myPlayer);
+                    SoundEngine.PlaySound(SoundID.Zombie88, NPC.position); // Teleport sound
                 }
             }
             private void UnleashSpikes(Player player)
@@ -349,7 +330,7 @@ public override void SetDefaults()
                         NPC.GetSource_FromAI(),
                         NPC.Center,
                         perturbedDirection * speed,
-                        ProjectileID.FrostWave,
+                        ProjectileID.FlamingScythe,
                         40,
                         1f,
                         Main.myPlayer 	
@@ -391,7 +372,7 @@ public override void SetDefaults()
                         NPC.GetSource_FromAI(),
                         NPC.Center,
                         perturbedDirection * speed,
-                        ProjectileID.FrostBlastHostile,
+                        ProjectileID.InfernoHostileBlast,
                         60,
                         1f,
                         Main.myPlayer

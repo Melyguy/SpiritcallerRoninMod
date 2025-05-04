@@ -1,5 +1,5 @@
 
-using SpiritcallerRoninMod.Content.Bosses.CryoWraith;
+using SpiritcallerRoninMod.Content.Bosses.MagmaGhoul;
 using SpiritcallerRoninMod.Content.Bosses.DesertSpirit;
 using SpiritcallerRoninMod.Content.Bosses.ForestGuardian;
 using SpiritcallerRoninMod.Content.Items.Weapons;
@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 namespace SpiritcallerRoninMod.Content.Items.Consumables
 {
 	// Basic code for a boss treasure bag
-	public class CryoWraithBag : ModItem
+	public class MagmaGhoulBag : ModItem
 	{
 		public override void SetStaticDefaults() {
 			// This set is one that every boss bag should have.
@@ -38,19 +38,19 @@ namespace SpiritcallerRoninMod.Content.Items.Consumables
 
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			// Guaranteed expert drops
-			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<FrozenKatana>(), 1));
-			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CryoWraithStaff>(), 2));
-			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<CryoWraithTalon>(), 3));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MoltenKatana>(), 1));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagmaGhoulStaff>(), 2));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<EyeOfTheGhoul>(), 3));
 			
 			// Chance-based drops (33% chance each)
-			itemLoot.Add(ItemDropRule.Common(ItemID.IceBoomerang, 3));
-			itemLoot.Add(ItemDropRule.Common(ItemID.IceFeather, 3));
+			itemLoot.Add(ItemDropRule.Common(ItemID.Flamarang, 3));
+			itemLoot.Add(ItemDropRule.Common(ItemID.BoneFeather, 3));
 			
 			// Wood drops (5-15 pieces, guaranteed)
-			itemLoot.Add(ItemDropRule.Common(ItemID.IceBlock, 1, 5, 15));
+			itemLoot.Add(ItemDropRule.Common(ItemID.HellstoneBar, 1, 5, 15));
 			
 			// Add coins based on NPC value
-			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<CryoWraith>()));
+			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<MagmaGhoul>()));
 		}
 	}
 }

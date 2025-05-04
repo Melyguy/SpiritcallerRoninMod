@@ -15,8 +15,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SpiritcallerRoninMod.Content.Bosses.DesertSpirit;
+[AutoloadBossHead]
 public class DesertSpirit : ModNPC
 {
+    
     private const float SpinSpeed = 0.04f;
     private const float ChargeSpeed = 13f;
     private const float IdleSpeed = 7f;
