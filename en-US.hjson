@@ -218,11 +218,11 @@ Mods: {
 
 				TownNPCMood: {
 					Content: I am content.
-					NoHome: I hate not having a home.
-					FarFromHome: I am too far from home.
-					LoveSpace: I love having so much space.
-					DislikeCrowded: I dislike how crowded I am.
-					HateCrowded: I hate how crowded I am.
+					NoHome: I might be used to being a nomad, but i would prefer to have a home.
+					FarFromHome: I am still searching for lord Kuro.
+					LoveSpace: I love having so much space. Helps me focus on my mission.
+					DislikeCrowded: I dislike how crowded it is.
+					HateCrowded: I hate how crowded it is.
 					LikeNPC_Princess: I can tolerate {NPCName}.
 					Princess_LovesNPC: I enjoy {NPCName}'s presence.
 				}
