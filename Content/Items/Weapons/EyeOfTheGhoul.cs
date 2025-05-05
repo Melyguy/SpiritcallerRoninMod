@@ -25,7 +25,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			Item.scale = 0.5f; // Adjust this value between 0.1 and 1.0 to get the desired size
 			
 			// Adjust hold style for better positioning
-			Item.holdStyle = ItemHoldStyleID.HoldGuitar;
+			//Item.holdStyle = ItemHoldStyleID.HoldGuitar;
 			Item.noUseGraphic = false;
 			
 			Item.SetWeaponValues(125, 6, 32);
