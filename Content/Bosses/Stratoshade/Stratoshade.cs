@@ -70,11 +70,11 @@ public override void SetDefaults()
     NPC.lifeMax = 80000;
     NPC.HitSound = SoundID.NPCHit55;
     NPC.DeathSound = SoundID.NPCDeath55;
-    NPC.value = Item.buyPrice(0, 20, 0, 0);
+    NPC.value = Item.buyPrice(10, 0, 0, 0);
     NPC.knockBackResist = 0f;
     NPC.aiStyle = -1; // Custom AI
     NPC.noTileCollide = true;
-        Music = MusicID.OtherworldlyIce;
+        Music = MusicID.OtherworldlyBoss1;
     NPC.noGravity = true;
     NPC.boss = true;
 }
@@ -93,14 +93,13 @@ public override void SetDefaults()
 			LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
 
 			// Add your new drops here
-			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FrozenKatana>(), 1)); // 100% drop chance
-			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CryoWraithStaff>(), 2)); // 100% drop chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<StratoshadeStaff>(), 2)); // 100% drop chance
 			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CryoWraithTalon>(), 3)); // 100% drop chance
 			
 			// Add some materials with different drop chances
-			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.IceBlock, 1, 15, 30)); // Drops 15-30 Wood
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.Cloud, 1, 15, 30)); // Drops 15-30 Wood
 			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.IceBow, 3)); // 33% chance
-			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.IceFeather, 3)); // 33% chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.SoulofFlight, 3, 5, 15)); // 33% chance
 			
 			// You can also add coins
 			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.GoldCoin, 1, 3, 5)); // Drops 3-5 Gold Coins
@@ -131,13 +130,13 @@ public override void SetDefaults()
 			npcLoot.Add(notExpertRule);
 
 			// Add the treasure bag using ItemDropRule.BossBag (automatically checks for expert mode)
-			npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<CryoWraithBag>()));
+			npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<StratoshadeBag>()));
 
 			// ItemDropRule.MasterModeCommonDrop for the relic
-			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Placeable.Furniture.CryoWraithRelic>()));
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Placeable.Furniture.StratoshadeRelic>()));
 
 			// ItemDropRule.MasterModeDropOnAllPlayers for the pet
-			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemID.IceBlock, 10)); //CHANGE THIS LATER!!!
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemID.Cloud, 10)); //CHANGE THIS LATER!!!
 		}
 
 		public override void OnKill()

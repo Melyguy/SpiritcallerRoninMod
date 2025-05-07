@@ -270,6 +270,31 @@ Mods: {
 				DisplayName: Onryo Heart
 				Tooltip: ""
 			}
+
+			StratoshadeBag: {
+				DisplayName: Stratoshade Bag
+				Tooltip: ""
+			}
+
+			StratoshadeRelic: {
+				DisplayName: Stratoshade Relic
+				Tooltip: ""
+			}
+
+			StratoshadeStaff: {
+				DisplayName: Stratoshade Staff
+				Tooltip: ""
+			}
+
+			OverchargedSoul: {
+				DisplayName: Overcharged Soul
+				Tooltip: ""
+			}
+
+			LightningLantern: {
+				DisplayName: Lightning Lantern
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
