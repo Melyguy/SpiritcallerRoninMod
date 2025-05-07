@@ -2,9 +2,9 @@ Mods: {
 	SpiritcallerRoninMod: {
 		Items: {
 			RoninHelmet: {
-				SetBonus: Mods.SpiritcallerRoninMod.Items.RoninHelmet.SetBonus
 				DisplayName: Ronin Helmet
 				Tooltip: ""
+				SetBonus: Increases Ronin damage by 10% and movement speed by 5%
 			}
 
 			ForestSpiritRobe: {
@@ -294,6 +294,11 @@ Mods: {
 			LightningLantern: {
 				DisplayName: Lightning Lantern
 				Tooltip: ""
+			}
+
+			SwordSharpener: {
+				DisplayName: Sword Sharpener
+				Tooltip: Increases Ronin damage by {0}% and attack speed by {1}%
 			}
 		}
 

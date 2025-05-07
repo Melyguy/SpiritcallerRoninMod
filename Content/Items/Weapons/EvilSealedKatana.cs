@@ -27,8 +27,8 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			//Item.noUseGraphic = false;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			
-			Item.useTime = 8; // Reduced from 10
-			Item.useAnimation = 8; // Reduced from 10
+			Item.useTime = 10; // Reduced from 10
+			Item.useAnimation = 10; // Reduced from 10
 			Item.autoReuse = true;
 			
 			Item.damage = 70;
@@ -77,7 +77,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			float adjustedItemScale = player.GetAdjustedItemScale(Item);
 			
 			// Create afterimages
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 1; i++) {
 				Vector2 offset = new Vector2(player.direction * i * -5, 0);
 				Dust.NewDustPerfect(player.MountedCenter + offset, DustID.BlueTorch, Vector2.Zero, 100, Color.White, 1.5f);
 			}

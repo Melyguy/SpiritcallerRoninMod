@@ -1,0 +1,6 @@
+Items: {
+	SwordSharpener: {
+		DisplayName: Sword Sharpener
+		Tooltip: Increases Ronin damage by {0}% and attack speed by {1}%
+	}
+}
