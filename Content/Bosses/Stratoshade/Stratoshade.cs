@@ -13,9 +13,9 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
-namespace SpiritcallerRoninMod.Content.Bosses.Onryo;
+namespace SpiritcallerRoninMod.Content.Bosses.Stratoshade;
 [AutoloadBossHead]
-public class Onryo : ModNPC
+public class Stratoshade : ModNPC
 {
 public override void SetStaticDefaults()
 {
@@ -67,20 +67,16 @@ public override void SetDefaults()
     NPC.height = 80;
     NPC.damage = 50;
     NPC.defense = 30;
-    NPC.lifeMax = 70000;
-    NPC.HitSound = SoundID.NPCHit54; // More ghostly hit sound
-    NPC.DeathSound = SoundID.NPCDeath52; // Haunting death sound
+    NPC.lifeMax = 80000;
+    NPC.HitSound = SoundID.NPCHit55;
+    NPC.DeathSound = SoundID.NPCDeath55;
     NPC.value = Item.buyPrice(0, 20, 0, 0);
     NPC.knockBackResist = 0f;
     NPC.aiStyle = -1; // Custom AI
     NPC.noTileCollide = true;
-        Music = MusicID.OtherworldlyCorruption;
+        Music = MusicID.OtherworldlyIce;
     NPC.noGravity = true;
     NPC.boss = true;
-    NPC.alpha = 100; // Make her semi-transparent
-    NPC.HitSound = SoundID.NPCHit54 with { Pitch = 0.2f }; // Higher pitched, feminine sound
-    NPC.DeathSound = SoundID.NPCDeath6; // More ghostly death sound
-    Music = MusicID.OtherworldlyEerie; // More ethereal music fitting for a spirit
 }
     		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			// Do NOT misuse the ModifyNPCLoot and OnKill hooks: the former is only used for registering drops, the latter for everything else
@@ -97,14 +93,14 @@ public override void SetDefaults()
 			LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
 
 			// Add your new drops here
-			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<YomiLantern>(), 1)); // 100% drop chance
-			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OnryoScream>(), 2)); // 100% drop chance
-			//notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CryoWraithTalon>(), 3)); // 100% drop chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FrozenKatana>(), 1)); // 100% drop chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CryoWraithStaff>(), 2)); // 100% drop chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CryoWraithTalon>(), 3)); // 100% drop chance
 			
 			// Add some materials with different drop chances
 			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.IceBlock, 1, 15, 30)); // Drops 15-30 Wood
-			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.BloodbathDye, 3)); // 33% chance
-			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.BloodOrange, 3)); // 33% chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.IceBow, 3)); // 33% chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.IceFeather, 3)); // 33% chance
 			
 			// You can also add coins
 			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.GoldCoin, 1, 3, 5)); // Drops 3-5 Gold Coins
@@ -135,10 +131,10 @@ public override void SetDefaults()
 			npcLoot.Add(notExpertRule);
 
 			// Add the treasure bag using ItemDropRule.BossBag (automatically checks for expert mode)
-			npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<OnryoBag>()));
+			npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<CryoWraithBag>()));
 
 			// ItemDropRule.MasterModeCommonDrop for the relic
-			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Placeable.Furniture.OnryoRelic>()));
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Placeable.Furniture.CryoWraithRelic>()));
 
 			// ItemDropRule.MasterModeDropOnAllPlayers for the pet
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemID.IceBlock, 10)); //CHANGE THIS LATER!!!
@@ -154,7 +150,7 @@ public override void SetDefaults()
 			// The first time this boss is killed, spawn ExampleOre into the world. This code is above SetEventFlagCleared because that will set downedForestGuardian to true.
 
 			// This sets downedForestGuardian to true, and if it was false before, it initiates a lantern night
-			NPC.SetEventFlagCleared(ref DownedBossSystem.downedOnryo, -1);
+			NPC.SetEventFlagCleared(ref DownedBossSystem.downedStratoshade, -1);
 
 			// Since this hook is only ran in singleplayer and serverside, we would have to sync it manually.
 			// Thankfully, vanilla sends the MessageID.WorldData packet if a BOSS was killed automatically, shortly after this hook is ran
@@ -207,33 +203,41 @@ public override void SetDefaults()
                 }
             }
 
-            private void Movement(Player player) {
-    float hoverY = -100f;
-    float hoverX = 150f * -NPC.direction;
-    
-    // Ghostly floating motion
-    float floatSpeed = 0.03f;
-    hoverY += (float)Math.Sin(Main.GameUpdateCount * floatSpeed) * 30f;
-    
-    Vector2 targetPos = player.Center + new Vector2(hoverX, hoverY);
-    
-    // Ethereal movement - smoother and more ghost-like
-    float speed = MathHelper.Clamp(NPC.Distance(targetPos) / 100f, 0.5f, 2f) * 6f;
-    Vector2 moveDirection = targetPos - NPC.Center;
-    
-    if (moveDirection != Vector2.Zero) {
-        moveDirection.Normalize();
-        NPC.velocity = Vector2.Lerp(NPC.velocity, moveDirection * speed, 0.04f);
-    }
-    
-    // Add ghostly trailing effect
-    if (Main.rand.NextBool(2)) {
-        int dust = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.CrimsonTorch);
-        Main.dust[dust].noGravity = true;
-        Main.dust[dust].velocity *= 0.1f;
-        Main.dust[dust].scale = 1.5f;
-    }
-}
+            private void Movement(Player player)
+            {
+                // Base hover position
+                float hoverY = -150f; // Height above player
+                float hoverX = 200f * -NPC.direction; // Distance to side of player
+                
+                // Add slight floating motion
+                float floatSpeed = 0.05f;
+                hoverY += (float)Math.Sin(Main.GameUpdateCount * floatSpeed) * 20f;
+                
+                // Calculate target position
+                Vector2 targetPos = player.Center + new Vector2(hoverX, hoverY);
+                
+                // Movement speed varies with distance
+                float speed = MathHelper.Clamp(NPC.Distance(targetPos) / 100f, 0.5f, 2f) * 8f;
+                
+                // Calculate movement
+                Vector2 moveDirection = targetPos - NPC.Center;
+                if (moveDirection != Vector2.Zero)
+                {
+                    moveDirection.Normalize();
+                    
+                    // Smooth acceleration
+                    NPC.velocity = Vector2.Lerp(NPC.velocity, moveDirection * speed, 0.08f);
+                }
+                
+                // Add slight bobbing motion to velocity
+                NPC.velocity.Y += (float)Math.Sin(Main.GameUpdateCount * floatSpeed) * 0.1f;
+                
+                // Dampen velocity when close to target
+                if (NPC.Distance(targetPos) < 50f)
+                {
+                    NPC.velocity *= 0.95f;
+                }
+            }
 
             public override void AI()
             {
@@ -308,7 +312,7 @@ public override void SetDefaults()
             {
                 Vector2 newPos = player.Center + Main.rand.NextVector2Circular(200, 200);
                 NPC.Center = newPos;
-                SoundEngine.PlaySound(SoundID.Item8 with { Volume = 0.5f, Pitch = -0.5f }, NPC.position); // Ghostly teleport
+                SoundEngine.PlaySound(SoundID.Zombie90, NPC.position); // Teleport sound
                 for (int i = 0; i < 20; i++) 
                 {
                     Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Ice, 0f, 0f);
@@ -318,55 +322,58 @@ public override void SetDefaults()
 
             private void FireIceProjectilesAtPlayer(Player player)
             {
-                Vector2 direction = (player.Center - NPC.Center).SafeNormalize(Vector2.UnitY);
-                float speed = 15f; // Slower speed for better shockwave effect
-                
-                // Create a wider arc of projectiles
-                for (int i = -4; i <= 4; i++)
-                {
-                    Vector2 perturbedDirection = direction.RotatedBy(MathHelper.ToRadians(15f * i));
-                    // Create the projectile
-                    Projectile.NewProjectile(
-                        NPC.GetSource_FromAI(), 
-                        NPC.Center, 
-                        perturbedDirection * speed, 
-                        ProjectileID.ShadowBeamHostile, // More ghost-like projectile
-                        35, 
-                        1f, 
-                        Main.myPlayer);
-                }
-                
-                // Add visual and sound effects
-                SoundEngine.PlaySound(SoundID.NPCDeath52 with { Volume = 1.5f, Pitch = -0.5f }, NPC.position); // Deeper, louder sound
-                
-                // Add dust effect for the scream
-                for (int i = 0; i < 50; i++)
-                {
-                    Vector2 dustSpeed = Main.rand.NextVector2CircularEdge(1f, 1f) * 8f;
-                    Dust.NewDust(NPC.Center, 0, 0, DustID.Shadowflame, dustSpeed.X, dustSpeed.Y, 100, default, 2f);
-                }
-            }
-            private void UnleashSpikes(Player player)
-            {
-                Vector2 direction = (player.Center - NPC.Center).SafeNormalize(Vector2.UnitY);
-                float speed = 10f;
+                Vector2 dir = (player.Center - NPC.Center).SafeNormalize(Vector2.UnitY);
+                float speed = 20f;
 
-                for (int i = 0; i < 5; i++ ){
-                    Vector2 perturbedDirection = direction.RotatedBy(MathHelper.ToRadians(15f * i));
-                    Projectile.NewProjectile(
-                        NPC.GetSource_FromAI(),
-                        NPC.Center,
-                        perturbedDirection * speed,
-                        ProjectileID.BloodShot,
-                        40,
-                        1f,
-                        Main.myPlayer 	
-                    );
-                    
-                SoundEngine.PlaySound(SoundID.NPCHit55, NPC.position); // Teleport sound
+                for (int i = -1; i <= 1; i++)
+                {
+                    Vector2 pDir = dir.RotatedBy(MathHelper.ToRadians(20f * i));
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, pDir * speed,
+                                            ProjectileID.CultistBossLightningOrb, 35, 1f, Main.myPlayer);
                 }
 
+                if (Main.rand.NextBool(2))
+                {
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, dir * (speed * 1.2f),
+                                            ProjectileID.CultistBossLightningOrb, 45, 1f, Main.myPlayer);
+                }
+                SoundEngine.PlaySound(SoundID.Item20, NPC.position);
             }
+private void UnleashSpikes(Player player)
+{
+    Vector2 dir = (player.Center - NPC.Center).SafeNormalize(Vector2.UnitY);
+    float speed = 20f;
+
+    // (Your existing orb code…)
+
+    // Spawn Nimbus Cloud “enemy” NPCs:
+    const int cloudCount = 2;
+    const float spawnHeight = 250f;       // how many pixels above the player
+    const float horizontalRadius = 100f;  // horizontal spread
+    for (int i = 0; i < cloudCount; i++)
+    {
+        Vector2 spawnPos = player.Center
+                         + new Vector2(
+                             Main.rand.NextFloat(-horizontalRadius, horizontalRadius),
+                             -spawnHeight
+                           );
+        int npcID = NPCID.AngryNimbus; // Spawn Angry Nimbus enemy
+        int index = NPC.NewNPC(
+            NPC.GetSource_FromAI(),
+            (int)spawnPos.X, 
+            (int)spawnPos.Y, 
+            npcID,
+            ai0: 0, 
+            ai1: 0
+        );
+        // Optionally tweak its velocity
+        Main.npc[index].velocity = new Vector2(0f, 2f);
+    }
+
+    SoundEngine.PlaySound(SoundID.Item20, NPC.position);
+}
+
+
             private void HandAttack(Player player)
             {
                 Vector2 direction = (player.Center - NPC.Center).SafeNormalize(Vector2.UnitY);
@@ -391,7 +398,7 @@ public override void SetDefaults()
             private void SnowballsOfDeath(Player player)
             {
                 Vector2 direction = (player.Center - NPC.Center).SafeNormalize(Vector2.UnitY);
-                float speed = 30f;
+                float speed = 10f;
 
                 for (int i = -1; i <= 1; i++ ){
                     Vector2 perturbedDirection = direction.RotatedBy(MathHelper.ToRadians(15f * i));
@@ -399,7 +406,7 @@ public override void SetDefaults()
                         NPC.GetSource_FromAI(),
                         NPC.Center,
                         perturbedDirection * speed,
-                        ProjectileID.LostSoulHostile,
+                        ProjectileID.SandnadoHostile,
                         60,
                         1f,
                         Main.myPlayer

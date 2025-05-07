@@ -17,6 +17,9 @@ namespace SpiritcallerRoninMod.Common.Systems
 		public static bool downedDesertSpirit = false;
 		public static bool downedCryoWraith = false;
 		public static bool downedMagmaGhoul = false;
+		public static bool downedOnryo = false;
+		public static bool downedStratoshade = false;
+		
 		// public static bool downedOtherBoss = false;
 
 		public override void ClearWorld() {
@@ -24,6 +27,8 @@ namespace SpiritcallerRoninMod.Common.Systems
 			downedDesertSpirit = false;
 			downedCryoWraith = false;
 			downedMagmaGhoul = false;
+			downedOnryo = false;
+			downedStratoshade = false;
 			// downedOtherBoss = false;
 		}
 
@@ -42,6 +47,12 @@ namespace SpiritcallerRoninMod.Common.Systems
 			if(downedMagmaGhoul) {
 				tag["downedMagmaGhoul"] = true;	
 			}
+			if(downedOnryo) {
+				tag["downedOnryo"] = true;	
+			}
+			if(downedStratoshade) {
+				tag["downedStratoshade"] = true;	
+			}
 
 			// if (downedOtherBoss) {
 			//	tag["downedOtherBoss"] = true;
@@ -53,6 +64,8 @@ namespace SpiritcallerRoninMod.Common.Systems
 			downedForestGuardian = tag.ContainsKey("downedDesertSpirit");
 			downedForestGuardian = tag.ContainsKey("downedCryoWraith");
 			downedForestGuardian = tag.ContainsKey("downedMagmaGhoul");
+			downedForestGuardian = tag.ContainsKey("downedOnryo");
+			downedForestGuardian = tag.ContainsKey("downedStratoshade");
 			// downedOtherBoss = tag.ContainsKey("downedOtherBoss");
 		}
 
@@ -62,6 +75,8 @@ namespace SpiritcallerRoninMod.Common.Systems
 			writer.WriteFlags(downedDesertSpirit/*, downedOtherBoss*/);
 			writer.WriteFlags(downedCryoWraith/*, downedOtherBoss*/);
 			writer.WriteFlags(downedMagmaGhoul/*, downedOtherBoss*/);
+			writer.WriteFlags(downedOnryo/*, downedOtherBoss*/);
+			writer.WriteFlags(downedStratoshade/*, downedOtherBoss*/);
 			// WriteFlags supports up to 8 entries, if you have more than 8 flags to sync, call WriteFlags again.
 
 			// If you need to send a large number of flags, such as a flag per item type or something similar, BitArray can be used to efficiently send them. See Utils.SendBitArray documentation.
@@ -73,6 +88,8 @@ namespace SpiritcallerRoninMod.Common.Systems
 			reader.ReadFlags(out downedDesertSpirit/*, out downedOtherBoss*/);
 			reader.ReadFlags(out downedCryoWraith/*, out downedOtherBoss*/);
 			reader.ReadFlags(out downedMagmaGhoul/*, out downedOtherBoss*/);
+			reader.ReadFlags(out downedOnryo/*, out downedOtherBoss*/);
+			reader.ReadFlags(out downedStratoshade/*, out downedOtherBoss*/);
 			// ReadFlags supports up to 8 entries, if you have more than 8 flags to sync, call ReadFlags again.
 		}
 	}

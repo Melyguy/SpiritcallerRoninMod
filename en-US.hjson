@@ -245,6 +245,31 @@ Mods: {
 				DisplayName: Eye Of The Ghoul
 				Tooltip: ""
 			}
+
+			YomiLantern: {
+				DisplayName: Yomi Lantern
+				Tooltip: ""
+			}
+
+			OnryoRelic: {
+				DisplayName: Onryo Relic
+				Tooltip: ""
+			}
+
+			OnryoBag: {
+				DisplayName: Onryo Bag
+				Tooltip: ""
+			}
+
+			OnryoScream: {
+				DisplayName: Onryo Scream
+				Tooltip: ""
+			}
+
+			OnryoHeart: {
+				DisplayName: Onryo Heart
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -280,6 +305,7 @@ Mods: {
 			CryoWraith.DisplayName: Cryo Wraith
 			MagmaGhoul.DisplayName: Magma Ghoul
 			Onryo.DisplayName: Onryo
+			Stratoshade.DisplayName: Stratoshade
 		}
 
 		Projectiles: {
