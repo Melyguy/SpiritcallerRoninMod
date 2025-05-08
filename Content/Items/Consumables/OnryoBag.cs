@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SpiritcallerRoninMod.Content.Items.Accessories;
 
 namespace SpiritcallerRoninMod.Content.Items.Consumables
 {
@@ -40,6 +41,7 @@ namespace SpiritcallerRoninMod.Content.Items.Consumables
 			// Guaranteed expert drops
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<YomiLantern>(), 1));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OnryoScream>(), 2));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SpiritualBell>(), 4));
 			
 			// Chance-based drops (33% chance each)
 			itemLoot.Add(ItemDropRule.Common(ItemID.BloodbathDye, 3));

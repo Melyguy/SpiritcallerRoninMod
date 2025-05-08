@@ -5,10 +5,10 @@ using Terraria.Localization;
 
 namespace SpiritcallerRoninMod.Content.Items.Accessories
 {
-    public class SwordSharpener : ModItem
+    public class OniBottle : ModItem
     {
-        private float AdditiveDamageBonus = 5f;
-        private float AdditiveAtkSpeed = 5f;
+        private float AdditiveDamageBonus = 15f;
+        private float AdditiveAtkSpeed = 15f;
 
         public override void SetDefaults()
         {
@@ -32,13 +32,15 @@ namespace SpiritcallerRoninMod.Content.Items.Accessories
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.StoneBlock, 10)
-                .AddIngredient(ItemID.IronBar, 5)
+                .AddIngredient(ItemID.Bottle, 1)
+                .AddIngredient(ItemID.DemoniteBar, 5)
+                .AddIngredient(ItemID.SoulofNight, 5)
                 .AddTile(TileID.Anvils)
                 .Register();
                         CreateRecipe()
-                .AddIngredient(ItemID.StoneBlock, 10)
-                .AddIngredient(ItemID.LeadBar, 5)
+                .AddIngredient(ItemID.Bottle, 1)
+                .AddIngredient(ItemID.CrimtaneBar, 5)
+                .AddIngredient(ItemID.SoulofNight, 5)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

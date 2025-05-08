@@ -5,10 +5,10 @@ using Terraria.Localization;
 
 namespace SpiritcallerRoninMod.Content.Items.Accessories
 {
-    public class SwordSharpener : ModItem
+    public class SpiritualAwakening : ModItem
     {
         private float AdditiveDamageBonus = 5f;
-        private float AdditiveAtkSpeed = 5f;
+        private int AdditiveMana = 20;
 
         public override void SetDefaults()
         {
@@ -19,27 +19,24 @@ namespace SpiritcallerRoninMod.Content.Items.Accessories
             Item.value = Item.sellPrice(silver: 50);
         }
 
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(AdditiveDamageBonus, AdditiveAtkSpeed);
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(AdditiveDamageBonus, AdditiveMana);
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             // Increase Ronin damage by 5%
-            player.GetModPlayer<GlobalPlayer>().RoninDamage += AdditiveDamageBonus /100f;
+            player.GetModPlayer<GlobalPlayer>().SpiritCallerDamage += AdditiveDamageBonus /100f;
             
             // For attack speed, we need to modify the player's attackSpeed stat
-            player.GetAttackSpeed(DamageClass.Generic)  += AdditiveAtkSpeed /100f;
+            // Increase player's max mana
+            player.statManaMax2 += AdditiveMana;
         }
 
         public override void AddRecipes()
         {
             CreateRecipe()
+                .AddIngredient(ItemID.Wood, 15)
                 .AddIngredient(ItemID.StoneBlock, 10)
-                .AddIngredient(ItemID.IronBar, 5)
-                .AddTile(TileID.Anvils)
-                .Register();
-                        CreateRecipe()
-                .AddIngredient(ItemID.StoneBlock, 10)
-                .AddIngredient(ItemID.LeadBar, 5)
-                .AddTile(TileID.Anvils)
+                .AddIngredient(ItemID.FallenStar, 3)
+                .AddTile(TileID.WorkBenches)
                 .Register();
         }
     }

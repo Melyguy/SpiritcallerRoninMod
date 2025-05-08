@@ -300,6 +300,46 @@ Mods: {
 				DisplayName: Sword Sharpener
 				Tooltip: Increases Ronin damage by {0}% and attack speed by {1}%
 			}
+
+			SpiritualAwakening: {
+				DisplayName: Spiritual Awakening
+				Tooltip: Increases Spiritcaller damage by {0}% and maximum mana by {1}
+			}
+
+			SpiritualReinforcement: {
+				DisplayName: Spiritual Reinforcement
+				Tooltip: Increases Spiritcaller damage by {0}% maximum mana by {1}
+			}
+
+			SpiritualArmoring: {
+				DisplayName: Spiritual Armoring
+				Tooltip: Increases Spirit Caller damage by {0}%, max mana by {1}, and defense by {2}
+			}
+
+			SpiritualStrengthening: {
+				DisplayName: Spiritual Strengthening
+				Tooltip: Increases Spirit Caller damage by {0}%, max mana by {1}, and defense by {2}
+			}
+
+			SpiritualPerfection: {
+				DisplayName: Spiritual Perfection
+				Tooltip: Increases Spirit Caller damage by {0}%, max mana by {1}, and defense by {2}
+			}
+
+			SpiritualBell: {
+				DisplayName: Spiritual Bell
+				Tooltip: Increases Spiritcaller damage by {0}% maximum mana by {1}
+			}
+
+			RoninsLastResolve: {
+				DisplayName: Ronin's Last Resolve
+				Tooltip: Increases Ronin damage by {0}% and attack speed by {1}%\nDoubles critical strike chance when below {2}% health
+			}
+
+			OniBottle: {
+				DisplayName: Oni Bottle
+				Tooltip: Increases Ronin damage by {0}% and attack speed by {1}%
+			}
 		}
 
 		NPCs: {

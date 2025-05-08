@@ -28,8 +28,8 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			//Item.noUseGraphic = false;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			
-			Item.useTime = 5; // Faster attack speed
-			Item.useAnimation = 5;
+			Item.useTime = 8; // Faster attack speed
+			Item.useAnimation = 8;
 			Item.autoReuse = true;
 			
 			Item.damage = 225; // Increased damage to reflect combined power
