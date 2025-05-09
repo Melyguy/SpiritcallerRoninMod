@@ -99,6 +99,7 @@ public override void SetDefaults()
 			// Add your new drops here
 			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<YomiLantern>(), 1)); // 100% drop chance
 			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OnryoScream>(), 2)); // 100% drop chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SpiritualBell>(), 4)); // 100% drop chance
 			//notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<CryoWraithTalon>(), 3)); // 100% drop chance
 			
 			// Add some materials with different drop chances
