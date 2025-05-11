@@ -340,6 +340,32 @@ Mods: {
 				DisplayName: Oni Bottle
 				Tooltip: Increases Ronin damage by {0}% and attack speed by {1}%
 			}
+
+			AshinaHelmet: {
+				SetBonus: Increases Ronin damage by 10% and movement speed by 5%
+				DisplayName: Ashina Helmet
+				Tooltip: ""
+			}
+
+			AshinaChestPlate: {
+				DisplayName: Ashina Chest Plate
+				Tooltip: ""
+			}
+
+			AshinaLeggings: {
+				DisplayName: Ashina Leggings
+				Tooltip: ""
+			}
+
+			GenichiroRelic: {
+				DisplayName: Genichiro Relic
+				Tooltip: ""
+			}
+
+			GenichiroBag: {
+				DisplayName: Genichiro Bag
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -376,6 +402,7 @@ Mods: {
 			MagmaGhoul.DisplayName: Magma Ghoul
 			Onryo.DisplayName: Onryo
 			Stratoshade.DisplayName: Stratoshade
+			GenichiroAshina.DisplayName: Genichiro Ashina
 		}
 
 		Projectiles: {
@@ -395,6 +422,7 @@ Mods: {
 			ShroomiteSlash.DisplayName: Shroomite Slash
 			PhoenixSlash.DisplayName: Phoenix Slash
 			PhoenixSlash2.DisplayName: Phoenix Slash2
+			GenichiroSlash.DisplayName: Genichiro Slash
 		}
 	}
 }

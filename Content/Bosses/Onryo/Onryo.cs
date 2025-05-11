@@ -13,6 +13,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SpiritcallerRoninMod.Content.Items.Accessories;
 namespace SpiritcallerRoninMod.Content.Bosses.Onryo;
 [AutoloadBossHead]
 public class Onryo : ModNPC
