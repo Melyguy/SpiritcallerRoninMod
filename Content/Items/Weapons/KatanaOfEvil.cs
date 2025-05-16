@@ -31,7 +31,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			Item.useAnimation = 8;
 			Item.autoReuse = true;
 			
-			Item.damage = 80;
+			Item.damage = 45;
 			Item.knockBack = 3; // Lower knockback for faster hits
 			
 			Item.UseSound = SoundID.Item103;

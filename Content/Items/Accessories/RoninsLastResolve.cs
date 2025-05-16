@@ -7,7 +7,7 @@ namespace SpiritcallerRoninMod.Content.Items.Accessories
 {
     public class RoninsLastResolve : ModItem
     {
-        private float AdditiveDamageBonus = 20f;
+        private float AdditiveDamageBonus = 5f;
         private float AdditiveAtkSpeed = 10f;
         private float LowHealthThreshold = 0.25f; // 25% health threshold
         private float CritMultiplier = 2f; // Double crit chance

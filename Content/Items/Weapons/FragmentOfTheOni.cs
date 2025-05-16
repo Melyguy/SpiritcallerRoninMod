@@ -32,7 +32,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			Item.useAnimation = 2;
 			Item.autoReuse = true;
 			
-			Item.damage = 320; // Increased damage for demonic power
+			Item.damage = 200; // Increased damage for demonic power
 			Item.useTime = 15; // Slightly slower for more impactful hits
 			Item.useAnimation = 15;
 			Item.knockBack = 8; // Increased knockback for oni strength

@@ -74,6 +74,7 @@ public override void FindFrame(int frameHeight)
     }
 }
 
+    public bool SecondPhase = false;
 public override void SetDefaults()
 {
     NPC.width = 44;
@@ -90,6 +91,7 @@ public override void SetDefaults()
     Music = MusicID.OtherworldlyEerie; // More intense music
     NPC.noGravity = false;
     NPC.boss = true;
+
 }
     		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			// Do NOT misuse the ModifyNPCLoot and OnKill hooks: the former is only used for registering drops, the latter for everything else
@@ -150,7 +152,7 @@ public override void SetDefaults()
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Placeable.Furniture.GenichiroRelic>()));
 
 			// ItemDropRule.MasterModeDropOnAllPlayers for the pet
-			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemID.IceBlock, 10)); //CHANGE THIS LATER!!!
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Items.Weapons.blackmortalBlade>())); //CHANGE THIS LATER!!!
 		}
 
 		public override void OnKill()
@@ -266,6 +268,33 @@ public override void AI()
     NPC.TargetClosest(true);
     Player player = Main.player[NPC.target];
 
+    if(!SecondPhase && NPC.life <= NPC.lifeMax * 0.5f){
+        SecondPhase = true;
+        NPC.damage = 100;
+        NPC.defense += 15; // Increase defense
+        NPC.knockBackResist = 0f; // Become immune to knockback
+        NPC.velocity *= 1.5f; // Speed boost
+        ManageBlizzard();
+        Music = MusicID.OtherworldlyBoss2; // More intense music
+// Change display name for second phase
+NPC.GivenName = "Genichiro Ashina, Way of Tomoe";
+        
+        // Visual transformation effects
+        for (int i = 0; i < 50; i++) {
+            Vector2 speed = Main.rand.NextVector2CircularEdge(1f, 1f);
+            Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Electric, speed.X * 5f, speed.Y * 5f);
+        }
+        
+        // Screen shake effect
+        Main.instance.CameraModifiers.Add(new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1f, 1f), 15f, 6f, 20, 1000f, "Genichiro Phase 2"));
+        
+        // Play transformation sound
+        SoundEngine.PlaySound(SoundID.Thunder, NPC.Center);
+
+        // Display text above boss when transforming
+        CombatText.NewText(NPC.getRect(), Color.Yellow, "Behold, the lightning of tomoe!", true);
+    }
+
     if (!player.active || player.dead)
     {
         NPC.TargetClosest(false);
@@ -275,7 +304,6 @@ public override void AI()
         return;
     }
 
-    ManageBlizzard();
     NPC.spriteDirection = NPC.direction = player.Center.X > NPC.Center.X ? 1 : -1;
 
     switch ((int)NPC.ai[0])
@@ -361,6 +389,7 @@ public override void AI()
                     
                     // Create a single large slash projectile
                     Vector2 slashPosition = NPC.Center + direction * 40f;
+                    if(!SecondPhase){
                     Projectile.NewProjectile(
                         NPC.GetSource_FromAI(),
                         slashPosition,
@@ -372,15 +401,51 @@ public override void AI()
                         ai0: 2.5f, // Much larger scale
                         ai1: 10f
                     );
-                    
-                    // Visual effects
+                    SoundEngine.PlaySound(SoundID.Item71, NPC.Center);
+                                        // Visual effects
                     for (int i = 0; i < 20; i++)
                     {
                         Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.WhiteTorch, 
                             direction.X * 2f, direction.Y * 2f, 100, default, 1.5f);
                     }
+                    }
+                    else{
+                    Projectile.NewProjectile(
+                        NPC.GetSource_FromAI(),
+                        slashPosition,
+                        direction * 8f,
+                        ModContent.ProjectileType<GenichiroSlashLightning>(),
+                        45,
+                        2f,
+                        Main.myPlayer,
+                        ai0: 2.5f, // Much larger scale
+                        ai1: 10f	
+                    );	
+                // Replace the existing Thunder sound with a combination of these:
+                SoundEngine.PlaySound(SoundID.Item94, NPC.Center); // Electric magic sound
+                SoundEngine.PlaySound(SoundID.Item92, NPC.Center); // Lightning zap sound
+                SoundEngine.PlaySound(SoundID.NPCHit53, NPC.Center); // Electric hit sound
+                    // Visual effects for lightning
+                    for (int i = 0; i < 30; i++)
+                    {
+                        // Create electric dust particles
+                        Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.YellowStarDust, 
+                            direction.X * 3f, direction.Y * 3f, 0, new Color(0, 236, 255), 2f);
+                        
+                        // Add some spark effects
+                        if (Main.rand.NextBool(2))
+                        {
+                            Dust sparkDust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, 
+                                DustID.YellowStarDust, direction.X * 4f, direction.Y * 4f);
+                            sparkDust.noGravity = true;
+                            sparkDust.scale = 2f;
+                        }
+                    }
+                    }
+
                     
-                    SoundEngine.PlaySound(SoundID.Item71, NPC.Center);
+
+                    
                 }
             }
             private void ArrowAtk(Player player)
@@ -397,6 +462,7 @@ public override void AI()
                     for (int i = -1; i <= 1; i++)
                     {
                         Vector2 perturbedDirection = direction.RotatedBy(MathHelper.ToRadians(15f * i));
+                        if(!SecondPhase){
                         Projectile.NewProjectile(
                             NPC.GetSource_FromAI(),
                             NPC.Center,
@@ -406,6 +472,19 @@ public override void AI()
                             1f,
                             Main.myPlayer
                         );
+
+                        }
+                        else{
+                        Projectile.NewProjectile(
+                            NPC.GetSource_FromAI(),
+                            NPC.Center,
+                            perturbedDirection * speed,
+                            ProjectileID.DD2BetsyFireball,
+                            60,
+                            1f,
+                            Main.myPlayer
+                        );		
+                        }
                     }
                     
                     // Visual and sound effects
@@ -429,20 +508,67 @@ public override void AI()
     {
         float scale = 1f + (i * 0.5f); // Each slash is 50% larger than the previous
         Vector2 slashPosition = NPC.Center + direction * 40f;
-        Projectile.NewProjectile(
-            NPC.GetSource_FromAI(),
-            slashPosition,
-            direction * 12f,
-            ModContent.ProjectileType<GenichiroSlash>(),
-            45,
-            2f,
-            Main.myPlayer,
-            ai0: scale, // Use ai0 to pass the scale to the projectile
-            ai1: 10f
-        );
+                    if(!SecondPhase){
+                    Projectile.NewProjectile(
+                        NPC.GetSource_FromAI(),
+                        slashPosition,
+                        direction * 8f,
+                        ModContent.ProjectileType<GenichiroSlash>(),
+                        45,
+                        2f,
+                        Main.myPlayer,
+                        ai0: 2.5f, // Much larger scale
+                        ai1: 10f
+                    );
+    SoundEngine.PlaySound(SoundID.Item71, NPC.Center);
+                    }
+                    else{
+                    Projectile.NewProjectile(
+                        NPC.GetSource_FromAI(),
+                        slashPosition,
+                        direction * 8f,
+                        ModContent.ProjectileType<GenichiroSlashLightning>(),
+                        45,
+                        2f,
+                        Main.myPlayer,
+                        ai0: 2.5f, // Much larger scale
+                        ai1: 10f	
+                    );	
+                SoundEngine.PlaySound(SoundID.Item94, NPC.Center); // Electric magic sound
+                SoundEngine.PlaySound(SoundID.Item92, NPC.Center); // Lightning zap sound
+                SoundEngine.PlaySound(SoundID.NPCHit53, NPC.Center); // Electric hit sound
+                    for (int x = 0; x < 15; x++) // Reduced particle count for smaller effect
+                    {
+                        // Create small lightning spark particles
+                        Vector2 randomOffset = Main.rand.NextVector2Circular(20f, 20f);
+                        Dust lightningDust = Dust.NewDustPerfect(
+                            NPC.Center + randomOffset,
+                            DustID.YellowStarDust, // Electric dust type for lightning effect
+                            direction * Main.rand.NextFloat(1f, 3f),
+                            0,
+                            new Color(255, 255, 220), // Yellowish white color for lightning
+                            0.5f); // Smaller scale for spark effect
+                        
+                        lightningDust.noGravity = true;
+                        lightningDust.fadeIn = 1f;
+                        
+                        // Create trailing sparks
+                        if (Main.rand.NextBool(2))
+                        {
+                            Dust trailDust = Dust.NewDustPerfect(
+                                NPC.Center + randomOffset,
+                                DustID.YellowStarDust,
+                                direction * Main.rand.NextFloat(0.5f, 2f),
+                                0,
+                                new Color(255, 255, 0),
+                                0.3f);
+                            trailDust.noGravity = true;
+                            trailDust.fadeIn = 0.5f;
+                        }
+                    }
+                    }
     }
     
-    SoundEngine.PlaySound(SoundID.Item71, NPC.Center);
 }
 
 private void LeapingSlash(Player player)
@@ -457,17 +583,34 @@ private void LeapingSlash(Player player)
     else if (NPC.velocity.Y > 0f) // Falling
     {
         Vector2 direction = (player.Center - NPC.Center).SafeNormalize(Vector2.UnitX);
-        Projectile.NewProjectile(
-            NPC.GetSource_FromAI(),
-            NPC.Center,
-            direction * 16f,
-            ModContent.ProjectileType<GenichiroSlash>(),
-            50,
-            3f,
-            Main.myPlayer,
-            ai0: 2f,
-            ai1: 20f
-        );
+                    if(!SecondPhase){
+                    Projectile.NewProjectile(
+                        NPC.GetSource_FromAI(),
+                        NPC.Center,
+                        direction * 8f,
+                        ModContent.ProjectileType<GenichiroSlash>(),
+                        45,
+                        2f,
+                        Main.myPlayer,
+                        ai0: 2.5f, // Much larger scale
+                        ai1: 10f
+                    );
+                    SoundEngine.PlaySound(SoundID.Item71, NPC.Center);
+                    }
+                    else{
+                    Projectile.NewProjectile(
+                        NPC.GetSource_FromAI(),
+                        NPC.Center,
+                        direction * 8f,
+                        ModContent.ProjectileType<GenichiroSlashLightning>(),
+                        45,
+                        2f,
+                        Main.myPlayer,
+                        ai0: 2.5f, // Much larger scale
+                        ai1: 10f	
+                    );	
+    SoundEngine.PlaySound(SoundID.Thunder, NPC.Center);
+                    }
     }
 }
 

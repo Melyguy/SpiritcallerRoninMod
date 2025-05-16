@@ -1,0 +1,33 @@
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SpiritcallerRoninMod.Content.Projectiles;
+using SpiritcallerRoninMod.Content.Items;
+using Terraria.Localization;
+
+namespace SpiritcallerRoninMod.Content.Tiles;
+
+
+public class SakuraGrass : ModTile
+{
+    public override void SetStaticDefaults()
+
+    {
+        Main.tileSolid[Type] = true;
+        Main.tileMergeDirt[Type] = true;
+        Main.tileBlockLight[Type] = true;
+        Main.tileLighted[Type] = true;
+        Main.tileBlendAll[Type] = true; // Allow blending with all tiles
+        Main.tileMerge[Type][TileID.Grass] = true; // Allow merging with regular grass
+        Main.tileMerge[TileID.Grass][Type] = true; // Allow regular grass to merge with this
+        AddMapEntry(new Color(255, 182, 193));
+
+        RegisterItemDrop(ItemID.DirtBlock);
+
+        RegisterItemDrop(ItemID.DirtBlock);
+    
+        DustType = DustID.CrystalSerpent_Pink; // Pink dust for particle effects
+    }
+}

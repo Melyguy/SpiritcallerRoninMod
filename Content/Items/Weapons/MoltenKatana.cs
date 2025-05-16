@@ -32,7 +32,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			Item.useAnimation = 7;
 			Item.autoReuse = true;
 			
-			Item.damage = 100; // Higher base damage against evil
+			Item.damage = 75; // Higher base damage against evil
 			Item.useTime = 10; // Slightly slower but more impactful
 			Item.useAnimation = 10;
 			Item.knockBack = 8; // Increased knockback to represent purifying force

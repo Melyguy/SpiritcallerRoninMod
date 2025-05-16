@@ -31,7 +31,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			Item.useAnimation = 10;
 			Item.autoReuse = true;
 			
-			Item.damage = 200;
+			Item.damage = 500;
 			Item.knockBack = 3; // Lower knockback for faster hits
 			
 			Item.UseSound = SoundID.Item60;
@@ -39,7 +39,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			Item.knockBack = 6;
 			Item.crit = 6;
 
-			Item.value = Item.buyPrice(platinum: 1);
+			Item.value = Item.buyPrice(platinum: 4);
 			Item.rare = ItemRarityID.Pink;
 
 			Item.shoot = ModContent.ProjectileType<ImbuedKatanaSlash>(); // Default slash projectile

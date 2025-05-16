@@ -32,7 +32,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			Item.useAnimation = 8;
 			Item.autoReuse = true;
 			
-			Item.damage = 150; // Increased damage to reflect combined power
+			Item.damage = 75; // Increased damage to reflect combined power
 			Item.useTime = 12; // Slightly slower but more powerful
 			Item.useAnimation = 12;
 			Item.knockBack = 3; // Lower knockback for faster hits

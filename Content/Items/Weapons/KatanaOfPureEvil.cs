@@ -32,7 +32,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			Item.useAnimation = 7;
 			Item.autoReuse = true;
 			
-			Item.damage = 100; // Slightly lower base damage to balance the extreme speed
+			Item.damage = 90; // Slightly lower base damage to balance the extreme speed
 			Item.knockBack = 2; // Lower knockback for rapid hits
 			
 			Item.UseSound = SoundID.Item119; // More chaotic sound

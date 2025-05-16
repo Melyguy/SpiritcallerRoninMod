@@ -8,6 +8,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader.Utilities;
 using Terraria.GameContent.Creative;
 using Terraria.GameContent.Personalities;
+using SpiritcallerRoninMod.Content.Biomes;
 
 namespace SpiritcallerRoninMod.NPCs
 {
@@ -41,6 +42,7 @@ namespace SpiritcallerRoninMod.NPCs
             AnimationType = 22;
         NPC.Happiness
         .SetBiomeAffection<ForestBiome>(AffectionLevel.Love)
+        .SetBiomeAffection<SakuraForestBiome>(AffectionLevel.Love)
         .SetBiomeAffection<UndergroundBiome>(AffectionLevel.Like)
         .SetBiomeAffection<DesertBiome>(AffectionLevel.Dislike)
         .SetNPCAffection(NPCID.Merchant, AffectionLevel.Like)
@@ -122,7 +124,6 @@ namespace SpiritcallerRoninMod.NPCs
         {
             NPCShop Sekiroshop = new NPCShop(Type, "Shop")
                 .Add(ModContent.ItemType<Content.Items.Weapons.mortalBlade>(), Condition.DownedPlantera)
-                .Add(ModContent.ItemType<Content.Items.Weapons.blackmortalBlade>(), Condition.DownedCultist)
                 .Add(ItemID.Shuriken, Condition.Hardmode)
                 .Add(ItemID.Katana, Condition.Hardmode)
                 .Add(ItemID.Muramasa, Condition.DownedSkeletron)

@@ -32,7 +32,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			Item.useAnimation = 8;
 			Item.autoReuse = true;
 			
-			Item.damage = 225; // Increased damage to reflect combined power
+			Item.damage = 125; // Increased damage to reflect combined power
 			Item.useTime = 8; // Balanced attack speed for a divine weapon
 			Item.useAnimation = 8;
 			Item.autoReuse = true;

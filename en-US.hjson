@@ -423,6 +423,14 @@ Mods: {
 			PhoenixSlash.DisplayName: Phoenix Slash
 			PhoenixSlash2.DisplayName: Phoenix Slash2
 			GenichiroSlash.DisplayName: Genichiro Slash
+			GenichiroSlashLightning.DisplayName: Genichiro Slash Lightning
+		}
+
+		Biomes: {
+			SakuraForestBiome: {
+				DisplayName: Sakura Forest Biome
+				TownNPCDialogueName: the Sakura Forest Biome
+			}
 		}
 	}
 }
