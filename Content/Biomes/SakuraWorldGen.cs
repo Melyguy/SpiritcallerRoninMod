@@ -102,7 +102,7 @@ private bool IsValidLocation(int x, int y)
                     if (!WorldGen.InWorld(newX, newY)) continue;
     
                     Tile tile = Main.tile[newX, newY];
-                    if (tile.HasTile && (tile.TileType == TileID.Grass || tile.TileType == TileID.Stone || tile.TileType == TileID.Sand || tile.TileType == TileID.Ebonsand || tile.TileType == TileID.Crimsand || tile.TileType == TileID.Mud))
+                    if (tile.HasTile && (tile.TileType == TileID.Grass || tile.TileType == TileID.Stone || tile.TileType == TileID.Sand || tile.TileType == TileID.JungleGrass || tile.TileType == TileID.Mud || tile.TileType == TileID.Ebonsand || tile.TileType == TileID.Crimsand))
                     {
                         tile.TileType = (ushort)ModContent.TileType<SakuraGrass>();
                         WorldGen.SquareTileFrame(newX, newY, true);
@@ -116,6 +116,7 @@ private bool IsValidLocation(int x, int y)
 
             for (int i = -treeRange; i <= treeRange; i += treeSpacing)
             {
+                // Remove the random check to make every spot try to place a tree
                 int treeX = x + i;
                 int treeY = y - 5;
                 PlaceSakuraTree(treeX, treeY);

@@ -366,6 +366,49 @@ Mods: {
 				DisplayName: Genichiro Bag
 				Tooltip: ""
 			}
+
+			WoodenRoninHelmet: {
+				SetBonus: Increases Ronin damage by 10% and movement speed by 5%
+				DisplayName: Wooden Ronin Helmet
+				Tooltip: ""
+			}
+
+			WoodenRoninArmor: {
+				DisplayName: Wooden Ronin Armor
+				Tooltip: ""
+			}
+
+			WoodenRoninLeggings: {
+				DisplayName: Wooden Ronin Leggings
+				Tooltip: ""
+			}
+
+			ForestSpiritJingasa: {
+				SetBonus: Increases SpiritCaller damage by 10% and movement speed by 5%
+				DisplayName: Forest Spirit Jingasa
+				Tooltip: ""
+			}
+
+			ForestSpiritSkirt: {
+				DisplayName: Forest Spirit Skirt
+				Tooltip: ""
+			}
+
+			HellstoneRoninHelmet: {
+				SetBonus: Mods.SpiritcallerRoninMod.Items.HellstoneRoninHelmet.SetBonus
+				DisplayName: Hellstone Ronin Helmet
+				Tooltip: ""
+			}
+
+			HellstoneRoninChestplate: {
+				DisplayName: Hellstone Ronin Chestplate
+				Tooltip: ""
+			}
+
+			HellstoneRoninLeggings: {
+				DisplayName: Hellstone Ronin Leggings
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
