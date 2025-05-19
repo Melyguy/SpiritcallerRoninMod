@@ -9,6 +9,7 @@ using Terraria.IO;
 using SpiritcallerRoninMod.Content.Tiles;
 using System;
 using SpiritcallerRoninMod.Content.Tiles.Trees;
+using SpiritcallerRoninMod.Content.Tiles.Walls;
 
 namespace SpiritcallerRoninMod.Content.Biomes
 {
@@ -61,8 +62,12 @@ private bool IsValidLocation(int x, int y)
         return false;
 
     // Large scan box
-    int width = 100;
-    int height = 60;
+     float worldSizeScale = Math.Max(0.6f, (float)Main.maxTilesX / 4200f); // Minimum scale of 0.6
+    int width = (int)(100 * worldSizeScale);
+    int height = (int)(60 * worldSizeScale);
+
+
+
 
     for (int i = -width / 2; i < width / 2; i++)
     {
@@ -109,6 +114,46 @@ private bool IsValidLocation(int x, int y)
                     }
                 }
             }
+{
+for (int i = -width / 2; i < width / 2; i++)
+{
+    int newX = x + i;
+
+    // Generate a noisy roof height (adds imperfections)
+    float roofNoise = (float)Math.Sin(i * 0.1f) * 4f + WorldGen.genRand.Next(-2, 3);
+    int caveTop = y + (int)(height * 1.2f) + (int)roofNoise;
+    int caveHeight = (int)(40 * worldSizeScale); // Cave height
+    int caveBottom = caveTop + caveHeight;
+
+    for (int j = -6; j <= caveHeight + 6; j++) // Extra buffer for walls/roof
+    {
+        int newY = caveTop + j;
+
+        if (!WorldGen.InWorld(newX, newY)) continue;
+
+        // Define thickness of roof/floor/walls
+        bool isRoof = j < 4;
+        bool isFloor = j > caveHeight - 4;
+        bool isWall = Math.Abs(i) >= width / 2 - 4;
+
+        if (isRoof || isFloor || isWall)
+        {
+            Main.tile[newX, newY].TileType = (ushort)ModContent.TileType<SakuraStone>();
+                        Tile tile = Main.tile[newX, newY];
+            tile.HasTile = true;
+        }
+        else
+        {
+             Main.tile[newX, newY].WallType = (ushort)ModContent.WallType<SakuraStoneWall>();
+            Tile tile = Main.tile[newX, newY];
+            tile.HasTile = false;
+        }
+    }
+}
+
+
+}
+
 
             // Place Sakura trees very close together and in a wider range
             int treeSpacing = (int)(2 * worldSizeScale); // Even closer spacing
@@ -123,29 +168,29 @@ private bool IsValidLocation(int x, int y)
             }
         }
 
-private void PlaceSakuraTree(int x, int y)
-{
-    while (!Main.tile[x, y].HasTile && y < Main.maxTilesY - 20)
-        y++;
+        private void PlaceSakuraTree(int x, int y)
+        {
+            while (!Main.tile[x, y].HasTile && y < Main.maxTilesY - 20)
+                y++;
 
-    if (y >= Main.maxTilesY - 20) return;
+            if (y >= Main.maxTilesY - 20) return;
 
-    int saplingX = x;
-    int saplingY = y - 1;
+            int saplingX = x;
+            int saplingY = y - 1;
 
-    // Ensure the tile is empty
-    if (Main.tile[saplingX, saplingY].HasTile) return;
+            // Ensure the tile is empty
+            if (Main.tile[saplingX, saplingY].HasTile) return;
 
-    // Place the sapling
-    WorldGen.PlaceObject(saplingX, saplingY, ModContent.TileType<SpiritSapling>());
-    WorldGen.SquareTileFrame(saplingX, saplingY, true);
+            // Place the sapling
+            WorldGen.PlaceObject(saplingX, saplingY, ModContent.TileType<SpiritSapling>());
+            WorldGen.SquareTileFrame(saplingX, saplingY, true);
 
-    // Force growth (only works if tile is a sapling)
-    if (Main.tile[saplingX, saplingY].TileType == ModContent.TileType<SpiritSapling>())
-    {
-        WorldGen.GrowTree(saplingX, saplingY);
-    }
-}
+            // Force growth (only works if tile is a sapling)
+            if (Main.tile[saplingX, saplingY].TileType == ModContent.TileType<SpiritSapling>())
+            {
+                WorldGen.GrowTree(saplingX, saplingY);
+            }
+        }
 
 
 

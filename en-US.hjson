@@ -474,6 +474,11 @@ Mods: {
 				DisplayName: Sakura Forest Biome
 				TownNPCDialogueName: the Sakura Forest Biome
 			}
+
+			UndergroundSakuraBiome: {
+				DisplayName: Underground Sakura Biome
+				TownNPCDialogueName: the Underground Sakura Biome
+			}
 		}
 	}
 }

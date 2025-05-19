@@ -47,7 +47,9 @@ public class SakuraForestBiome : ModBiome
         }
         
         // Reduce required tiles to make detection easier
-        return sakuraTileCount >= 100;
+        // Only active above ground
+        bool isAboveSurface = player.position.Y / 16f <= Main.worldSurface + 30;
+        return sakuraTileCount >= 100 && isAboveSurface;
     }
     
 }
