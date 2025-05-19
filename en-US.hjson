@@ -409,6 +409,38 @@ Mods: {
 				DisplayName: Hellstone Ronin Leggings
 				Tooltip: ""
 			}
+
+			CobaltRoninHelmet: {
+				SetBonus: Mods.SpiritcallerRoninMod.Items.CobaltRoninHelmet.SetBonus
+				DisplayName: Cobalt Ronin Helmet
+				Tooltip: ""
+			}
+
+			CobaltRoninChestplate: {
+				DisplayName: Cobalt Ronin Chestplate
+				Tooltip: ""
+			}
+
+			CobaltRoninLeggings: {
+				DisplayName: Cobalt Ronin Leggings
+				Tooltip: ""
+			}
+
+			PalladiumRoninHelmet: {
+				SetBonus: Mods.SpiritcallerRoninMod.Items.PalladiumRoninHelmet.SetBonus
+				DisplayName: Palladium Ronin Helmet
+				Tooltip: ""
+			}
+
+			PalladiumRoninChestplate: {
+				DisplayName: Palladium Ronin Chestplate
+				Tooltip: ""
+			}
+
+			PalladiumRoninLeggings: {
+				DisplayName: Palladium Ronin Leggings
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
