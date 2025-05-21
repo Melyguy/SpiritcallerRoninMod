@@ -8,7 +8,7 @@ namespace SpiritcallerRoninMod.Content.Items.Armor
 	// The AutoloadEquip attribute automatically attaches an equip texture to this item.
 	// Providing the EquipType.Legs value here will result in TML expecting a X_Legs.png file to be placed next to the item's main texture.
 	[AutoloadEquip(EquipType.Legs)]
-	public class AshinaLeggings : ModItem
+	public class HallowedRoninLeggings : ModItem
 	{
 		public static readonly float RoninDamageIncrease = 1.03f;
 
@@ -19,7 +19,7 @@ namespace SpiritcallerRoninMod.Content.Items.Armor
 			Item.height = 18; // Height of the item
 			Item.value = Item.sellPrice(gold: 1); // How many coins the item is worth
 			Item.rare = ItemRarityID.Green; // The rarity of the item
-			Item.defense = 20; // The amount of defense the item will give when equipped
+			Item.defense = 11; // The amount of defense the item will give when equipped
 		}
 
 		public override void UpdateEquip(Player player) {
@@ -27,6 +27,13 @@ namespace SpiritcallerRoninMod.Content.Items.Armor
 		}
 
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
+		public override void AddRecipes() {
+		Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ItemID.Wood, 20);
+			recipe.AddIngredient(ItemID.HallowedBar, 20);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
 
+		}
 	}
 }

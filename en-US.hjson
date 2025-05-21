@@ -441,6 +441,69 @@ Mods: {
 				DisplayName: Palladium Ronin Leggings
 				Tooltip: ""
 			}
+
+			OrichalcumRoninHat: {
+				SetBonus: Mods.SpiritcallerRoninMod.Items.OrichalcumRoninHat.SetBonus
+				DisplayName: Orichalcum Ronin Hat
+				Tooltip: ""
+			}
+
+			OrichalcumRoninChestplate: {
+				DisplayName: Orichalcum Ronin Chestplate
+				Tooltip: ""
+			}
+
+			OrichalcumRoninLeggings: {
+				DisplayName: Orichalcum Ronin Leggings
+				Tooltip: ""
+			}
+
+			MythrilRoninHat: {
+				SetBonus: Mods.SpiritcallerRoninMod.Items.MythrilRoninHat.SetBonus
+				DisplayName: Mythril Ronin Hat
+				Tooltip: ""
+			}
+
+			MythrilRoninChestplate: {
+				DisplayName: Mythril Ronin Chestplate
+				Tooltip: ""
+			}
+
+			MythrilRoninLeggings: {
+				DisplayName: Mythril Ronin Leggings
+				Tooltip: ""
+			}
+
+			HallowedRoninHelmet: {
+				SetBonus: Mods.SpiritcallerRoninMod.Items.HallowedRoninHelmet.SetBonus
+				DisplayName: Hallowed Ronin Helmet
+				Tooltip: ""
+			}
+
+			HallowedRoninChestplate: {
+				DisplayName: Hallowed Ronin Chestplate
+				Tooltip: ""
+			}
+
+			HallowedRoninLeggings: {
+				DisplayName: Hallowed Ronin Leggings
+				Tooltip: ""
+			}
+
+			SkullOfTheFounder: {
+				DisplayName: Skull Of The Founder
+				Tooltip: Increases Spiritcaller damage by {0}% maximum mana by {1}
+			}
+
+			HeadOfTheFoundersVessel: {
+				DisplayName: Head Of The Founders Vessel
+				Tooltip: The founder has found his new vessel
+			}
+
+			TrueSpiritualAwakening: {
+				DisplayName: True Spiritual Awakening
+				Tooltip: You've proved that you're nothing like those pesky dryads by taking your spiritual powers by force instead of peace.
+			}
 		}
 
 		NPCs: {

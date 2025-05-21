@@ -28,19 +28,6 @@ namespace SpiritcallerRoninMod.Content.Items.Armor
 		}
 
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
-public override void AddRecipes() {
-		Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.Wood, 15);
-			recipe.AddIngredient(ItemID.IronBar, 30);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
 
-            recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.Wood, 15);
-			recipe.AddIngredient(ItemID.LeadBar, 30);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
-
-		}
 	}
 }

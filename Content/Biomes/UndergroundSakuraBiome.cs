@@ -10,7 +10,7 @@ namespace SpiritcallerRoninMod.Content.Biomes
     public class UndergroundSakuraBiome : ModBiome
     {
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
-        public override int Music => MusicID.OtherworldlyUnderground; // Replace with your custom music if desired
+        public override int Music => MusicID.OtherworldlyJungle; // Replace with your custom music if desired
 
         public override bool IsBiomeActive(Player player)
         {

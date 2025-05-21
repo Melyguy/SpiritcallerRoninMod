@@ -25,10 +25,9 @@ namespace SpiritcallerRoninMod.Content.Biomes
                 {
                     progress.Message = "Planting Sakura biome...";
 
-                    // Adjust edge buffer based on world size
-                    int edgeBuffer = (int)(Main.maxTilesX * 0.05f); // 5% of world width
-                    
-                    for (int attempt = 0; attempt < 200; attempt++) // Increased attempts
+                    int edgeBuffer = (int)(Main.maxTilesX * 0.05f);
+
+                    for (int attempt = 0; attempt < 200; attempt++)
                     {
                         int x = WorldGen.genRand.Next(edgeBuffer, Main.maxTilesX - edgeBuffer);
                         int y = GetSurfaceY(x);
@@ -54,49 +53,43 @@ namespace SpiritcallerRoninMod.Content.Biomes
             return -1;
         }
 
-private bool IsValidLocation(int x, int y)
-{
-    // Avoid being too close to spawn
-    int minSpawnDistance = 200; // Adjust as needed
-    if (Math.Abs(x - Main.spawnTileX) < minSpawnDistance)
-        return false;
-
-    // Large scan box
-     float worldSizeScale = Math.Max(0.6f, (float)Main.maxTilesX / 4200f); // Minimum scale of 0.6
-    int width = (int)(100 * worldSizeScale);
-    int height = (int)(60 * worldSizeScale);
-
-
-
-
-    for (int i = -width / 2; i < width / 2; i++)
-    {
-        for (int j = -height / 2; j < height / 2; j++)
+        private bool IsValidLocation(int x, int y)
         {
-            int checkX = x + i;
-            int checkY = y + j;
-            if (!WorldGen.InWorld(checkX, checkY)) continue;
-
-            Tile tile = Main.tile[checkX, checkY];
-            if (!tile.HasTile) continue;
-
-            ushort t = tile.TileType;
-            if (t == TileID.SnowBlock || t == TileID.IceBlock || 
-                t == TileID.CorruptGrass || t == TileID.CrimsonGrass || t == TileID.HallowedGrass ||
-                t == TileID.BlueDungeonBrick || t == TileID.GreenDungeonBrick || t == TileID.PinkDungeonBrick)
+            int minSpawnDistance = 200;
+            if (Math.Abs(x - Main.spawnTileX) < minSpawnDistance)
                 return false;
-        }
-    }
 
-    return true;
-}
+            float worldSizeScale = Math.Max(0.6f, (float)Main.maxTilesX / 4200f);
+            int width = (int)(100 * worldSizeScale);
+            int height = (int)(60 * worldSizeScale);
+
+            for (int i = -width / 2; i < width / 2; i++)
+            {
+                for (int j = -height / 2; j < height / 2; j++)
+                {
+                    int checkX = x + i;
+                    int checkY = y + j;
+                    if (!WorldGen.InWorld(checkX, checkY)) continue;
+
+                    Tile tile = Main.tile[checkX, checkY];
+                    if (!tile.HasTile) continue;
+
+                    ushort t = tile.TileType;
+                    if (t == TileID.SnowBlock || t == TileID.IceBlock ||
+                        t == TileID.CorruptGrass || t == TileID.CrimsonGrass || t == TileID.HallowedGrass ||
+                        t == TileID.BlueDungeonBrick || t == TileID.GreenDungeonBrick || t == TileID.PinkDungeonBrick)
+                        return false;
+                }
+            }
+
+            return true;
+        }
 
         private void PlaceSakuraBiome(int x, int y)
         {
-            // Adjust base sizes for small worlds
-            float worldSizeScale = Math.Max(0.6f, (float)Main.maxTilesX / 4200f); // Minimum scale of 0.6
-            int width = (int)(100 * worldSizeScale);  // Reduced base width to 100
-            int height = (int)(60 * worldSizeScale);  // Reduced base height to 60
+            float worldSizeScale = Math.Max(0.6f, (float)Main.maxTilesX / 4200f);
+            int width = (int)(100 * worldSizeScale);
+            int height = (int)(60 * worldSizeScale);
 
             for (int i = -width / 2; i < width / 2; i++)
             {
@@ -105,7 +98,7 @@ private bool IsValidLocation(int x, int y)
                     int newX = x + i;
                     int newY = y + j;
                     if (!WorldGen.InWorld(newX, newY)) continue;
-    
+
                     Tile tile = Main.tile[newX, newY];
                     if (tile.HasTile && (tile.TileType == TileID.Grass || tile.TileType == TileID.Stone || tile.TileType == TileID.Sand || tile.TileType == TileID.JungleGrass || tile.TileType == TileID.Mud || tile.TileType == TileID.Ebonsand || tile.TileType == TileID.Crimsand))
                     {
@@ -114,54 +107,51 @@ private bool IsValidLocation(int x, int y)
                     }
                 }
             }
-{
-for (int i = -width / 2; i < width / 2; i++)
-{
-    int newX = x + i;
 
-    // Generate a noisy roof height (adds imperfections)
-    float roofNoise = (float)Math.Sin(i * 0.1f) * 4f + WorldGen.genRand.Next(-2, 3);
-    int caveTop = y + (int)(height * 1.2f) + (int)roofNoise;
-    int caveHeight = (int)(40 * worldSizeScale); // Cave height
-    int caveBottom = caveTop + caveHeight;
+            // === Underground Structure + Roof ===
+            for (int i = -width / 2; i < width / 2; i++)
+            {
+                int newX = x + i;
+                float roofNoise = (float)Math.Sin(i * 0.1f) * 4f + WorldGen.genRand.Next(-2, 3);
+                int caveTop = y + (int)(height * 1.2f) + (int)roofNoise;
+                int caveHeight = (int)(40 * worldSizeScale);
+                int caveBottom = caveTop + caveHeight;
 
-    for (int j = -6; j <= caveHeight + 6; j++) // Extra buffer for walls/roof
-    {
-        int newY = caveTop + j;
+                for (int j = -6; j <= caveHeight + 6; j++)
+                {
+                    int newY = caveTop + j;
+                    if (!WorldGen.InWorld(newX, newY)) continue;
 
-        if (!WorldGen.InWorld(newX, newY)) continue;
+                    bool isRoof = j < 4;
+                    bool isFloor = j > caveHeight - 4;
+                    bool isWall = Math.Abs(i) >= width / 2 - 4;
 
-        // Define thickness of roof/floor/walls
-        bool isRoof = j < 4;
-        bool isFloor = j > caveHeight - 4;
-        bool isWall = Math.Abs(i) >= width / 2 - 4;
-
-        if (isRoof || isFloor || isWall)
-        {
-            Main.tile[newX, newY].TileType = (ushort)ModContent.TileType<SakuraStone>();
+                    if (isRoof || isFloor || isWall)
+                    {
+                        Main.tile[newX, newY].TileType = (ushort)ModContent.TileType<SakuraStone>();
                         Tile tile = Main.tile[newX, newY];
-            tile.HasTile = true;
-        }
-        else
-        {
-             Main.tile[newX, newY].WallType = (ushort)ModContent.WallType<SakuraStoneWall>();
-            Tile tile = Main.tile[newX, newY];
-            tile.HasTile = false;
-        }
-    }
-}
+                        tile.HasTile = true;
+                    }
+                    else
+                    {
+                        Main.tile[newX, newY].WallType = (ushort)ModContent.WallType<SakuraStoneWall>();
+                        Tile tile = Main.tile[newX, newY];
+                        tile.HasTile = false;
+                    }
+                }
+            }
 
+            // === Place Dynasty Ruins Inside Underground ===
+            int caveY = y + (int)(height * 1.2f);
+            int ruinsCaveHeight = (int)(40 * worldSizeScale); // Renamed variable
+            PlaceDynastyRuinsInCave(x, caveY, width, ruinsCaveHeight); // <<<<<< INSERTION POINT
 
-}
-
-
-            // Place Sakura trees very close together and in a wider range
-            int treeSpacing = (int)(2 * worldSizeScale); // Even closer spacing
-            int treeRange = (int)(width / 2);  // Use the full biome width for tree placement
+            // === Sakura Trees ===
+            int treeSpacing = (int)(2 * worldSizeScale);
+            int treeRange = (int)(width / 2);
 
             for (int i = -treeRange; i <= treeRange; i += treeSpacing)
             {
-                // Remove the random check to make every spot try to place a tree
                 int treeX = x + i;
                 int treeY = y - 5;
                 PlaceSakuraTree(treeX, treeY);
@@ -178,21 +168,78 @@ for (int i = -width / 2; i < width / 2; i++)
             int saplingX = x;
             int saplingY = y - 1;
 
-            // Ensure the tile is empty
             if (Main.tile[saplingX, saplingY].HasTile) return;
 
-            // Place the sapling
             WorldGen.PlaceObject(saplingX, saplingY, ModContent.TileType<SpiritSapling>());
             WorldGen.SquareTileFrame(saplingX, saplingY, true);
 
-            // Force growth (only works if tile is a sapling)
             if (Main.tile[saplingX, saplingY].TileType == ModContent.TileType<SpiritSapling>())
             {
                 WorldGen.GrowTree(saplingX, saplingY);
             }
         }
 
+        // === Dynasty Ruin Logic ===
+        private void PlaceDynastyRuinsInCave(int x, int yStart, int caveWidth, int caveHeight)
+        {
+            int ruinCount = WorldGen.genRand.Next(2, 5);
 
+            for (int i = 0; i < ruinCount; i++)
+            {
+                int ruinX = x + WorldGen.genRand.Next(-caveWidth / 2 + 10, caveWidth / 2 - 10);
+                int ruinY = yStart + WorldGen.genRand.Next(5, caveHeight - 15);
+
+                int ruinWidth = WorldGen.genRand.Next(6, 12);
+                int ruinHeight = WorldGen.genRand.Next(4, 7);
+
+                GenerateDynastyRuin(ruinX, ruinY, ruinWidth, ruinHeight);
+            }
+        }
+
+        private void GenerateDynastyRuin(int x, int y, int width, int height)
+        {
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    int tileX = x + i;
+                    int tileY = y + j;
+
+                    if (!WorldGen.InWorld(tileX, tileY)) continue;
+
+                    bool isEdge = i == 0 || j == 0 || i == width - 1 || j == height - 1;
+                    bool isBroken = WorldGen.genRand.NextBool(6);
+
+                    if (isEdge && !isBroken)
+                    {
+                        Main.tile[tileX, tileY].TileType = TileID.DynastyWood;
+                                                Tile tile = Main.tile[tileX, tileY];
+                    tile.HasTile = true;
+                    }
+                    else
+                    {
+                        Main.tile[tileX, tileY].WallType = WallID.WhiteDynasty;
+                        Tile tile = Main.tile[tileX, tileY];
+                    tile.HasTile = false;
+                    }
+
+                    WorldGen.SquareTileFrame(tileX, tileY);
+                }
+            }
+
+            for (int i = -1; i <= width; i++)
+            {
+                int roofX = x + i;
+                int roofY = y - 1;
+                if (WorldGen.InWorld(roofX, roofY) && WorldGen.genRand.NextBool(3))
+                {
+                    Main.tile[roofX, roofY].TileType = TileID.BlueDynastyShingles;
+                    Tile tile = Main.tile[roofX, roofY];
+                    tile.HasTile = true;
+                    WorldGen.SquareTileFrame(roofX, roofY);
+                }
+            }
+        }
 
         public override void Load()
         {
