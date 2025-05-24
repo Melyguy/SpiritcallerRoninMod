@@ -32,12 +32,10 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			Item.useAnimation = 8;
 			Item.autoReuse = true;
 			
-			Item.damage = 125; // Increased damage to reflect combined power
+			Item.damage = 100; // Increased damage to reflect combined power
 			Item.useTime = 8; // Balanced attack speed for a divine weapon
 			Item.useAnimation = 8;
 			Item.autoReuse = true;
-			
-			Item.damage = 280; // Increased for divine dragon power
 			Item.knockBack = 4; // Moderate knockback
 			
 			Item.UseSound = SoundID.Item84; // More divine sound

@@ -504,6 +504,36 @@ Mods: {
 				DisplayName: True Spiritual Awakening
 				Tooltip: You've proved that you're nothing like those pesky dryads by taking your spiritual powers by force instead of peace.
 			}
+
+			HonedSheath: {
+				DisplayName: Honed Sheath
+				Tooltip: Increases Ronin damage by {0}% and attack speed by {1}%
+			}
+
+			SilentStepTabi: {
+				DisplayName: Silent Step Tabi
+				Tooltip: Allows the wearer to dash
+			}
+
+			SilentSheath: {
+				DisplayName: Silent Sheath
+				Tooltip: Allows the wearer to dash. Increases Ronin damage by {0}% and attack speed by {1}%
+			}
+
+			CrimsonCrescent: {
+				DisplayName: Crimson Crescent
+				Tooltip: Allows the wearer to dash. Increases Ronin damage by {0}% and crit chance by {1}%
+			}
+
+			CounterCharm: {
+				DisplayName: Counter Charm
+				Tooltip: Allows the wearer to dash. Increases Ronin damage by {0}% and attack speed by {1}%
+			}
+
+			CursedBladeChunk: {
+				DisplayName: Cursed Blade Chunk
+				Tooltip: Allows the wearer to dash. Increases Ronin damage by {0}%, attack speed by {1}% and crit chance by {2}%
+			}
 		}
 
 		NPCs: {

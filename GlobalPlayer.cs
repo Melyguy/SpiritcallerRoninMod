@@ -18,6 +18,7 @@ namespace SpiritcallerRoninMod{
             RoninDamage = 0f;
             SpiritCallerDamage = 0f;
         }
+        
 
     }
 }
