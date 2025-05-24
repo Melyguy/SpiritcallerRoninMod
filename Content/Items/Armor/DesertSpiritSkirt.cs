@@ -8,7 +8,7 @@ namespace SpiritcallerRoninMod.Content.Items.Armor
 	// The AutoloadEquip attribute automatically attaches an equip texture to this item.
 	// Providing the EquipType.Legs value here will result in TML expecting a X_Legs.png file to be placed next to the item's main texture.
 	[AutoloadEquip(EquipType.Legs)]
-	public class MythrilRoninLeggings : ModItem
+	public class DesertSpiritSkirt : ModItem
 	{
 		public static readonly float RoninDamageIncrease = 1.03f;
 
@@ -19,18 +19,18 @@ namespace SpiritcallerRoninMod.Content.Items.Armor
 			Item.height = 18; // Height of the item
 			Item.value = Item.sellPrice(gold: 1); // How many coins the item is worth
 			Item.rare = ItemRarityID.Green; // The rarity of the item
-			Item.defense = 10; // The amount of defense the item will give when equipped
+			Item.defense = 7; // The amount of defense the item will give when equipped
 		}
 
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<GlobalPlayer>().RoninDamage += RoninDamageIncrease;
+			player.GetModPlayer<GlobalPlayer>().SpiritCallerDamage += RoninDamageIncrease;
 		}
 
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
 		public override void AddRecipes() {
-		Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.Wood, 20);
-			recipe.AddIngredient(ItemID.MythrilBar, 20);
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ItemID.Sandstone, 10);
+			recipe.AddIngredient(ItemID.DesertFossil, 10);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 

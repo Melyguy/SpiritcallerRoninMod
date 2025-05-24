@@ -31,7 +31,7 @@ namespace SpiritcallerRoninMod.Content.Items.Armor
 public override void AddRecipes() {
 		Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.Wood, 15);
-			recipe.AddIngredient(ItemID.OrichalcumBar, 30);
+			recipe.AddIngredient(ItemID.MythrilBar, 30);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 

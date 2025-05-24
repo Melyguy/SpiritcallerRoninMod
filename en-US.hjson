@@ -534,6 +534,32 @@ Mods: {
 				DisplayName: Cursed Blade Chunk
 				Tooltip: Allows the wearer to dash. Increases Ronin damage by {0}%, attack speed by {1}% and crit chance by {2}%
 			}
+
+			FavorOfTheLight: {
+				DisplayName: Favor Of The Light
+				Tooltip: Allows the wearer to dash. Increases Ronin damage by {0}%, attack speed by {1}%
+			}
+
+			SeveredOniHead: {
+				DisplayName: Severed Oni Head
+				Tooltip: Increases Ronin damage by {0}% and attack speed by {1}%
+			}
+
+			DesertSpiritRobe: {
+				DisplayName: Desert Spirit Robe
+				Tooltip: ""
+			}
+
+			DesertSpiritSkirt: {
+				DisplayName: Desert Spirit Skirt
+				Tooltip: ""
+			}
+
+			DesertSpiritJingasa: {
+				SetBonus: Mods.SpiritcallerRoninMod.Items.DesertSpiritJingasa.SetBonus
+				DisplayName: Desert Spirit Jingasa
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
