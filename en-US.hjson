@@ -560,6 +560,21 @@ Mods: {
 				DisplayName: Desert Spirit Jingasa
 				Tooltip: ""
 			}
+
+			AshinaCrest: {
+				DisplayName: Ashina Crest
+				Tooltip: ""
+			}
+
+			TarnishedHarvester: {
+				DisplayName: Tarnished Harvester
+				Tooltip: A rusted blade haunted by a whisper... Has a chance to release a soul wisp.
+			}
+
+			SoulSplinterHarvester: {
+				DisplayName: Soul Splinter Harvester
+				Tooltip: Each soul it takes cracks the blade further — and sharpens its hunger.
+			}
 		}
 
 		NPCs: {
@@ -618,6 +633,7 @@ Mods: {
 			PhoenixSlash2.DisplayName: Phoenix Slash2
 			GenichiroSlash.DisplayName: Genichiro Slash
 			GenichiroSlashLightning.DisplayName: Genichiro Slash Lightning
+			SoulWispProjectile.DisplayName: Soul Wisp Projectile
 		}
 
 		Biomes: {

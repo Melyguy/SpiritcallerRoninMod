@@ -149,7 +149,9 @@ namespace SpiritcallerRoninMod.NPCs
             case 3:
                 return "Two!... The master is absolute. You give your life to keep him safe. You bring him back at any cost.";
             case 4:
-                return "Three!... Fear is absolute. There is no shame in losing one battle. But you must take revenge by any means necessary!";        
+                return "Three!... Fear is absolute. There is no shame in losing one battle. But you must take revenge by any means necessary!";
+            case 5:
+                return "Be vary of the sakura grove. It a sanctuary for the ronin and a hunting ground for the cruel spiritcallers.";           
             default:
                 return "Where is Lord Kuro."; 
         }
