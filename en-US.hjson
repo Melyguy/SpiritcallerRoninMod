@@ -575,6 +575,26 @@ Mods: {
 				DisplayName: Soul Splinter Harvester
 				Tooltip: Each soul it takes cracks the blade further — and sharpens its hunger.
 			}
+
+			SpectreFang: {
+				DisplayName: Spectre Fang
+				Tooltip: Its edge tears through flesh. Its hunger tears through souls.
+			}
+
+			ReapersHunger: {
+				DisplayName: Reapers Hunger
+				Tooltip: It no longer waits for souls to die
+			}
+
+			WailingEclipse: {
+				DisplayName: Wailing Eclipse
+				Tooltip: No gods remain where it reaps.
+			}
+
+			ScytheOfTheHollowStar: {
+				DisplayName: Scythe Of The Hollow Star
+				Tooltip: A fragment of the cosmos, corrupted and bound to soulfire. Fires void slashes.
+			}
 		}
 
 		NPCs: {
@@ -634,6 +654,10 @@ Mods: {
 			GenichiroSlash.DisplayName: Genichiro Slash
 			GenichiroSlashLightning.DisplayName: Genichiro Slash Lightning
 			SoulWispProjectile.DisplayName: Soul Wisp Projectile
+			SoulGhastProjectile.DisplayName: Soul Ghast Projectile
+			EclipseSlash.DisplayName: Eclipse Slash
+			EclipseCrescentProjectile.DisplayName: Eclipse Crescent Projectile
+			HollowStarSlash.DisplayName: Hollow Star Slash
 		}
 
 		Biomes: {
