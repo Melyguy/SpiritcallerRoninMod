@@ -50,7 +50,7 @@ namespace SpiritcallerRoninMod.Content.Items.Armor
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
 		public override void AddRecipes() {
 		Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.Wood, 15);
+			recipe.AddIngredient(ItemID.SandBlock, 15);
 			recipe.AddIngredient(ItemID.DynastyWood, 15);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.Register();

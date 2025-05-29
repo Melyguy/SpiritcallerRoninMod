@@ -76,6 +76,22 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
             recipe.AddTile(TileID.Anvils); // Or Crimson Altar
             recipe.Register();
             
+            recipe = CreateRecipe();
+			recipe.AddIngredient<SoulSplinterHarvester>();
+            recipe.AddIngredient(ItemID.OrichalcumBar, 15); // or CrimtaneBar
+            recipe.AddIngredient(ItemID.CursedFlame, 5);
+            recipe.AddIngredient(ItemID.SoulofNight, 10); // or Tissue Sample
+            recipe.AddTile(TileID.Anvils); // Or Crimson Altar
+            recipe.Register();
+            
+            recipe = CreateRecipe();
+			recipe.AddIngredient<SoulSplinterHarvester>();
+            recipe.AddIngredient(ItemID.OrichalcumBar, 15); // or CrimtaneBar
+            recipe.AddIngredient(ItemID.Ichor, 5);
+            recipe.AddIngredient(ItemID.SoulofNight, 10); // or Tissue Sample
+            recipe.AddTile(TileID.Anvils); // Or Crimson Altar
+            recipe.Register();
+            
         }
     }
 }

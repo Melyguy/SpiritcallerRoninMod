@@ -595,6 +595,11 @@ Mods: {
 				DisplayName: Scythe Of The Hollow Star
 				Tooltip: A fragment of the cosmos, corrupted and bound to soulfire. Fires void slashes.
 			}
+
+			GravebornCrescent: {
+				DisplayName: Graveborn Crescent
+				Tooltip: Forged of the head of an old god its forced to watch as you slaughter its kin.
+			}
 		}
 
 		NPCs: {
@@ -632,6 +637,8 @@ Mods: {
 			Onryo.DisplayName: Onryo
 			Stratoshade.DisplayName: Stratoshade
 			GenichiroAshina.DisplayName: Genichiro Ashina
+			AkaneTheWardenOfTheEnd.DisplayName: Akane The Warden Of The End
+			GuardOfTheEnd.DisplayName: Guard Of The End
 		}
 
 		Projectiles: {
@@ -658,6 +665,8 @@ Mods: {
 			EclipseSlash.DisplayName: Eclipse Slash
 			EclipseCrescentProjectile.DisplayName: Eclipse Crescent Projectile
 			HollowStarSlash.DisplayName: Hollow Star Slash
+			HollowStarMelee.DisplayName: Hollow Star Melee
+			Crescentslash.DisplayName: Crescentslash
 		}
 
 		Biomes: {

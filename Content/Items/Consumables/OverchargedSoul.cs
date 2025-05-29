@@ -70,8 +70,8 @@ namespace SpiritcallerRoninMod.Content.Items.Consumables
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
 		public override void AddRecipes() {
 			CreateRecipe()
-				.AddIngredient(ItemID.HellstoneBar, 30)
-				.AddIngredient(ItemID.Obsidian, 30)
+				.AddIngredient(ItemID.Cloud, 30)
+				.AddIngredient(ItemID.RainCloud, 30)
                 .AddIngredient(ItemID.ThrowingKnife, 1)
                 .AddIngredient(ItemID.SoulofNight, 10)
                 .AddIngredient(ItemID.SoulofLight, 10)

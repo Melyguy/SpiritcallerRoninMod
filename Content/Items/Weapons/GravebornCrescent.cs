@@ -8,34 +8,37 @@ using System.Linq;
 
 namespace SpiritcallerRoninMod.Content.Items.Weapons
 {
-    public class WailingEclipse : ModItem
+    public class GravebornCrescent : ModItem
     {
         private bool alternateSlash = false;
-
         public override void SetStaticDefaults()
         {
+
         }
 
         public override void SetDefaults()
         {
-            Item.damage = 80;
-            Item.DamageType = DamageClass.Magic; // Your custom damage class can replace this
-            Item.width = 55;
-            Item.height = 48;
-            Item.useTime = 18;
-            Item.useAnimation = 18;
+            Item.damage = 150;
+            Item.DamageType = DamageClass.Magic; // Replace with your custom SpiritcallerDamageClass
+            Item.width = 58;
+            Item.height = 58;
+			Item.scale = 1.2f; // Extreme scale down for 500x500 texture
+            Item.useTime = 20;
+            Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.knockBack = 3f;
-            Item.value = Item.buyPrice(silver: 75);
-            Item.rare = ItemRarityID.Blue;
+            Item.knockBack = 6.5f;
+            Item.value = Item.sellPrice(platinum: 1);
+            Item.rare = ItemRarityID.Red;
             Item.UseSound = SoundID.Item71;
+            Item.UseSound = SoundID.Item124;
             Item.autoReuse = true;
-            Item.noMelee = false; // Scythe does melee
-            Item.shoot = ModContent.ProjectileType<EclipseCrescentProjectile>(); // Optional wisp
+            Item.noMelee = false;
+            Item.mana = 12;
+
+            Item.shoot = ModContent.ProjectileType<Crescentslash>();
             Item.shootSpeed = 20f;
-            Item.mana = 5;
         }
-            public override void ModifyTooltips(List<TooltipLine> tooltips)
+                    public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             var linetochange = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.Mod == "Terraria");
             if (linetochange != null)
@@ -48,7 +51,8 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
         {
             damage += player.GetModPlayer<GlobalPlayer>().SpiritCallerDamage;
         }
-        public override bool? UseItem(Player player)
+
+               public override bool? UseItem(Player player)
         {
             // 1 in 2 chance to release a soul wisp
             if (Main.rand.NextBool(2))
@@ -60,8 +64,8 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
             // Create a slash projectile
             float adjustedItemScale = player.GetAdjustedItemScale(Item);
             int projectileType = alternateSlash ? 
-                ModContent.ProjectileType<EclipseSlash>() : 
-                ModContent.ProjectileType<EclipseSlash>();
+                ModContent.ProjectileType<HollowStarMelee>() : 
+                ModContent.ProjectileType<HollowStarMelee>();
 
             // Create two slashes for a combo effect
             for (int i = 0; i < 2; i++)
@@ -90,17 +94,16 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
         public override void AddRecipes()
         {
             Recipe recipe = CreateRecipe();
-			recipe.AddIngredient<ReapersHunger>();
-            recipe.AddIngredient(ItemID.ChlorophyteBar, 15);
-            recipe.AddIngredient(ItemID.ShroomiteBar, 15);
-            recipe.AddIngredient(ItemID.BeetleHusk, 5); // or CrimtaneBar
-            recipe.AddIngredient(ItemID.SpectreBar, 20);
-            recipe.AddIngredient(ItemID.BrokenHeroSword, 1); // or Tissue Sample
-            recipe.AddIngredient(ItemID.DeathSickle, 1); // or Tissue Sample
-            recipe.AddTile(TileID.Anvils); // Or Crimson Altar
+            recipe.AddIngredient(ModContent.ItemType<ScytheOfTheHollowStar>(), 1);
+            recipe.AddIngredient(ItemID.FragmentNebula, 30);
+            recipe.AddIngredient(ItemID.LunarBar, 20);
+            recipe.AddIngredient(ItemID.SoulofNight, 10);
+            recipe.AddIngredient(ItemID.SoulofMight, 10);
+            recipe.AddIngredient(ItemID.SoulofFright, 10);
+            recipe.AddIngredient(ItemID.SoulofSight, 10);
+
+            recipe.AddTile(TileID.LunarCraftingStation);
             recipe.Register();
-        
-            
         }
     }
 }
