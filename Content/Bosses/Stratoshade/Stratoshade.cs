@@ -242,7 +242,13 @@ public override void SetDefaults()
             {
                 NPC.TargetClosest(true);
                 Player player = Main.player[NPC.target];
-
+			if (player.dead) {
+				// If the targeted player is dead, flee
+				NPC.velocity.Y -= 0.04f;
+				// This method makes it so when the boss is in "despawn range" (outside of the screen), it despawns in 10 ticks
+				NPC.EncourageDespawn(10);
+				return;
+			}
                 // Add blizzard effect
                 ManageBlizzard();
 

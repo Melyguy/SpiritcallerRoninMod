@@ -20,7 +20,7 @@ public class AkaneTheWardenOfTheEnd : ModNPC
 {
 public override void SetStaticDefaults()
 {
-    Main.npcFrameCount[NPC.type] = 20; // Update total frames to match spritesheet
+    Main.npcFrameCount[NPC.type] = 40; // Update total frames to match spritesheet
     NPCID.Sets.NPCBestiaryDrawOffset[NPC.type] = new NPCID.Sets.NPCBestiaryDrawModifiers()
     {
         CustomTexturePath = null,
@@ -29,55 +29,65 @@ public override void SetStaticDefaults()
         PortraitPositionYOverride = null
     };
 }
-
+		public static int secondStageHeadSlot = -1;
 public override void FindFrame(int frameHeight)
 {
     NPC.frameCounter++;
     int frameSpeed = 5;
 
+    // Phase check: 0 = phase one, 1 = phase two
+    int phaseOffset = (int)NPC.ai[3] == 1 ? 20 : 0;
+
     switch ((int)NPC.ai[0])
     {
-        case 0: // Idle (frames 0–3)
-            NPC.frame.Y = ((int)(NPC.frameCounter / frameSpeed) % 4) * frameHeight;
-            if (NPC.frameCounter >= frameSpeed * 4)
-                NPC.frameCounter = 0;
+        case 0: // Idle (frames 0–3) or (20–23)
+            NPC.frame.Y = ((int)(NPC.frameCounter / frameSpeed) % 4 + phaseOffset + 0) * frameHeight;
             break;
 
-        case 1: // Walking or preparing (frames 4–7)
-            NPC.frame.Y = ((int)(NPC.frameCounter / frameSpeed) % 4 + 4) * frameHeight;
-            if (NPC.frameCounter >= frameSpeed * 4)
-                NPC.frameCounter = 0;
+        case 1: // Walking/prep (frames 4–7 or 24–27)
+            NPC.frame.Y = ((int)(NPC.frameCounter / frameSpeed) % 4 + phaseOffset + 4) * frameHeight;
             break;
 
-        case 2: // Slashing attack (frames 8–11)
-            NPC.frame.Y = ((int)(NPC.frameCounter / frameSpeed) % 4 + 8) * frameHeight;
-            if (NPC.frameCounter >= frameSpeed * 4)
-                NPC.frameCounter = 0;
+        case 2: // Slashing attack (frames 8–11 or 28–31)
+            NPC.frame.Y = ((int)(NPC.frameCounter / frameSpeed) % 4 + phaseOffset + 8) * frameHeight;
             break;
 
-        case 3: // Charging or casting (frames 12–15)
-            NPC.frame.Y = ((int)(NPC.frameCounter / frameSpeed) % 4 + 12) * frameHeight;
-            if (NPC.frameCounter >= frameSpeed * 4)
-                NPC.frameCounter = 0;
+        case 3: // Casting/charge (frames 12–15 or 32–35)
+            NPC.frame.Y = ((int)(NPC.frameCounter / frameSpeed) % 4 + phaseOffset + 12) * frameHeight;
             break;
 
-        case 4: // Enraged/Transformed (frames 16–19)
-            NPC.frame.Y = ((int)(NPC.frameCounter / frameSpeed) % 4 + 16) * frameHeight;
-            if (NPC.frameCounter >= frameSpeed * 4)
-                NPC.frameCounter = 0;
+        case 4: // Transformed attack/enraged (frames 16–19 or 36–39)
+            NPC.frame.Y = ((int)(NPC.frameCounter / frameSpeed) % 4 + phaseOffset + 16) * frameHeight;
             break;
 
-        default: // fallback to idle
-            NPC.frame.Y = 0;
+        default:
+            NPC.frame.Y = phaseOffset * frameHeight;
             break;
     }
+
+    // Reset counter after one full animation cycle
+    if (NPC.frameCounter >= frameSpeed * 4)
+        NPC.frameCounter = 0;
 }
 
+		public override void Load() {
+			// We want to give it a second boss head icon, so we register one
+			string texture = BossHeadTexture + "_SecondStage"; // Our texture is called "ClassName_Head_Boss_SecondStage"
+			secondStageHeadSlot = Mod.AddBossHeadTexture(texture, -1); // -1 because we already have one registered via the [AutoloadBossHead] attribute, it would overwrite it otherwise
+		}
+
+		public override void BossHeadSlot(ref int index) {
+			int slot = secondStageHeadSlot;
+			if (SecondPhase && slot != -1) {
+				// If the boss is in its second stage, display the other head icon instead
+				index = slot;
+			}
+		}
 
     public bool SecondPhase = false;
 public override void SetDefaults()
 {
-    NPC.width = 120;
+    NPC.width = 100;
     NPC.height = 140;
     NPC.damage = 60; // Increased damage
     NPC.defense = 50;
@@ -108,13 +118,13 @@ public override void SetDefaults()
 			LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
 
 			// Add your new drops here
-			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<AshinaHelmet>(), 1)); // 100% drop chance
-			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<AshinaChestPlate>(), 2)); // 100% drop chance
-			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<AshinaLeggings>(), 3)); // 100% drop chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PikeOfTheWarden>(), 1)); // 100% drop chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<WardensHalo>(), 2)); // 100% drop chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<WardensHiddenTreasure>(), 3)); // 100% drop chance
 			
 			// Add some materials with different drop chances
-			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.WoodenArrow, 1, 15, 30)); // Drops 15-30 Wood
-			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.WoodenBow, 3)); // 33% chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.Ectoplasm, 1, 15, 30)); // Drops 15-30 Wood
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.AbigailsFlower, 3)); // 33% chance
 			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<SheathedKatana>(), 3)); // 33% chance
 			
 			// You can also add coins
@@ -127,8 +137,6 @@ public override void SetDefaults()
 			// This part is not required for a boss and is just showcasing some advanced stuff you can do with drop rules to control how items spawn
 			// We make 12-15 ExampleItems spawn randomly in all directions, like the lunar pillar fragments. Hereby we need the DropOneByOne rule,
 			// which requires these parameters to be defined
-			int itemType = ModContent.ItemType<EvilSealingSheath>();
-			int itemType2 = ModContent.ItemType<CactusSpirit>();
 			
 			var parameters = new DropOneByOne.Parameters() {
 				ChanceNumerator = 1,
@@ -138,18 +146,15 @@ public override void SetDefaults()
 				MinimumItemDropsCount = 1,
 				MaximumItemDropsCount = 1,
 			};
-			
-
-			notExpertRule.OnSuccess(new DropOneByOne(itemType, parameters));
 
 			// Finally add the leading rule 
 			npcLoot.Add(notExpertRule);
 
 			// Add the treasure bag using ItemDropRule.BossBag (automatically checks for expert mode)
-			npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<GenichiroBag>()));
+			npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<AkaneBag>()));
 
 			// ItemDropRule.MasterModeCommonDrop for the relic
-			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Placeable.Furniture.GenichiroRelic>()));
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Placeable.Furniture.AkaneRelic>()));
 
 			// ItemDropRule.MasterModeDropOnAllPlayers for the pet
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Items.Weapons.blackmortalBlade>())); //CHANGE THIS LATER!!!
@@ -216,60 +221,192 @@ public override void SetDefaults()
                     Main.dust[snowDust].noGravity = true;
                     Main.dust[snowDust].velocity.X *= 2f;
                 }
-            }
+            }   
 
-            private void Movement(Player player)
+
+private bool TileExists(int x, int y)
 {
-    float moveSpeed = 4f; // Increased speed
-    float acceleration = 0.3f; // Increased acceleration
-    
-    // Calculate direction to player
-    float xDiff = player.Center.X - NPC.Center.X;
-    
-    // Always move towards player
-    NPC.velocity.X = MathHelper.Lerp(NPC.velocity.X, Math.Sign(xDiff) * moveSpeed, acceleration);
-    
-    // Set animation state
-    NPC.ai[0] = Math.Abs(NPC.velocity.X) > 0.5f ? 1 : 0;
-    
-    // Ground and jump logic
-    bool onGround = false;
-    Point tileCoords = (NPC.Bottom + new Vector2(0, 8f)).ToTileCoordinates();
-    
-    if (WorldGen.InWorld(tileCoords.X, tileCoords.Y, 2))
+    if (!WorldGen.InWorld(x, y, 2)) return false;
+
+    Tile tile = Main.tile[x, y];
+    if (tile == null || !tile.HasTile)
+        return false;
+
+    // Check if it's a fully solid tile (no slope, no half block)
+    return Main.tileSolid[tile.TileType] &&
+           !tile.IsHalfBlock &&
+           tile.Slope == SlopeType.Solid;
+}
+
+private bool IsOnGround()
+{
+    int startX = (int)(NPC.Left.X / 16f);
+    int endX = (int)(NPC.Right.X / 16f);
+    int y = (int)((NPC.Bottom.Y + 2f) / 16f);
+
+    for (int x = startX; x <= endX; x++)
     {
-        Tile tile = Main.tile[tileCoords.X, tileCoords.Y];
-        onGround = tile != null && tile.HasTile && Main.tileSolid[tile.TileType];
+        if (TileExists(x, y)) return true;
     }
+    return false;
+}
+
+
+
+private void Movement(Player player)
+{
+    float normalSpeed = 3f;
+    float normalAcceleration = 0.2f;
+
+    ref float ai_jumpCooldown = ref NPC.ai[0];
+    ref float ai_stuckTimer = ref NPC.ai[1];
+    ref float ai_prevX = ref NPC.ai[2];
+
+    bool fleeing = player.dead;
+
+    int direction = fleeing 
+        ? -Math.Sign(player.Center.X - NPC.Center.X)
+        : Math.Sign(player.Center.X - NPC.Center.X);
+    if (direction == 0) direction = 1;
+
+if (player.dead)
+{
+    NPC.EncourageDespawn(10);
+    NPC.noTileCollide = false;
+    NPC.noGravity = false;
     
-    if (onGround)
+    float fleeSpeed = 6f;
+    float fleeAcceleration = 0.3f;
+
+    int fleeDirection = -Math.Sign(player.Center.X - NPC.Center.X);
+    if (fleeDirection == 0)
+        fleeDirection = 1;
+
+    NPC.velocity.X = MathHelper.Lerp(NPC.velocity.X, fleeDirection * fleeSpeed, fleeAcceleration);
+    NPC.direction = fleeDirection;
+    NPC.spriteDirection = -fleeDirection;
+
+    bool onground = IsOnGround();
+    Point tileAhead = (NPC.Bottom + new Vector2(fleeDirection * 16f, 0)).ToTileCoordinates();
+
+    bool obstacleAhead = TileExists(tileAhead.X, tileAhead.Y - 1);    // tile right in front (head level)
+    bool spaceAbove = !TileExists(tileAhead.X, tileAhead.Y - 2);      // space 1 block above front tile
+    bool spaceTwoAbove = !TileExists(tileAhead.X, tileAhead.Y - 3);   // space 2 blocks above front tile
+    
+
+    // Check tile ahead at feet level
+
+
+if (onground && Math.Abs(NPC.velocity.Y) < 0.1f && ai_jumpCooldown <= 0f)
+{
+    if (obstacleAhead && spaceAbove)
     {
-        Point frontCoords = new Point(tileCoords.X + Math.Sign(NPC.velocity.X), tileCoords.Y - 2);
-        bool tileInFront = WorldGen.InWorld(frontCoords.X, frontCoords.Y, 2) && 
-                          Main.tile[frontCoords.X, frontCoords.Y].HasTile && 
-                          Main.tileSolid[Main.tile[frontCoords.X, frontCoords.Y].TileType];
-        
-        if (tileInFront && NPC.velocity.Y == 0f)
-        {
-            NPC.velocity.Y = -10f;
-            SoundEngine.PlaySound(SoundID.Item16, NPC.Center);
-        }
+        NPC.velocity.Y = -10f; // Slightly stronger jump
+        ai_jumpCooldown = 30f;
     }
-    else
+    else if (obstacleAhead && !spaceAbove && spaceTwoAbove)
     {
-        NPC.velocity.Y += 0.4f;
-        if (NPC.velocity.Y > 10f)
-            NPC.velocity.Y = 10f;
+        NPC.velocity.Y = -20f; // Higher jump for 2-tile obstacles
+        ai_jumpCooldown = 30f;
     }
 }
 
+
+    if (!onground)
+    {
+        NPC.velocity.Y += 0.4f;    // gravity
+        if (NPC.velocity.Y > 10f)
+            NPC.velocity.Y = 10f;
+    }
+
+    if (ai_jumpCooldown > 0)
+        ai_jumpCooldown--;
+
+    return;
+}
+
+
+
+    // === Normal grounded movement ===
+
+    NPC.noTileCollide = false;
+    NPC.noGravity = false;
+
+    float moveSpeed = normalSpeed;
+    float acceleration = normalAcceleration;
+
+    NPC.velocity.X = MathHelper.Lerp(NPC.velocity.X, direction * moveSpeed, acceleration);
+    NPC.direction = direction;
+    NPC.spriteDirection = direction;
+
+    bool onGround = IsOnGround();
+
+    if (!onGround)
+    {
+        NPC.velocity.Y += 0.4f;
+        if (NPC.velocity.Y > 10f) NPC.velocity.Y = 10f;
+    }
+
+    Point ahead = (NPC.Bottom + new Vector2(direction * 16f, 0)).ToTileCoordinates();
+    bool tileInFront = TileExists(ahead.X, ahead.Y - 1);
+    bool stepPossible = !TileExists(ahead.X, ahead.Y);
+
+if (onGround && Math.Abs(NPC.velocity.Y) < 0.1f && ai_jumpCooldown <= 0f)
+{
+    if (tileInFront && !TileExists(ahead.X, ahead.Y - 2))
+    {
+        NPC.position.Y -= 16f;
+        NPC.velocity.Y = -2f; // step-up only
+    }
+    else if (tileInFront && TileExists(ahead.X, ahead.Y - 2) && !TileExists(ahead.X, ahead.Y - 4))
+    {
+        NPC.velocity.Y = -11f; // higher jump for 2-tile obstacle
+        SoundEngine.PlaySound(SoundID.Item16, NPC.Center);
+        ai_jumpCooldown = 30f;
+    }
+}
+
+
+    if (onGround && tileInFront && TileExists(ahead.X, ahead.Y - 2) && !TileExists(ahead.X, ahead.Y - 4))
+    {
+        if (ai_jumpCooldown <= 0f)
+        {
+            NPC.velocity.Y = -10f;
+            SoundEngine.PlaySound(SoundID.Item16, NPC.Center);
+            ai_jumpCooldown = 30f;
+        }
+    }
+
+    if (Math.Abs(NPC.Center.X - ai_prevX) < 0.2f && onGround)
+    {
+        ai_stuckTimer++;
+        if (ai_stuckTimer > 30)
+        {
+            NPC.velocity.Y = -6f;
+            ai_stuckTimer = 0f;
+        }
+    }
+    else ai_stuckTimer = 0f;
+
+    ai_prevX = NPC.Center.X;
+
+    if (ai_jumpCooldown > 0f)
+        ai_jumpCooldown--;
+}
+
+
+
+
+
 public override void AI()
 {
+    
     NPC.TargetClosest(true);
     Player player = Main.player[NPC.target];
 
     if(!SecondPhase && NPC.life <= NPC.lifeMax * 0.8f){
         SecondPhase = true;
+        NPC.ai[3] = 1;
         NPC.damage = 100;
         NPC.defense += 15; // Increase defense
         NPC.knockBackResist = 0f; // Become immune to knockback
@@ -292,7 +429,7 @@ NPC.GivenName = "Soulfractured Akane";
         SoundEngine.PlaySound(SoundID.Thunder, NPC.Center);
 
         // Display text above boss when transforming
-        CombatText.NewText(NPC.getRect(), Color.Yellow, "I cannot yield! ", true);
+        CombatText.NewText(NPC.getRect(), Color.Pink, "Seems i have to deal with you myself! ", true);
     }
 
     if (!player.active || player.dead)
@@ -304,47 +441,68 @@ NPC.GivenName = "Soulfractured Akane";
         return;
     }
 
-    NPC.spriteDirection = NPC.direction = player.Center.X > NPC.Center.X ? 1 : -1;
+NPC.spriteDirection = NPC.direction = player.Center.X > NPC.Center.X ? 1 : -1;
 
-    switch ((int)NPC.ai[0])
+if (player.dead) {
+    NPC.velocity.Y -= 0.04f;
+    NPC.EncourageDespawn(10);
+    return;
+}
+
+ref float ai_attackTimer = ref NPC.ai[3]; // new attack timer
+
+// Always move while on ground or unless overridden
+if (NPC.ai[0] == 0 || NPC.ai[0] == 1)
+{
+    Movement(player);
+}
+
+// Always count up attack timer (unless doing rapid attack)
+if (NPC.ai[0] == 0 || NPC.ai[0] == 1)
+{
+    ai_attackTimer++;
+    if (ai_attackTimer >= 60f) // Attack every ~1 second
     {
-        case 0: // Idle/Movement
-        case 1: // Walking
-            Movement(player);
-            if (NPC.ai[1]++ >= 30)
-            {
-                NPC.ai[1] = 0;
-                NPC.ai[0] = Main.rand.Next(2, 5); // Randomly choose between attacks
-            }
-            break;
-
-        case 2: // Bow Attack
-            ArrowAtk(player);
-            if (NPC.ai[1]++ >= 45)
-            {
-                NPC.ai[1] = 0;
-                NPC.ai[0] = 0;
-            }
-            break;
-
-        case 3: // Basic Slash
-            SpawnGuys(player);
-            if (NPC.ai[1]++ >= 30)
-            {
-                NPC.ai[1] = 0;
-                NPC.ai[0] = 0;
-            }
-            break;
-
-        case 4: // Rapid Slash
-            RapidSlash(player);
-            if (NPC.ai[1]++ >= 20)
-            {
-                NPC.ai[1] = 0;
-                NPC.ai[0] = 0;
-            }
-            break;
+        ai_attackTimer = 0;
+        NPC.ai[0] = Main.rand.Next(2, 5); // Choose attack
+        NPC.ai[1] = 0;
     }
+}
+
+switch ((int)NPC.ai[0])
+{
+    case 0: // Idle
+    case 1: // Walking (merged above)
+        break;
+
+    case 2: // Bow Attack
+        ArrowAtk(player);
+        if (NPC.ai[1]++ >= 45)
+        {
+            NPC.ai[1] = 0;
+            NPC.ai[0] = 0;
+        }
+        break;
+
+    case 3: // Basic Slash
+        SpawnGuys(player);
+        if (NPC.ai[1]++ >= 30)
+        {
+            NPC.ai[1] = 0;
+            NPC.ai[0] = 0;
+        }
+        break;
+
+    case 4: // Rapid Slash
+        RapidSlash(player);
+        if (NPC.ai[1]++ >= 20)
+        {
+            NPC.ai[1] = 0;
+            NPC.ai[0] = 0;
+        }
+        break;
+}
+
 
     // Failsafe
     if (NPC.ai[1] > 60 && NPC.ai[0] != 0)
@@ -353,102 +511,7 @@ NPC.GivenName = "Soulfractured Akane";
         NPC.ai[1] = 0;
     }
 }
-            private void FireIceProjectilesAtPlayer(Player player)
-            {
-                Vector2 direction = (player.Center - NPC.Center).SafeNormalize(Vector2.UnitY);
-                float speed = 30f;
-
-                for (int i = -1; i <= 1; i++)
-                {
-                    Vector2 perturbedDirection = direction.RotatedBy(MathHelper.ToRadians(15f * i));
-                    Projectile.NewProjectile(
-                        NPC.GetSource_FromAI(), 
-                        NPC.Center, 
-                        perturbedDirection * speed, 
-                        ProjectileID.CultistBossIceMist, 
-                        40, 
-                        1f, 
-                        Main.myPlayer);
-                }
-            }
-
-            private void SlashAttack(Player player)
-            {
-                // Set animation state to slash
-                NPC.ai[0] = 4;
-                
-                // Calculate direction to player
-                Vector2 direction = (player.Center - NPC.Center).SafeNormalize(Vector2.UnitX);
-                
-                // Only perform the slash on the correct animation frame
-                if (NPC.frameCounter == 10)
-                {
-                    // Dash towards player
-                    float dashSpeed = 12f;
-                    NPC.velocity = direction * dashSpeed;
-                    
-                    // Create a single large slash projectile
-                    Vector2 slashPosition = NPC.Center + direction * 40f;
-                    if(!SecondPhase){
-                    Projectile.NewProjectile(
-                        NPC.GetSource_FromAI(),
-                        slashPosition,
-                        direction * 8f,
-                        ModContent.ProjectileType<GenichiroSlash>(),
-                        45,
-                        2f,
-                        Main.myPlayer,
-                        ai0: 2.5f, // Much larger scale
-                        ai1: 10f
-                    );
-                    SoundEngine.PlaySound(SoundID.Item71, NPC.Center);
-                                        // Visual effects
-                    for (int i = 0; i < 20; i++)
-                    {
-                        Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.WhiteTorch, 
-                            direction.X * 2f, direction.Y * 2f, 100, default, 1.5f);
-                    }
-                    }
-                    else{
-                    Projectile.NewProjectile(
-                        NPC.GetSource_FromAI(),
-                        slashPosition,
-                        direction * 8f,
-                        ModContent.ProjectileType<GenichiroSlashLightning>(),
-                        45,
-                        2f,
-                        Main.myPlayer,
-                        ai0: 2.5f, // Much larger scale
-                        ai1: 10f	
-                    );	
-                // Replace the existing Thunder sound with a combination of these:
-                SoundEngine.PlaySound(SoundID.Item94, NPC.Center); // Electric magic sound
-                SoundEngine.PlaySound(SoundID.Item92, NPC.Center); // Lightning zap sound
-                SoundEngine.PlaySound(SoundID.NPCHit53, NPC.Center); // Electric hit sound
-                    // Visual effects for lightning
-                    for (int i = 0; i < 30; i++)
-                    {
-                        // Create electric dust particles
-                        Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.YellowStarDust, 
-                            direction.X * 3f, direction.Y * 3f, 0, new Color(0, 236, 255), 2f);
-                        
-                        // Add some spark effects
-                        if (Main.rand.NextBool(2))
-                        {
-                            Dust sparkDust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, 
-                                DustID.YellowStarDust, direction.X * 4f, direction.Y * 4f);
-                            sparkDust.noGravity = true;
-                            sparkDust.scale = 2f;
-                        }
-                    }
-                    }
-
-                    
-
-                    
-                }
-            }
-            private void ArrowAtk(Player player)
+                        private void ArrowAtk(Player player)
             {
                 // Set animation state to use last 4 frames (arrow animation)
                 NPC.ai[0] = 2; // Attack animation state
@@ -479,7 +542,7 @@ NPC.GivenName = "Soulfractured Akane";
                             NPC.GetSource_FromAI(),
                             NPC.Center,
                             perturbedDirection * speed,
-                            ProjectileID.DD2BetsyFireball,
+                            ModContent.ProjectileType<CrescentslashBoss>(),
                             60,
                             1f,
                             Main.myPlayer
@@ -527,7 +590,7 @@ NPC.GivenName = "Soulfractured Akane";
                         NPC.GetSource_FromAI(),
                         slashPosition,
                         direction * 8f,
-                        ModContent.ProjectileType<GenichiroSlashLightning>(),
+                        ModContent.ProjectileType<HollowStarSlashBoss>(),
                         45,
                         2f,
                         Main.myPlayer,
@@ -543,7 +606,7 @@ NPC.GivenName = "Soulfractured Akane";
                         Vector2 randomOffset = Main.rand.NextVector2Circular(20f, 20f);
                         Dust lightningDust = Dust.NewDustPerfect(
                             NPC.Center + randomOffset,
-                            DustID.YellowStarDust, // Electric dust type for lightning effect
+                            DustID.PurpleCrystalShard, // Electric dust type for lightning effect
                             direction * Main.rand.NextFloat(1f, 3f),
                             0,
                             new Color(255, 255, 220), // Yellowish white color for lightning
@@ -557,7 +620,7 @@ NPC.GivenName = "Soulfractured Akane";
                         {
                             Dust trailDust = Dust.NewDustPerfect(
                                 NPC.Center + randomOffset,
-                                DustID.YellowStarDust,
+                                DustID.PurpleCrystalShard,
                                 direction * Main.rand.NextFloat(0.5f, 2f),
                                 0,
                                 new Color(255, 255, 0),
@@ -570,39 +633,61 @@ NPC.GivenName = "Soulfractured Akane";
     }
     
 }
-
+            private void TeleportNearPlayer(Player player)
+            {
+                Vector2 newPos = player.Center + Main.rand.NextVector2Circular(200, 200);
+                NPC.Center = newPos;
+                SoundEngine.PlaySound(SoundID.Zombie90, NPC.position); // Teleport sound
+                for (int i = 0; i < 20; i++) 
+                {
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Ice, 0f, 0f);
+                }
+            }
 private void SpawnGuys(Player player)
 {
-  Vector2 dir = (player.Center - NPC.Center).SafeNormalize(Vector2.UnitY);
-    float speed = 20f;
+    if(!SecondPhase) {
+    	  Vector2 dir = (player.Center - NPC.Center).SafeNormalize(Vector2.UnitY);
+            float speed = 20f;
 
-    // (Your existing orb code…)
+            // (Your existing orb code…)
 
-    // Spawn Nimbus Cloud “enemy” NPCs:
-    const int cloudCount = 2;
-    const float spawnHeight = 250f;       // how many pixels above the player
-    const float horizontalRadius = 100f;  // horizontal spread
-    for (int i = 0; i < cloudCount; i++)
-    {
-        Vector2 spawnPos = player.Center
-                         + new Vector2(
-                             Main.rand.NextFloat(-horizontalRadius, horizontalRadius),
-                             -spawnHeight
-                           );
-        int npcID = ModContent.NPCType<GuardOfTheEnd>(); // Spawn Angry Nimbus enemy
-        int index = NPC.NewNPC(
-            NPC.GetSource_FromAI(),
-            (int)spawnPos.X, 
-            (int)spawnPos.Y, 
-            npcID,
-            ai0: 0, 
-            ai1: 0
-        );
-        // Optionally tweak its velocity
-        Main.npc[index].velocity = new Vector2(0f, 2f);
+            // Spawn Nimbus Cloud “enemy” NPCs:
+            const int cloudCount = 2;
+            const float spawnHeight = 250f;       // how many pixels above the player
+            const float horizontalRadius = 100f;  // horizontal spread
+            for (int i = 0; i < cloudCount; i++)
+            {
+                Vector2 spawnPos = player.Center
+                                + new Vector2(
+                                    Main.rand.NextFloat(-horizontalRadius, horizontalRadius),
+                                    -spawnHeight
+                                );
+                int npcID = ModContent.NPCType<GuardOfTheEnd>(); // Spawn Angry Nimbus enemy
+                int index = NPC.NewNPC(
+                    NPC.GetSource_FromAI(),
+                    (int)spawnPos.X, 
+                    (int)spawnPos.Y, 
+                    npcID,
+                    ai0: 0, 
+                    ai1: 0
+                );
+                // Optionally tweak its velocity
+                Main.npc[index].velocity = new Vector2(0f, 2f);
+            }
+
+                if (NPC.frameCounter == 10)
+                {
+                    SoundEngine.PlaySound(SoundID.Item20, NPC.position);
+                }
+    else if(SecondPhase){
+            TeleportNearPlayer(player);
+
+    }
+    
+        
+    
     }
 
-    SoundEngine.PlaySound(SoundID.Item20, NPC.position);
 }
 
 

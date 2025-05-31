@@ -600,6 +600,31 @@ Mods: {
 				DisplayName: Graveborn Crescent
 				Tooltip: Forged of the head of an old god its forced to watch as you slaughter its kin.
 			}
+
+			PikeOfTheWarden: {
+				DisplayName: Pike Of The Warden
+				Tooltip: ""
+			}
+
+			WardensHalo: {
+				DisplayName: Wardens Halo
+				Tooltip: ""
+			}
+
+			AkaneRelic: {
+				DisplayName: Akane Relic
+				Tooltip: ""
+			}
+
+			WardensHiddenTreasure: {
+				DisplayName: Wardens Hidden Treasure
+				Tooltip: Before she was known as the Warden, she was a nameless blade in the dark — carving justice into the bones of the Spiritcallers
+			}
+
+			AkaneBag: {
+				DisplayName: Akane Bag
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -639,6 +664,8 @@ Mods: {
 			GenichiroAshina.DisplayName: Genichiro Ashina
 			AkaneTheWardenOfTheEnd.DisplayName: Akane The Warden Of The End
 			GuardOfTheEnd.DisplayName: Guard Of The End
+			PrototypeZR1Head.DisplayName: Prototype-ZR1
+			PrototypeZR1Body.DisplayName: Prototype-ZR1
 		}
 
 		Projectiles: {
@@ -667,6 +694,10 @@ Mods: {
 			HollowStarSlash.DisplayName: Hollow Star Slash
 			HollowStarMelee.DisplayName: Hollow Star Melee
 			Crescentslash.DisplayName: Crescentslash
+			CrescentslashBoss.DisplayName: Crescentslash Boss
+			HollowStarSlashBoss.DisplayName: Hollow Star Slash Boss
+			AkaneAoeAttack.DisplayName: Akane Aoe Attack
+			HollowStarMelee2.DisplayName: Hollow Star Melee2
 		}
 
 		Biomes: {

@@ -229,7 +229,13 @@ public override void SetDefaults()
 
                 // Add movement
                 Movement(player);
-
+			if (player.dead) {
+				// If the targeted player is dead, flee
+				NPC.velocity.Y -= 0.04f;
+				// This method makes it so when the boss is in "despawn range" (outside of the screen), it despawns in 10 ticks
+				NPC.EncourageDespawn(10);
+				return;
+			}
                 // Make the boss face the player
                 NPC.spriteDirection = NPC.direction = player.Center.X > NPC.Center.X ? 1 : -1;
 
