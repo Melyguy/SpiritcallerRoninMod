@@ -698,6 +698,7 @@ Mods: {
 			HollowStarSlashBoss.DisplayName: Hollow Star Slash Boss
 			AkaneAoeAttack.DisplayName: Akane Aoe Attack
 			HollowStarMelee2.DisplayName: Hollow Star Melee2
+			PrototypeNukeDeath.DisplayName: Prototype Nuke Death
 		}
 
 		Biomes: {

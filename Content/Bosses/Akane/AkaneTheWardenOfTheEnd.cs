@@ -449,7 +449,7 @@ if (player.dead) {
     return;
 }
 
-ref float ai_attackTimer = ref NPC.ai[3]; // new attack timer
+ref float ai_attackTimer = ref NPC.ai[2]; // new attack timer
 
 // Always move while on ground or unless overridden
 if (NPC.ai[0] == 0 || NPC.ai[0] == 1)

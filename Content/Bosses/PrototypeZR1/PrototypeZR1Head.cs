@@ -4,12 +4,15 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
+using System.Linq;
+using SpiritcallerRoninMod.Content.Projectiles;
 
 namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1;
 [AutoloadBossHead]
 
     public class PrototypeZR1Head : ModNPC
     {
+        public bool boomboomBool = false;
         public override void SetDefaults()
         {
             NPC.width = 200;
@@ -24,12 +27,52 @@ namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1;
             NPC.boss = true;
             NPC.netAlways = true;
             NPC.HitSound = SoundID.NPCHit4;
-            NPC.DeathSound = SoundID.Roar;
+            NPC.DeathSound = SoundID.Zombie104;
             Music = MusicID.OtherworldlyCrimson;
         }
 
         public override void AI()
         {
+            if (!Main.player.Any(p => p.active && !p.dead && p.ZoneUnderworldHeight)) // or just !p.dead
+{
+    NPC.TargetClosest(false);
+    NPC.velocity.Y -= 0.1f; // Fly upward
+    CombatText.NewText(NPC.Hitbox, Color.Gray, "ThReAt ElIImiNATed. DISENGAGING.");
+
+    if (NPC.timeLeft > 10)
+        NPC.timeLeft = 10; // Despawn soon
+    return;
+}   
+            if(!boomboomBool && NPC.life <= NPC.lifeMax * 0.10f){
+                boomboomBool = true;
+                TriggerNukeSequence();
+                CombatText.NewText(NPC.Hitbox, Color.Red, "WARNING: CORE MELTDOWN DETECTED");
+                CombatText.NewText(NPC.Hitbox, Color.Yellow, "WARNING: CORE MELTDOWN DETECTED");
+                CombatText.NewText(NPC.Hitbox, Color.Red, "WARNING: CORE MELTDOWN DETECTED");
+                CombatText.NewText(NPC.Hitbox, Color.Yellow, "WARNING: CORE MELTDOWN DETECTED");
+            }
+            if (NPC.ai[0] == 99) // Nuke phase
+{
+    
+    NPC.dontTakeDamage = true;
+    NPC.chaseable = false; // Optional: disables targeting/reticles
+    NPC.localAI[0]++;
+
+    // Warning effects
+    if (NPC.localAI[0] % 20 == 0)
+    {
+        Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke, Scale: 1.5f);
+    }
+
+    if (NPC.localAI[0] >= 120) // 2 seconds later
+    {
+        NukeExplosion();
+        NPC.life = 0; // Kill boss if part of the effect
+        NPC.checkDead(); // Force death
+    }
+}
+
+
             if (NPC.ai[0] == 0)
             {
                 int previous = NPC.whoAmI;
@@ -114,7 +157,7 @@ if (Main.rand.NextBool(30)) // Very rare, dramatic spark
 
     // Optional: play mechanical glitch sound occasionally
     if (Main.rand.NextBool(300))
-        SoundEngine.PlaySound(SoundID.Zombie104 with { Pitch = 0.5f }, NPC.position);
+                SoundEngine.PlaySound(SoundID.Item94, NPC.Center); // Electric magic sound
 }
 
         
@@ -156,6 +199,33 @@ if (Main.rand.NextBool(30)) // Very rare, dramatic spark
                      GoreID.Smoke1, 1.5f);
     }
 }
+private void TriggerNukeSequence()
+{
+    // Optional: Pause or change behavior
+    NPC.ai[0] = 99; // Enter nuke state
+    NPC.velocity *= 0f; // Stop moving
 
+    // Screen shake or warning sound
+    SoundEngine.PlaySound(SoundID.Roar, NPC.position);
+
+    // Start a countdown using a timer in AI slots (e.g., NPC.ai[1])
+    NPC.localAI[0] = 0; // Used as nuke timer
+}
+private void NukeExplosion()
+{
+    // Big visual and sound
+    SoundEngine.PlaySound(SoundID.Item14, NPC.position); // Explosion
+    for (int i = 0; i < 50; i++)
+    {
+        Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Torch, Main.rand.NextFloat(-10, 10), Main.rand.NextFloat(-10, 10), Scale: 2f);
     }
+
+    // Spawn projectile or damaging explosion
+    Projectile.NewProjectile(NPC.GetSource_Death(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<PrototypeNukeDeath>(), 200, 10f);
+}
+
+
+
+}
+
 
