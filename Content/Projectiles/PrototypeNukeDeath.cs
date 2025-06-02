@@ -9,151 +9,112 @@ using System;
 
 namespace SpiritcallerRoninMod.Content.Projectiles
 {
-public class PrototypeNukeDeath : ModProjectile
+    public class PrototypeNukeDeath : ModProjectile
+    {
+        private float expansionSpeed = 1.5f;
+        private float maxScale = 30f;
+        private bool hasExploded = false;
+        private bool isFading = false;
+
+        public override void SetDefaults()
+        {
+            Projectile.width = 32;
+            Projectile.height = 32;
+            Projectile.hostile = true;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft = 120;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.alpha = 0;
+            Projectile.damage = 300; // Heavy damage
+            Projectile.DamageType = DamageClass.Default;
+        }
+
+public override void AI()
 {
-    private float expansionSpeed = 0.3f;
-    private float maxScale = 75f;
-    private bool exploded = false;
+    Projectile.velocity = Vector2.Zero;
 
-    public override void SetDefaults()
+    // Expansion phase
+    if (!isFading && Projectile.scale < maxScale)
     {
-        Projectile.width = 32;
-        Projectile.height = 32;
-        Projectile.hostile = true;
-        Projectile.penetrate = -1;
-        Projectile.timeLeft = 180;
-        Projectile.tileCollide = false;
-        Projectile.ignoreWater = true;
-        Projectile.alpha = 100;
-        Projectile.scale = 0.1f;
-        Projectile.damage = 100; // Set base damage
-        Projectile.DamageType = DamageClass.Default;
-    }
+        Projectile.scale += expansionSpeed * 1f; // Slow but sharp scaling
 
-    public override void AI()
-    {
-        // Stop any movement
-        Projectile.velocity = Vector2.Zero;
+        float radius = (32f * Projectile.scale) / 2f;
 
-        // Expand with acceleration
-        if (Projectile.scale < maxScale)
-        {
-            Projectile.scale += expansionSpeed * (1f + Projectile.scale * 0.1f);
-            
-            // Calculate current radius
-            float radius = (Projectile.width * Projectile.scale) / 2f;
-            
-            // Check for player collision using circular detection
-            for (int i = 0; i < Main.maxPlayers; i++)
-            {
-                Player player = Main.player[i];
-                if (player.active && !player.dead && player.immuneTime <= 0)
-                {
-                    // Calculate distance from player center to projectile center
-                    float distance = Vector2.Distance(player.Center, Projectile.Center);
-                    
-                    // If player is within the radius, apply damage
-                    if (distance <= radius)
-                    {
-                        int damage = (int)(Projectile.damage * (1f + Projectile.scale * 0.2f));
-                        player.Hurt(PlayerDeathReason.ByProjectile(player.whoAmI, Projectile.whoAmI), damage, 0);
-                        player.immuneTime = 20;
-                        
-                        // Add screen shake when player is hit
-                        Main.instance.CameraModifiers.Add(new PunchCameraModifier(player.Center, Main.rand.NextVector2CircularEdge(1f, 1f), 3f, 3f, 5, 1000f, "NukeHit"));
-                    }
-                }
-            }
-        }
-
-        // More intense particle effects
-        for (int i = 0; i < 3; i++) // Spawn more particles
-        {
-            Vector2 dustPos = Projectile.Center + Main.rand.NextVector2Circular(Projectile.width/2, Projectile.height/2);
-            int dustType = Main.rand.NextFromList(DustID.Smoke, DustID.Torch, DustID.Torch);
-            var dust = Dust.NewDustPerfect(dustPos, dustType, Vector2.Zero, Scale: 2.5f);
-            dust.noGravity = true;
-            dust.velocity = (dustPos - Projectile.Center) * 0.1f;
-        }
-
-        // Stronger lighting
-        float lightIntensity = 2f + (float)Math.Sin(Main.GameUpdateCount * 0.1f) * 0.5f;
-        Lighting.AddLight(Projectile.Center, 2f * lightIntensity, 1.5f * lightIntensity, 0.5f * lightIntensity);
-
-        // Screen shake while expanding
-        if (Projectile.scale < maxScale * 0.8f)
-        {
-            Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Main.rand.NextVector2CircularEdge(1f, 1f), 5f, 6f, 20, 1000f, "Nuke"));
-        }
-
-        if (!exploded && Projectile.timeLeft <= 3)
-        {
-            exploded = true;
-            Explode();
-        }
-    }
-
-    private void Explode()
-    {
-        // Multiple explosion sounds layered
-        SoundEngine.PlaySound(SoundID.Item62, Projectile.Center);
-        SoundEngine.PlaySound(SoundID.Item14, Projectile.Center); // Thunder sound
-        SoundEngine.PlaySound(SoundID.Item69, Projectile.Center); // Bass boom
-
-        // Massive screen shake on explosion
-        Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, (Main.rand.NextFloat() * 6.28318f).ToRotationVector2(), 20f, 20f, 40, 2000f, "NukeExplosion"));
-
-        // More dramatic particle effects
-        for (int i = 0; i < 120; i++)
-        {
-            int dustType = Main.rand.NextFromList(DustID.Smoke, DustID.Torch, DustID.Torch, DustID.Vortex);
-            Vector2 velocity = Main.rand.NextVector2CircularEdge(15f, 15f);
-            var dust = Dust.NewDustPerfect(Projectile.Center, dustType, velocity, 0, default, 3f);
-            dust.noGravity = true;
-        }
-
-        // Gore effects for more impact
-        for (int i = 0; i < 30; i++)
-        {
-            Gore.NewGore(Projectile.GetSource_Death(), Projectile.Center, Main.rand.NextVector2CircularEdge(8f, 8f), Main.rand.Next(61, 64));
-        }
-
-        // Player damage check with screen shake on hit
+        // Damage players inside the scaled radius
         foreach (Player player in Main.player)
         {
-            // Enhanced explosion damage
-            // Fixed explosion damage check
-            float explosionRadius = Projectile.width * Projectile.scale / 2;
-            for (int i = 0; i < Main.maxPlayers; i++)
+            if (player.active && !player.dead && player.immuneTime <= 0)
             {
-                Player currentPlayer = Main.player[i];
-                if (player.active && !player.dead && player.immuneTime <= 0 && 
-                    Vector2.Distance(player.Center, Projectile.Center) < explosionRadius)
+                if (Vector2.Distance(player.Center, Projectile.Center) < radius)
                 {
-                    int explosionDamage = Projectile.damage * 2;
-                    player.Hurt(PlayerDeathReason.ByProjectile(player.whoAmI, Projectile.whoAmI), explosionDamage, 0);
-                    player.AddBuff(BuffID.OnFire, 180);
-                    player.immuneTime = 30; // Longer immunity frames for explosion
+                    player.Hurt(PlayerDeathReason.ByProjectile(player.whoAmI, Projectile.whoAmI), Projectile.damage, 0);
+                    player.immuneTime = 40;
+                    Main.instance.CameraModifiers.Add(
+                        new PunchCameraModifier(player.Center, Main.rand.NextVector2CircularEdge(1f, 1f), 4f, 4f, 10, 1000f, "NukeTouch")
+                    );
+                }
+            }
+        }
+
+        // Dust around edge
+        for (int i = 0; i < 4; i++)
+        {
+            Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(radius, radius);
+            int dust = Dust.NewDust(pos, 1, 1, DustID.Smoke, 0f, 0f, 100, default, 2f);
+            Main.dust[dust].noGravity = true;
+        }
+
+        if (Projectile.scale >= maxScale)
+        {
+            isFading = true;
+            Projectile.hostile = false;
+        }
+    }
+
+    // Fade-out
+    if (isFading)
+    {
+        Projectile.alpha += 10;
+        if (Projectile.alpha >= 255 || Projectile.timeLeft < 10)
+        {
+            Projectile.Kill();
+        }
+    }
+
+    // Lighting effect
+    float lightStrength = 1f - (Projectile.alpha / 255f);
+    Lighting.AddLight(Projectile.Center, lightStrength * 2.5f, lightStrength * 2f, lightStrength);
+}
+
+
+
+        public override bool CanHitPlayer(Player target)
+        {
+            return !isFading; // Only hit during expansion
+        }
+
+        public override void Kill(int timeLeft)
+        {
+            if (!hasExploded)
+            {
+                hasExploded = true;
+
+                SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
+
+                // Dust burst
+                for (int i = 0; i < 60; i++)
+                {
+                    int dust = Dust.NewDust(Projectile.Center, 1, 1, DustID.Torch, Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5), 100, default, 2f);
+                    Main.dust[dust].noGravity = true;
+                }
+
+                // Gore burst
+                for (int i = 0; i < 10; i++)
+                {
+                    Gore.NewGore(Projectile.GetSource_Death(), Projectile.Center, Main.rand.NextVector2Circular(4f, 4f), GoreID.Smoke1);
                 }
             }
         }
     }
-
-    public override bool CanHitPlayer(Player target)
-    {
-        return true; // Ensure the projectile can hit players
-    }
-
-    public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
-    {
-        // Scale damage based on projectile scale
-        modifiers.SourceDamage *= 1f + Projectile.scale * 0.5f;
-        
-        // Add critical hit chance
-        if (Main.rand.NextBool(10)) // 10% chance for critical hit
-        {
-            modifiers.SetCrit();
-        }
-    }
-}
 }

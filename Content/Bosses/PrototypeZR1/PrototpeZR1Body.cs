@@ -110,6 +110,7 @@ public override void OnKill()
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
             Vector2 origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
+             float scale = 1.5f;
 
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, origin, 1f, SpriteEffects.None, 0f);
             return false;

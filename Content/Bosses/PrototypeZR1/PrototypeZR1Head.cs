@@ -19,7 +19,7 @@ namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1;
             NPC.height = 200;
             NPC.damage = 30;
             NPC.defense = 10;
-            NPC.lifeMax = 40000;
+            NPC.lifeMax = 50000;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.noTileCollide = true;
@@ -165,7 +165,7 @@ if (Main.rand.NextBool(30)) // Very rare, dramatic spark
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
             Vector2 origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
-
+            float scale = 2f;
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, origin, 1f, SpriteEffects.None, 0f);
             return false;
         }
@@ -215,9 +215,9 @@ private void NukeExplosion()
 {
     // Big visual and sound
     SoundEngine.PlaySound(SoundID.Item14, NPC.position); // Explosion
-    for (int i = 0; i < 50; i++)
+    for (int i = 0; i < 100; i++)
     {
-        Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Torch, Main.rand.NextFloat(-10, 10), Main.rand.NextFloat(-10, 10), Scale: 2f);
+        Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke  , Main.rand.NextFloat(-10, 10), Main.rand.NextFloat(-10, 10), Scale: 2f);
     }
 
     // Spawn projectile or damaging explosion
