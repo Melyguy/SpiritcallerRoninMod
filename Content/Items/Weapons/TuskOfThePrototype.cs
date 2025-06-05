@@ -111,19 +111,6 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			}
 		}
 
-		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
-		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient<SheathedKatana>();
-			recipe.AddIngredient(ItemID.GoldBar, 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
-
-			recipe = CreateRecipe();
-			recipe.AddIngredient<SheathedKatana>();
-			recipe.AddIngredient(ItemID.PlatinumBar, 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
-		}
+		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation
 	}
 }
