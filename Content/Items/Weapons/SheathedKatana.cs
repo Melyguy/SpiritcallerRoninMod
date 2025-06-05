@@ -43,19 +43,6 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			// Item.ChangePlayerDirectionOnShoot = false;
 		}
 		// This method gets called when firing your weapon/sword.
-		        public override void ModifyTooltips(List<TooltipLine> tooltips)
-        {
-            var linetochange = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.Mod == "Terraria");
-            if (linetochange != null)
-            {
-                string[] splittext = linetochange.Text.Split(' ');
-                linetochange.Text = splittext.First() + " Ronin " + splittext.Last();
-            }
-        }
-		        public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
-        {
-            damage += player.GetModPlayer<GlobalPlayer>().ShogunDamage;
-        }
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			Vector2 target = Main.screenPosition + new Vector2(Main.mouseX, Main.mouseY);
 			float ceilingLimit = target.Y;

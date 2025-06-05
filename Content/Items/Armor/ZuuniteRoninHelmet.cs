@@ -12,6 +12,7 @@ namespace SpiritcallerRoninMod.Content.Items.Armor
 	public class ZuuniteRoninHelmet : ModItem
 	{
 		public static readonly int AdditiveGenericDamageBonus = 30;
+		public static readonly int AdditiveFocusBonus = 30;
 		public static readonly float RoninDamageIncrease = 20f;
 		public static LocalizedText SetBonusText { get; private set; }
 
@@ -24,7 +25,7 @@ namespace SpiritcallerRoninMod.Content.Items.Armor
 
 			SetBonusText = this.GetLocalization("SetBonus").WithFormatArgs(RoninDamageIncrease, AdditiveGenericDamageBonus);
 		}
-
+		
 		public override void SetDefaults() {
 			Item.width = 18; // Width of the item
 			Item.height = 18; // Height of the item
@@ -37,15 +38,20 @@ namespace SpiritcallerRoninMod.Content.Items.Armor
 			player.GetModPlayer<GlobalPlayer>().RoninDamage += RoninDamageIncrease / 100f;
 		}
 
-		// IsArmorSet determines what armor pieces are needed for the setbonus to take effect
-		public override bool IsArmorSet(Item head, Item body, Item legs) {
-			return body.type == ModContent.ItemType<ZuuniteRoninLeggings>() && legs.type == ModContent.ItemType<ZuuniteRoninChestplate>();
-		}
+public override bool IsArmorSet(Item head, Item body, Item legs) {
+    return body.type == ModContent.ItemType<ZuuniteRoninChestplate>() && 
+           legs.type == ModContent.ItemType<ZuuniteRoninLeggings>();
+}
+
 
 		// UpdateArmorSet allows you to give set bonuses to the armor.
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = SetBonusText.Value; // This is the setbonus tooltip: "Increases dealt damage by 20%"
+			player.setBonus = "Focus builds up when attacking, allowing powerful Ronin strikes.";
 			player.GetModPlayer<GlobalPlayer>().RoninDamage += AdditiveGenericDamageBonus / 100f; // Increase dealt damage for all weapon classes by 20%
+			player.GetModPlayer<RoninPlayer>().HasRoninSet = true;
+			
+
+
 		}
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();

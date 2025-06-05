@@ -45,6 +45,7 @@ namespace SpiritcallerRoninMod.Content.Items.Armor
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = SetBonusText.Value; // This is the setbonus tooltip: "Increases dealt damage by 20%"
 			player.GetModPlayer<GlobalPlayer>().RoninDamage += AdditiveGenericDamageBonus / 100f; // Increase dealt damage for all weapon classes by 20%
+			player.GetModPlayer<RoninPlayer>().HasRoninSet = true;
 		}
 
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.

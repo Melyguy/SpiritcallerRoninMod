@@ -9,7 +9,7 @@ namespace SpiritcallerRoninMod.Content.Items.Accessories
     public class MastersTsuba : ModItem
     {
         private float AdditiveDamageBonus = 30f;
-        private float AdditiveAtkSpeed = 25f;
+        private float AdditiveAtkSpeed = 15f;
 
         public override void SetDefaults()
         {

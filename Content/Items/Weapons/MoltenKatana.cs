@@ -73,6 +73,15 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			// Create balanced light/dark afterimages
+			var modPlayer = player.GetModPlayer<RoninPlayer>();
+			bool shootExtra = false;
+
+			// Only shoot the rocket if the player has enough focus
+			int focusCost = 50; // Example cost
+			if (modPlayer.ConsumeFocus(focusCost))
+			{
+				shootExtra = true;
+			}
 			for (int i = 0; i < 3; i++) {
 				Vector2 offset = new Vector2(player.direction * i * -5, 0);
 				// Light dust
@@ -89,7 +98,6 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			// Declare the projectile type variables
 			int projectileType;
 			int extraProjectileType;
-			bool shootExtra = true;
 			
 			// Four-part cycle representing different aspects of order
 			switch (slashCounter) {

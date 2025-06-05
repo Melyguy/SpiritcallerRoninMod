@@ -79,6 +79,15 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			// Create spectral afterimages
+						var modPlayer = player.GetModPlayer<RoninPlayer>();
+			bool shootExtra = false;
+
+			// Only shoot the rocket if the player has enough focus
+			int focusCost = 50; // Example cost
+			if (modPlayer.ConsumeFocus(focusCost))
+			{
+				shootExtra = true;
+			}
 			for (int i = 0; i < 3; i++) {
 				Vector2 offset = new Vector2(player.direction * i * -5, 0);
 				// Spectral essence
@@ -93,7 +102,6 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			
 			int projectileType;
 			int extraProjectileType;
-			bool shootExtra = true;
 			
 			// Cycle representing the materials used
 			switch (slashCounter) {
@@ -145,25 +153,5 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 
 
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.
-		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient<KatanaOfTrueVirtue>();
-			recipe.AddIngredient<KatanaOfPureEvil>();
-			recipe.AddIngredient<KatanaOfOrder>();
-			recipe.AddIngredient(ItemID.ChlorophyteBar, 10);
-			recipe.AddIngredient(ItemID.ShroomiteBar, 10);
-			recipe.AddIngredient(ItemID.SpectreBar, 10);
-            recipe.AddIngredient(ItemID.Ectoplasm, 20);
-            recipe.AddIngredient(ItemID.SoulofNight, 10);
-            recipe.AddIngredient(ItemID.SoulofLight, 10);
-            recipe.AddIngredient(ItemID.SoulofFright, 10);
-            recipe.AddIngredient(ItemID.SoulofSight, 10);
-            recipe.AddIngredient(ItemID.SoulofMight, 10);
-            recipe.AddIngredient(ItemID.SoulofFlight, 10);
-			recipe.AddIngredient(ItemID.Torch, 200);
-			recipe.AddTile(TileID.LunarCraftingStation);
-			recipe.Register();
-            
-		}
 	}
 }

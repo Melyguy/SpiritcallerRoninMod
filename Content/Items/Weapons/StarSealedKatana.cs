@@ -75,6 +75,14 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			float adjustedItemScale = player.GetAdjustedItemScale(Item);
+			var modPlayer = player.GetModPlayer<RoninPlayer>();
+
+    			bool shootExtra = false;
+			    int focusCost = 50; // Example cost
+				if (modPlayer.ConsumeFocus(focusCost))
+				{
+					shootExtra = true;
+				}
 			
 			// Create afterimages
 			for (int i = 0; i < 3; i++) {
@@ -102,6 +110,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 
 			// Changed from 2 to 1 star
 			for (int i = 0; i < 1; i++) { // Reduced to 1 star for balance
+			if(shootExtra){
 				position = player.Center - new Vector2(Main.rand.NextFloat(401) * player.direction, 600f);
 				position.Y -= 100 * i;
 				Vector2 heading = target - position;
@@ -118,6 +127,8 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 				heading *= velocity.Length();
 				heading.Y += Main.rand.Next(-40, 41) * 0.02f;
 				Projectile.NewProjectile(source, position, heading, ProjectileID.StarWrath, damage, knockback, player.whoAmI, 0f, ceilingLimit);
+
+			}
 			}
 
 			// Toggle the slash type for next shot

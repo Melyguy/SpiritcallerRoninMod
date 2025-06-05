@@ -38,13 +38,15 @@ namespace SpiritcallerRoninMod.Content.Items.Armor
 
 		// IsArmorSet determines what armor pieces are needed for the setbonus to take effect
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
-			return body.type == ModContent.ItemType<RoninChestplate>() && legs.type == ModContent.ItemType<RoninLeggings>();
+			return body.type == ModContent.ItemType<WoodenRoninArmor>() && 
+			legs.type == ModContent.ItemType<WoodenRoninLeggings>();
 		}
 
 		// UpdateArmorSet allows you to give set bonuses to the armor.
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = SetBonusText.Value; // This is the setbonus tooltip: "Increases dealt damage by 20%"
 			player.GetModPlayer<GlobalPlayer>().RoninDamage += AdditiveGenericDamageBonus / 100f; // Increase dealt damage for all weapon classes by 20%
+			player.GetModPlayer<RoninPlayer>().HasRoninSet = true;
 		}
 
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.

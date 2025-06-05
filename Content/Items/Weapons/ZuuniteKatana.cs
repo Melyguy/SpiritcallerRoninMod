@@ -79,69 +79,64 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 		private int slashCounter = 0;
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			// Create spectral afterimages
-			for (int i = 0; i < 3; i++) {
-				Vector2 offset = new Vector2(player.direction * i * -5, 0);
-				// Spectral essence
-				Dust.NewDustPerfect(player.MountedCenter + offset, DustID.Chlorophyte, Vector2.Zero, 100, Color.Green, 1.5f);
-				// Shroomite trail
-				Dust.NewDustPerfect(player.MountedCenter + offset, DustID.BlueTorch, Vector2.Zero, 100, Color.Blue, 1.5f);
-			}
-			
-			Vector2 mousePosition = Main.MouseWorld;
-			Vector2 direction = mousePosition - player.MountedCenter;
-			direction.Normalize();
-			
-			int projectileType;
-			int extraProjectileType;
-			bool shootExtra = true;
-			
-			// Cycle representing the materials used
-			switch (slashCounter) {
-				case 0: // Chlorophyte's Nature
-					projectileType = ModContent.ProjectileType<PhoenixSlash2>();
-					extraProjectileType = ProjectileID.RocketI;
-					break;
-				case 1: // Spectre's Spirit
-					projectileType = ModContent.ProjectileType<PhoenixSlash>();
-					extraProjectileType = ProjectileID.RocketI;
-					break;
-				case 2: // Shroomite's Precision
-					projectileType = ModContent.ProjectileType<PhoenixSlash2>();
-					extraProjectileType = ProjectileID.RocketI; // Shroomite-like precision
-					break;
-                case 3: // Shroomite's Precision
-					projectileType = ModContent.ProjectileType<PhoenixSlash>();
-					extraProjectileType = ProjectileID.RocketI; // Shroomite-like precision
-					break;
-                
-				default: // Ectoplasm's Power
-					projectileType = ModContent.ProjectileType<PhoenixSlash2>();
-					extraProjectileType = ProjectileID.RocketI;
-					break;
-			}
-			
-			// Enhanced projectile system
-			for (int i = 0; i < 2; i++) {
-				// Main slash
-				Vector2 slashSpeed = direction.RotatedBy(MathHelper.ToRadians(i == 0 ? -10 : 10)) * 24f;
-				Projectile.NewProjectile(source, player.MountedCenter, slashSpeed, projectileType, damage, knockback, 
-					player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax, 1.8f);
-				
-				// Material-themed projectiles
-				if (shootExtra) {
-					// First extra projectile
-					Vector2 extraSpeed = direction.RotatedBy(MathHelper.ToRadians(i == 0 ? 5 : -5)) * 20f;
-					Projectile.NewProjectile(source, player.MountedCenter, extraSpeed, extraProjectileType, damage * 3/4, knockback, 
-						player.whoAmI);
-					
-					// Spectral homing projectile (represents souls)
-				}
-			}
+    var modPlayer = player.GetModPlayer<RoninPlayer>();
 
-			slashCounter = (slashCounter + 1) % 5;
-			return false;
-		}
+    Vector2 mousePosition = Main.MouseWorld;
+    Vector2 direction = mousePosition - player.MountedCenter;
+    direction.Normalize();
+
+    int projectileType;
+    int extraProjectileType;
+    
+    bool shootExtra = false;
+
+    // Only shoot the rocket if the player has enough focus
+    int focusCost = 50; // Example cost
+    if (modPlayer.ConsumeFocus(focusCost))
+    {
+        shootExtra = true;
+    }
+
+    switch (slashCounter) {
+        case 0:
+            projectileType = ModContent.ProjectileType<PhoenixSlash2>();
+            extraProjectileType = ProjectileID.RocketI;
+            break;
+        case 1:
+            projectileType = ModContent.ProjectileType<PhoenixSlash>();
+            extraProjectileType = ProjectileID.RocketI;
+            break;
+        case 2:
+            projectileType = ModContent.ProjectileType<PhoenixSlash2>();
+            extraProjectileType = ProjectileID.RocketI;
+            break;
+        case 3:
+            projectileType = ModContent.ProjectileType<PhoenixSlash>();
+            extraProjectileType = ProjectileID.RocketI;
+            break;
+        default:
+            projectileType = ModContent.ProjectileType<PhoenixSlash2>();
+            extraProjectileType = ProjectileID.RocketI;
+            break;
+    }
+
+    // Create main slashes
+    for (int i = 0; i < 2; i++) {
+        Vector2 slashSpeed = direction.RotatedBy(MathHelper.ToRadians(i == 0 ? -10 : 10)) * 24f;
+        Projectile.NewProjectile(source, player.MountedCenter, slashSpeed, projectileType, damage, knockback,
+            player.whoAmI, player.direction * player.gravDir, player.itemAnimationMax, 1.8f);
+
+        // Shoot extra rockets only if focus is consumed successfully
+        if (shootExtra) {
+            Vector2 extraSpeed = direction.RotatedBy(MathHelper.ToRadians(i == 0 ? 5 : -5)) * 20f;
+            Projectile.NewProjectile(source, player.MountedCenter, extraSpeed, extraProjectileType, damage * 3 / 4, knockback,
+                player.whoAmI);
+        }
+    }
+
+    slashCounter = (slashCounter + 1) % 5;
+    return false;
+}
 
 
 
