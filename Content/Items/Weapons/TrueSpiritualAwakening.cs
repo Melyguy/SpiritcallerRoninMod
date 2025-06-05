@@ -51,14 +51,6 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 				mult *= 0.5f; // Half the mana cost when at low health. Make sure to use multiplication with the mult parameter.
 			}
 		}
-                public override void AddRecipes()
-        {
-            CreateRecipe()
-				.AddIngredient<SkullOfTheFounder>()
-				.AddIngredient<HeadOfTheFoundersVessel>()
-				.AddIngredient<SpiritualAwakening>()
-                .AddTile(TileID.Anvils)
-                .Register();
-        }
+
 	}
 }

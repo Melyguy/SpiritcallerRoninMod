@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using SpiritcallerRoninMod.Content.Projectiles;
 using System.Collections.Generic;
 using System.Linq;
+using SpiritcallerRoninMod.Content.Items.Placeable;
 
 namespace SpiritcallerRoninMod.Content.Items.Weapons
 {

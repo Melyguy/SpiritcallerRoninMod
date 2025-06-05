@@ -22,10 +22,13 @@ namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1
             NPC.noTileCollide = true;
             NPC.noGravity = true;
             NPC.dontTakeDamage = true; // This segment can't be damaged directly
+            Lighting.AddLight(NPC.Center, 1f, 0f, 0f); // red glow
         }
 
         public override void AI()
         {
+
+
             // Parent = previous segment; RealLife = head
             NPC parent = Main.npc[(int)NPC.ai[1]];
             NPC head = Main.npc[(int)NPC.ai[2]];

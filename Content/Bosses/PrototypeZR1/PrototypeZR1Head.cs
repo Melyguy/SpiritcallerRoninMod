@@ -6,6 +6,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using System.Linq;
 using SpiritcallerRoninMod.Content.Projectiles;
+using Terraria.GameContent.ItemDropRules;
+using SpiritcallerRoninMod.Content.Items.Placeable;
+using SpiritcallerRoninMod.Content.Items.Consumables;
+using SpiritcallerRoninMod.Content.Items.Weapons;
 
 namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1;
 [AutoloadBossHead]
@@ -29,11 +33,37 @@ namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.Zombie104;
             Music = MusicID.OtherworldlyCrimson;
+            Lighting.AddLight(NPC.Center, 1f, 0f, 0f); // red glow
         }
 
         public override void AI()
         {
-            if (!Main.player.Any(p => p.active && !p.dead && p.ZoneUnderworldHeight)) // or just !p.dead
+                        // Rocket attack logic
+NPC.localAI[1]++;
+if (NPC.localAI[1] >= 60 && Main.netMode != NetmodeID.MultiplayerClient) // Every 3 seconds
+{
+    NPC.localAI[1] = 0;
+
+    Player target = Main.player[NPC.target];
+    if (target != null && target.active && !target.dead)
+    {
+        Vector2 shootDirection = target.Center - NPC.Center;
+        shootDirection.Normalize();
+        shootDirection *= 10f; // rocket speed
+
+        int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, shootDirection,
+            ModContent.ProjectileType<Content.Projectiles.PrototypeRocket>(), 40, 1f, Main.myPlayer);
+
+        Main.projectile[proj].hostile = true;
+        Main.projectile[proj].friendly = false;
+
+        SoundEngine.PlaySound(SoundID.Item11, NPC.position); // rocket launch sound
+    }
+}
+
+
+
+            if (!Main.player.Any(p => p.active && !p.dead )) // or just !p.dead
 {
     NPC.TargetClosest(false);
     NPC.velocity.Y -= 0.1f; // Fly upward
@@ -199,6 +229,62 @@ if (Main.rand.NextBool(30)) // Very rare, dramatic spark
                      GoreID.Smoke1, 1.5f);
     }
 }
+
+public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			// Do NOT misuse the ModifyNPCLoot and OnKill hooks: the former is only used for registering drops, the latter for everything else
+
+			// The order in which you add loot will appear as such in the Bestiary. To mirror vanilla boss order:
+			// 1. Trophy
+			// 2. Classic Mode ("not expert")
+			// 3. Expert Mode (usually just the treasure bag)
+			// 4. Master Mode (relic first, pet last, everything else inbetween)
+
+			// Trophies are spawned with 1/10 chance
+
+			// All the Classic Mode drops here are based on "not expert", meaning we use .OnSuccess() to add them into the rule, which then gets added
+			LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+
+			// Add your new drops here
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ZuuniteBar>(), 1, 30, 45)); // 100% drop chance
+			
+			// Add some materials with different drop chances
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.ChlorophyteBar, 1, 15, 30)); // Drops 15-30 Wood
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<TuskOfThePrototype>(), 2)); // 33% chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.LivingWoodWand, 3)); // 33% chance
+			
+			// You can also add coins
+			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.GoldCoin, 1, 3, 5)); // Drops 3-5 Gold Coins
+
+			// Notice we use notExpertRule.OnSuccess instead of npcLoot.Add so it only applies in normal mode
+			// Boss masks are spawned with 1/7 chance
+			//notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ForestGuardianMask>(), 7));
+
+			// This part is not required for a boss and is just showcasing some advanced stuff you can do with drop rules to control how items spawn
+			// We make 12-15 ExampleItems spawn randomly in all directions, like the lunar pillar fragments. Hereby we need the DropOneByOne rule,
+			// which requires these parameters to be defined
+			
+			var parameters = new DropOneByOne.Parameters() {
+				ChanceNumerator = 1,
+				ChanceDenominator = 1,
+				MinimumStackPerChunkBase = 1,
+				MaximumStackPerChunkBase = 1,
+				MinimumItemDropsCount = 1,
+				MaximumItemDropsCount = 1,
+			};
+			
+
+			// Finally add the leading rule
+			npcLoot.Add(notExpertRule);
+
+			// Add the treasure bag using ItemDropRule.BossBag (automatically checks for expert mode)
+			npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<DesertSpiritBag>()));
+
+			// ItemDropRule.MasterModeCommonDrop for the relic
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Items.Placeable.Furniture.DesertSpiritRelic>()));
+
+			// ItemDropRule.MasterModeDropOnAllPlayers for the pet
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemID.SandBlock, 10)); //CHANGE THIS LATER!!!
+		}
 private void TriggerNukeSequence()
 {
     // Optional: Pause or change behavior

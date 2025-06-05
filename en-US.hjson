@@ -625,6 +625,63 @@ Mods: {
 				DisplayName: Akane Bag
 				Tooltip: ""
 			}
+
+			ShadowCallerHood: {
+				SetBonus: Mods.SpiritcallerRoninMod.Items.ShadowCallerHood.SetBonus
+				DisplayName: Shadow Caller Hood
+				Tooltip: ""
+			}
+
+			ShadowCallerRobe: {
+				DisplayName: Shadow Caller Robe
+				Tooltip: ""
+			}
+
+			ShadowCallerSkirt: {
+				DisplayName: Shadow Caller Skirt
+				Tooltip: ""
+			}
+
+			ZuuniteBar: {
+				Tooltip: Crafted from the scales of Zeruun the deity of death. It fills your soul with dread.
+				DisplayName: Zuunite Bar
+			}
+
+			TuskOfThePrototype: {
+				Tooltip: ""
+				DisplayName: Tusk Of The Prototype
+			}
+
+			PrototypeBag: {
+				Tooltip: ""
+				DisplayName: Prototype Bag
+			}
+
+			ZuuniteKatana: {
+				Tooltip: ""
+				DisplayName: Zuunite Katana
+			}
+
+			ZuuniteRoninHelmet: {
+				Tooltip: ""
+				DisplayName: Zuunite Ronin Helmet
+				SetBonus: Mods.SpiritcallerRoninMod.Items.ZuuniteRoninHelmet.SetBonus
+			}
+
+			ZuuniteRoninChestplate: {
+				Tooltip: ""
+				DisplayName: Zuunite Ronin Chestplate
+			}
+
+			ZuuniteRoninLeggings: {
+				Tooltip: ""
+				DisplayName: Zuunite Ronin Leggings
+			}
+
+			MastersTsuba: {
+				DisplayName: Masters Tsuba
+				Tooltip: Increases Ronin damage by {0}% and attack speed by {1}%
+			}
 		}
 
 		NPCs: {
@@ -699,6 +756,7 @@ Mods: {
 			AkaneAoeAttack.DisplayName: Akane Aoe Attack
 			HollowStarMelee2.DisplayName: Hollow Star Melee2
 			PrototypeNukeDeath.DisplayName: Prototype Nuke Death
+			PrototypeRocket.DisplayName: Prototype Rocket
 		}
 
 		Biomes: {

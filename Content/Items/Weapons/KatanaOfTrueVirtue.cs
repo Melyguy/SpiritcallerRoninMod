@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SpiritcallerRoninMod.Content.Items.Placeable;
 
 namespace SpiritcallerRoninMod.Content.Items.Weapons
 {
@@ -139,6 +140,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient<EvilSealedKatana>();
+            recipe.AddIngredient(ModContent.ItemType<ZuuniteBar>(), 15);
 			recipe.AddIngredient(ItemID.HallowedBar, 10);
             recipe.AddIngredient(ItemID.FallenStar, 20);
             recipe.AddIngredient(ItemID.SoulofLight, 20);

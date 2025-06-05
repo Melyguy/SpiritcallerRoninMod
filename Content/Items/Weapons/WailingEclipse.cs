@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using SpiritcallerRoninMod.Content.Projectiles;
 using System.Collections.Generic;
 using System.Linq;
+using SpiritcallerRoninMod.Content.Items.Placeable;
 
 namespace SpiritcallerRoninMod.Content.Items.Weapons
 {
@@ -92,6 +93,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
             Recipe recipe = CreateRecipe();
 			recipe.AddIngredient<ReapersHunger>();
             recipe.AddIngredient(ItemID.ChlorophyteBar, 15);
+            recipe.AddIngredient(ModContent.ItemType<ZuuniteBar>(), 15);
             recipe.AddIngredient(ItemID.ShroomiteBar, 15);
             recipe.AddIngredient(ItemID.BeetleHusk, 5); // or CrimtaneBar
             recipe.AddIngredient(ItemID.SpectreBar, 20);
