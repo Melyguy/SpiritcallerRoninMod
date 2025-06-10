@@ -723,6 +723,15 @@ Mods: {
 			GuardOfTheEnd.DisplayName: Guard Of The End
 			PrototypeZR1Head.DisplayName: Prototype-ZR1
 			PrototypeZR1Body.DisplayName: Prototype-ZR1
+			SakuraWisp.DisplayName: Sakura Wisp
+			SakuraSlime.DisplayName: Sakura Slime
+			PossessedDrone.DisplayName: Possessed Drone
+			SakuraDragonHead.DisplayName: Sakura Dragon Head
+			SakuraDragonBody.DisplayName: Sakura Dragon Body
+			SakuraDragonTail.DisplayName: Sakura Dragon Tail
+			SakuraDragonLegs.DisplayName: Sakura Dragon Legs
+			SakuraDragonBody2.DisplayName: Sakura Dragon Body2
+			SakuraDragonBody3.DisplayName: Sakura Dragon Body3
 		}
 
 		Projectiles: {
@@ -757,6 +766,7 @@ Mods: {
 			HollowStarMelee2.DisplayName: Hollow Star Melee2
 			PrototypeNukeDeath.DisplayName: Prototype Nuke Death
 			PrototypeRocket.DisplayName: Prototype Rocket
+			SakuraBlastBoss.DisplayName: Sakura Blast Boss
 		}
 
 		Biomes: {
@@ -769,6 +779,13 @@ Mods: {
 				DisplayName: Underground Sakura Biome
 				TownNPCDialogueName: the Underground Sakura Biome
 			}
+
+			IronExpanseBiome: {
+				DisplayName: Iron Expanse Biome
+				TownNPCDialogueName: the Iron Expanse Biome
+			}
 		}
+
+		Tiles.RustSand.MapEntry: Rust Sand
 	}
 }

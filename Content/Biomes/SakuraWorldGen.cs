@@ -27,7 +27,7 @@ namespace SpiritcallerRoninMod.Content.Biomes
 
                     int edgeBuffer = (int)(Main.maxTilesX * 0.05f);
 
-                    for (int attempt = 0; attempt < 200; attempt++)
+                    for (int attempt = 0; attempt < 300; attempt++)
                     {
                         int x = WorldGen.genRand.Next(edgeBuffer, Main.maxTilesX - edgeBuffer);
                         int y = GetSurfaceY(x);
@@ -75,7 +75,7 @@ namespace SpiritcallerRoninMod.Content.Biomes
                     if (!tile.HasTile) continue;
 
                     ushort t = tile.TileType;
-                    if (t == TileID.SnowBlock || t == TileID.IceBlock ||
+                    if (
                         t == TileID.CorruptGrass || t == TileID.CrimsonGrass || t == TileID.HallowedGrass ||
                         t == TileID.BlueDungeonBrick || t == TileID.GreenDungeonBrick || t == TileID.PinkDungeonBrick)
                         return false;
@@ -100,9 +100,14 @@ namespace SpiritcallerRoninMod.Content.Biomes
                     if (!WorldGen.InWorld(newX, newY)) continue;
 
                     Tile tile = Main.tile[newX, newY];
-                    if (tile.HasTile && (tile.TileType == TileID.Grass || tile.TileType == TileID.Stone || tile.TileType == TileID.Sand || tile.TileType == TileID.JungleGrass || tile.TileType == TileID.Mud || tile.TileType == TileID.Ebonsand || tile.TileType == TileID.Crimsand))
+                    if (tile.HasTile && (tile.TileType == TileID.Grass || tile.TileType == TileID.SnowBlock || tile.TileType == TileID.JungleGrass || tile.TileType == TileID.Mud  || tile.TileType == TileID.CorruptGrass ))
                     {
                         tile.TileType = (ushort)ModContent.TileType<SakuraGrass>();
+                        WorldGen.SquareTileFrame(newX, newY, true);
+                    }
+                    if (tile.HasTile && (tile.TileType == TileID.Stone || tile.TileType == TileID.Ebonstone || tile.TileType == TileID.IceBlock))
+                    {
+                        tile.TileType = (ushort)ModContent.TileType<SakuraStone>();
                         WorldGen.SquareTileFrame(newX, newY, true);
                     }
                 }
@@ -182,15 +187,18 @@ namespace SpiritcallerRoninMod.Content.Biomes
         // === Dynasty Ruin Logic ===
         private void PlaceDynastyRuinsInCave(int x, int yStart, int caveWidth, int caveHeight)
         {
-            int ruinCount = WorldGen.genRand.Next(2, 5);
+            int ruinCount = WorldGen.genRand.Next(40, 50);
 
             for (int i = 0; i < ruinCount; i++)
             {
-                int ruinX = x + WorldGen.genRand.Next(-caveWidth / 2 + 10, caveWidth / 2 - 10);
-                int ruinY = yStart + WorldGen.genRand.Next(5, caveHeight - 15);
-
                 int ruinWidth = WorldGen.genRand.Next(6, 12);
                 int ruinHeight = WorldGen.genRand.Next(4, 7);
+                int ruinX = x + WorldGen.genRand.Next(-caveWidth / 2 + 10, caveWidth / 2 - 10);
+                // Calculate ruinY to place the bottom of the ruin at the cave floor
+                // We subtract ruinHeight to ensure the entire ruin is within the cave, starting from the floor
+                int ruinY = yStart + caveHeight - WorldGen.genRand.Next(ruinHeight + 2, ruinHeight + 5); // Added a small random offset above the floor
+
+
 
                 GenerateDynastyRuin(ruinX, ruinY, ruinWidth, ruinHeight);
             }

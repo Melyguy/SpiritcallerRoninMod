@@ -20,6 +20,7 @@ namespace SpiritcallerRoninMod.Content.Projectiles
             Projectile.ignoreWater = true;
             Projectile.tileCollide = true;
             Projectile.aiStyle = 0;
+            Projectile.damage = 25;
         }
 
         public override void AI()

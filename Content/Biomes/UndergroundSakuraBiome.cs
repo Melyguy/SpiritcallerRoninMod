@@ -17,10 +17,10 @@ namespace SpiritcallerRoninMod.Content.Biomes
             int sakuraStoneCount = 0;
             Point playerCenter = player.Center.ToTileCoordinates();
 
-            // Check a 60x60 area around the player
-            for (int x = playerCenter.X - 30; x < playerCenter.X + 30; x++)
+            // Check a 200x200 area around the player
+            for (int x = playerCenter.X - 100; x < playerCenter.X + 100; x++)
             {
-                for (int y = playerCenter.Y - 30; y < playerCenter.Y + 30; y++)
+                for (int y = playerCenter.Y - 100; y < playerCenter.Y + 100; y++)
                 {
                     if (WorldGen.InWorld(x, y))
                     {
