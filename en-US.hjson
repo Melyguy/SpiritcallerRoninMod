@@ -682,6 +682,11 @@ Mods: {
 				DisplayName: Masters Tsuba
 				Tooltip: Increases Ronin damage by {0}% and attack speed by {1}%
 			}
+
+			PrototypeRelic: {
+				DisplayName: Prototype Relic
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {

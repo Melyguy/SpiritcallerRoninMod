@@ -43,7 +43,6 @@ namespace SpiritcallerRoninMod.Content.Items.Consumables
 			// Guaranteed expert drops
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ZuuniteBar>(), 1, 30, 45));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<TuskOfThePrototype>(), 2));
-			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<WardensHiddenTreasure>(), 3));
 			
 			// Chance-based drops (33% chance each)
 			itemLoot.Add(ItemDropRule.Common(ItemID.AbigailsFlower, 3));

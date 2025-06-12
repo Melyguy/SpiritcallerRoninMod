@@ -130,7 +130,7 @@ namespace SpiritcallerRoninMod.Content.Biomes
 {
     int width = WorldGen.genRand.Next(20, 35); // random width
     int height = WorldGen.genRand.Next(10, 18); // random height
-    int floorCount = WorldGen.genRand.Next(3, 5); // one or two floor ruins
+    int floorCount = WorldGen.genRand.Next(3, 8); // one or two floor ruins
 
     for (int f = 0; f < floorCount; f++)
     {

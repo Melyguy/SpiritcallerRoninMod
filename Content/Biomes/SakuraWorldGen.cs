@@ -77,7 +77,7 @@ namespace SpiritcallerRoninMod.Content.Biomes
                     ushort t = tile.TileType;
                     if (
                         t == TileID.CorruptGrass || t == TileID.CrimsonGrass || t == TileID.HallowedGrass ||
-                        t == TileID.BlueDungeonBrick || t == TileID.GreenDungeonBrick || t == TileID.PinkDungeonBrick)
+                        t == TileID.BlueDungeonBrick || t == TileID.GreenDungeonBrick || t == TileID.PinkDungeonBrick || t == TileID.Cloud || t == TileID.Sand)
                         return false;
                 }
             }
