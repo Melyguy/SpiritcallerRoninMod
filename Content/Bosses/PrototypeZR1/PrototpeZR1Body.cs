@@ -12,8 +12,8 @@ namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1
     {
         public override void SetDefaults()
         {
-            NPC.width = 90;
-            NPC.height = 85;
+            NPC.width = 98;
+            NPC.height = 136;
             NPC.damage = 20;
             NPC.defense = 8;
             NPC.lifeMax = 10000;
@@ -33,7 +33,17 @@ namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1
             NPC parent = Main.npc[(int)NPC.ai[1]];
             NPC head = Main.npc[(int)NPC.ai[2]];
             NPC.realLife = head.whoAmI;
+// Segment spacing logic
+            Vector2 directionToParent = parent.Center - NPC.Center;
+            float distanceToParent = directionToParent.Length();
 
+            float desiredSpacing = NPC.width * 0.85f; // Slightly closer than full width to avoid gaps
+
+            if (distanceToParent > desiredSpacing)
+            {
+                directionToParent.Normalize();
+                NPC.Center = parent.Center - directionToParent * desiredSpacing;
+            }
             // Follow parent segment
             Vector2 toParent = parent.Center - NPC.Center;
             float distance = toParent.Length();
@@ -54,6 +64,34 @@ namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1
             {
                 NPC.active = false;
             }
+
+
+            // Timer for laser shooting
+NPC.localAI[0]++; // Increment timer every tick
+
+if (NPC.localAI[0] >= 600f) // Every 20 seconds
+{
+    NPC.localAI[0] = 0f; // Reset timer
+
+    if (Main.netMode != NetmodeID.MultiplayerClient) // Server-only logic
+    {
+        Vector2 laserDirection = Vector2.UnitY.RotatedBy(NPC.rotation - MathHelper.PiOver2); // Shoots forward
+        float laserSpeed = 12f;
+
+        // Replace ProjectileID.DeathLaser with your custom projectile if you have one
+        int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(),
+                                            NPC.Center,
+                                            laserDirection * laserSpeed,
+                                            ProjectileID.DeathLaser,
+                                            25, 1f, Main.myPlayer);
+        Main.projectile[proj].hostile = true;
+        Main.projectile[proj].friendly = false;
+    }
+
+    // Optional: Sound effect
+    SoundEngine.PlaySound(SoundID.Item33, NPC.position); // Laser sound
+}
+
             // Emit smoke and sparks to show wear and tear
 if (Main.rand.NextBool(3)) // Roughly every 3 ticks
 {
@@ -113,9 +151,33 @@ public override void OnKill()
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
             Vector2 origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
+             Vector2 drawPos = NPC.Center - screenPos;
              float scale = 1.5f;
+            spriteBatch.Draw(
+        texture,
+        drawPos,
+        NPC.frame,
+        drawColor,
+        NPC.rotation,
+        origin,
+        1f,
+        SpriteEffects.None,
+        0f
+    );
 
-            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, origin, 1f, SpriteEffects.None, 0f);
+    // Draw glowmask
+    Texture2D glowTexture = ModContent.Request<Texture2D>("SpiritcallerRoninMod/Content/Bosses/PrototypeZR1/PrototypeZR1Head_Glow").Value;
+    spriteBatch.Draw(
+        glowTexture,
+        drawPos,
+        NPC.frame,
+        Color.White, // Glow is unaffected by lighting
+        NPC.rotation,
+        origin,
+        1f,
+        SpriteEffects.None,
+        0f
+    );
             return false;
         }
 

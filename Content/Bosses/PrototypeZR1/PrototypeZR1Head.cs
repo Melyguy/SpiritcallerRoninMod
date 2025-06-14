@@ -10,6 +10,7 @@ using Terraria.GameContent.ItemDropRules;
 using SpiritcallerRoninMod.Content.Items.Placeable;
 using SpiritcallerRoninMod.Content.Items.Consumables;
 using SpiritcallerRoninMod.Content.Items.Weapons;
+using System;
 
 namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1;
 [AutoloadBossHead]
@@ -17,10 +18,20 @@ namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1;
     public class PrototypeZR1Head : ModNPC
     {
         public bool boomboomBool = false;
+                // AI states for readability
+        private enum SakuraDragonAI
+        {
+            Idle = 0,
+            Flamethrower = 1,
+            OtherStuff = 2
+        }
+        
+        private int flameTimer = 0;
+        private int flameDuration = 120; // 2 seconds of continuous flamethrower
         public override void SetDefaults()
         {
-            NPC.width = 200;
-            NPC.height = 200;
+            NPC.width = 173;
+            NPC.height = 104;
             NPC.damage = 30;
             NPC.defense = 10;
             NPC.lifeMax = 50000;
@@ -38,28 +49,66 @@ namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1;
 
         public override void AI()
         {
+            
+            Player target = Main.player[NPC.target];
                         // Rocket attack logic
-NPC.localAI[1]++;
-if (NPC.localAI[1] >= 60 && Main.netMode != NetmodeID.MultiplayerClient) // Every 3 seconds
-{
-    NPC.localAI[1] = 0;
+            NPC.localAI[1]++;
+            if (NPC.localAI[1] >= 180 && Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                NPC.localAI[1] = 0;
 
-    Player target = Main.player[NPC.target];
-    if (target != null && target.active && !target.dead)
-    {
-        Vector2 shootDirection = target.Center - NPC.Center;
-        shootDirection.Normalize();
-        shootDirection *= 10f; // rocket speed
+                if (target != null && target.active && !target.dead)
+                {
+                    if (Main.rand.NextBool()) // 50% chance energyball
+                    {
+                        Vector2 shootDirection = target.Center - NPC.Center;
+                        shootDirection.Normalize();
+                        shootDirection *= 10f;
 
-        int proj = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, shootDirection,
-            ModContent.ProjectileType<Content.Projectiles.PrototypeRocket>(), 40, 1f, Main.myPlayer);
+                        int proj = Projectile.NewProjectile(
+                            NPC.GetSource_FromAI(),
+                            NPC.Center,
+                            shootDirection,
+                            ModContent.ProjectileType<Content.Projectiles.PrototypeRocket>(),
+                            40,
+                            1f,
+                            Main.myPlayer
+                        );
 
-        Main.projectile[proj].hostile = true;
-        Main.projectile[proj].friendly = false;
+                        Main.projectile[proj].hostile = true;
+                        Main.projectile[proj].friendly = false;
 
-        SoundEngine.PlaySound(SoundID.Item11, NPC.position); // rocket launch sound
-    }
-}
+                        SoundEngine.PlaySound(SoundID.NPCHit56, NPC.position);
+                    }
+                    else
+                    {
+                        // Start flamethrower phase
+                        NPC.ai[0] = (int)SakuraDragonAI.Flamethrower;
+                        flameTimer = 0;
+                        SoundEngine.PlaySound(SoundID.Item34, NPC.position); // flame start sound
+                    }
+                }
+            }
+
+            // Flamethrower continuous attack
+            if (NPC.ai[0] == (int)SakuraDragonAI.Flamethrower)
+            {
+                flameTimer++;
+
+                if (flameTimer % 4 == 0) // Spawn flame projectile every 4 ticks (~15/sec)
+                {
+                    FlamethrowerAttack();
+                }
+
+                if (flameTimer >= flameDuration)
+                {
+                    NPC.ai[0] = (int)SakuraDragonAI.Idle; // Return to idle or another state
+                    flameTimer = 0;
+                }
+
+                // Optional: Slow movement while flamethrowing
+                //NPC.velocity *= 0.9f;
+            }   
 
 
 
@@ -103,20 +152,21 @@ if (NPC.localAI[1] >= 60 && Main.netMode != NetmodeID.MultiplayerClient) // Ever
 }
 
 
-            if (NPC.ai[0] == 0)
-            {
-                int previous = NPC.whoAmI;
-                for (int i = 0; i < 40; ++i) // 40 segments
-                {
-                    int type = (i == 19) ? ModContent.NPCType<PrototypeZR1Body>() : ModContent.NPCType<PrototypeZR1Body>();
-                    int segment = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
-                    Main.npc[segment].ai[1] = previous;
-                    Main.npc[segment].realLife = NPC.whoAmI;
-                    Main.npc[segment].ai[2] = NPC.whoAmI;
-                    previous = segment;
-                }
-                NPC.ai[0] = 1;
-            }
+           if (NPC.localAI[3] == 0f) // Only run once
+{
+    NPC.localAI[3] = 1f;
+    int previous = NPC.whoAmI;
+    for (int i = 0; i < 40; ++i)
+    {
+        int type = ModContent.NPCType<PrototypeZR1Body>();
+        int segment = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
+        Main.npc[segment].ai[1] = previous;
+        Main.npc[segment].realLife = NPC.whoAmI;
+        Main.npc[segment].ai[2] = NPC.whoAmI;
+        previous = segment;
+    }
+}
+
             if (NPC.velocity != Vector2.Zero)
             {
                 NPC.rotation = NPC.velocity.ToRotation() + MathHelper.PiOver2;
@@ -145,58 +195,101 @@ if (Main.rand.NextBool(30)) // Very rare, dramatic spark
             
         }
         
-        private void WormMovement()
-{
-    Player player = Main.player[NPC.target];
-    NPC.TargetClosest();
+ private void WormMovement()
+        {
+            Player player = Main.player[NPC.target];
+            NPC.TargetClosest();
 
-    Vector2 moveTo = player.Center - NPC.Center;
-    float baseSpeed = 8f;
-    float speed = baseSpeed;
-    float turnSpeed = 0.1f;
+            float flySpeed = 10f; // Base movement speed
+            float turnSpeed = 0.02f; // How quickly it turns (lower = wider turns)
 
-    // Occasionally slow down or speed up for glitch effect
-    if (Main.rand.NextBool(120))
-        speed *= 0.5f;
-    else if (Main.rand.NextBool(120))
-        speed *= 1.3f;
+            Vector2 toPlayer = player.Center - NPC.Center;
 
-    // Apply movement vector
-    moveTo.Normalize();
-    moveTo *= speed;
-    NPC.velocity = (NPC.velocity * (1f - turnSpeed)) + (moveTo * turnSpeed);
+            if (toPlayer.LengthSquared() < 20f * 20f)
+            {
+                toPlayer = NPC.velocity.SafeNormalize(Vector2.UnitY);
+            }
+            else
+            {
+                toPlayer.Normalize();
+            }
 
-    // Add erratic rotation with jitter
-    float targetRotation = NPC.velocity.ToRotation() + MathHelper.PiOver2;
-    float rotationJitter = MathHelper.ToRadians(Main.rand.NextFloat(-4f, 4f));
-    NPC.rotation = MathHelper.Lerp(NPC.rotation, targetRotation + rotationJitter, 0.2f);
+            Vector2 desiredVelocity = toPlayer * flySpeed;
+            NPC.velocity = Vector2.Lerp(NPC.velocity, desiredVelocity, turnSpeed);
 
-    // Occasionally flicker transparency to simulate short-circuiting
-    if (Main.rand.NextBool(20))
-        NPC.alpha = 200;
-    else
-        NPC.alpha = 0;
+            float time = Main.GameUpdateCount * 0.1f;
+            float wave = (float)Math.Sin(time + NPC.whoAmI) * 0.3f;
+            Vector2 waveOffset = NPC.velocity.RotatedBy(MathHelper.PiOver2) * wave;
+            NPC.velocity += waveOffset * 0.05f;
 
-    // Emit sparks or smoke
-    if (Main.rand.NextBool(4))
-    {
-        int dustType = Main.rand.NextBool(2) ? DustID.Electric : DustID.Smoke;
-        Dust.NewDust(NPC.position, NPC.width, NPC.height, dustType,
-            Main.rand.NextFloat(-1f, 1f), Main.rand.NextFloat(-1f, 1f));
-    }
+            if (Main.rand.NextBool(300))
+            {
+                Vector2 chargeDir = (player.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 20f;
+                NPC.velocity = chargeDir;
+                SoundEngine.PlaySound(SoundID.Item92, NPC.position);
+            }
+        }
+public void FlamethrowerAttack()
+        {
+            if (!Main.player[NPC.target].active || Main.player[NPC.target].dead)
+                return;
 
-    // Optional: play mechanical glitch sound occasionally
-    if (Main.rand.NextBool(300))
-                SoundEngine.PlaySound(SoundID.Item94, NPC.Center); // Electric magic sound
-}
+            Vector2 direction = (Main.player[NPC.target].Center - NPC.Center).SafeNormalize(Vector2.UnitX);
+            float speed = 12f;
+
+            Vector2 velocity = direction.RotatedByRandom(MathHelper.ToRadians(10f)) * speed;
+
+            int flame = Projectile.NewProjectile(
+                NPC.GetSource_FromAI(),
+                NPC.Center,
+                velocity,
+                ProjectileID.EyeFire,
+                20,
+                1f,
+                Main.myPlayer
+            );
+
+            Main.projectile[flame].hostile = true;
+            Main.projectile[flame].friendly = false;
+            Main.projectile[flame].tileCollide = false;
+            Main.projectile[flame].timeLeft = 30; // Short life for fast fading
+        }
 
         
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
             Vector2 origin = new Vector2(texture.Width / 2f, texture.Height / 2f);
+             Vector2 drawPos = NPC.Center - screenPos;
             float scale = 2f;
-            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor, NPC.rotation, origin, 1f, SpriteEffects.None, 0f);
+                // Draw base texture
+    spriteBatch.Draw(
+        texture,
+        drawPos,
+        NPC.frame,
+        drawColor,
+        NPC.rotation,
+        origin,
+        1f,
+        SpriteEffects.None,
+        0f
+    );
+
+    // Draw glowmask
+    Texture2D glowTexture = ModContent.Request<Texture2D>("SpiritcallerRoninMod/Content/Bosses/PrototypeZR1/PrototypeZR1Head_Glow").Value;
+    spriteBatch.Draw(
+        glowTexture,
+        drawPos,
+        NPC.frame,
+        Color.White, // Glow is unaffected by lighting
+        NPC.rotation,
+        origin,
+        1f,
+        SpriteEffects.None,
+        0f
+    );
+
+            
             return false;
         }
         public override void OnKill()
