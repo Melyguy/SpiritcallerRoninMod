@@ -8,7 +8,7 @@ using Terraria.Audio;
 namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1
 
 {
-    public class PrototypeZR1Body : ModNPC
+    public class PrototypeZR1Tail : ModNPC
     {
         public override void SetDefaults()
         {
@@ -21,9 +21,46 @@ namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1
             NPC.aiStyle = -1;
             NPC.noTileCollide = true;
             NPC.noGravity = true;
-            NPC.dontTakeDamage = true; // This segment can't be damaged directly
+            NPC.dontTakeDamage = false; // This segment can't be damaged directly
             Lighting.AddLight(NPC.Center, 1f, 0f, 0f); // red glow
         }
+public override bool? CanBeHitByItem(Player player, Item item)
+{
+    // Allow hitting the body
+    return true;
+}
+
+public override bool? CanBeHitByProjectile(Projectile projectile)
+{
+    // Allow hitting the body
+    return true;
+}
+
+public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
+{
+    TransferDamageToHead(item.damage, player.direction);
+    modifiers.FinalDamage *= 0; // Prevent body from taking damage
+}
+
+public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
+{
+    TransferDamageToHead(projectile.damage, projectile.direction);
+    modifiers.FinalDamage *= 0; // Prevent body from taking damage
+}
+public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) => false;
+private void TransferDamageToHead(int damage, int direction)
+{
+    if (!Main.npc[(int)NPC.ai[2]].active)
+        return;
+
+    NPC head = Main.npc[(int)NPC.ai[2]];
+
+    if (head.life > 0)
+    {
+        CombatText.NewText(head.Hitbox, Color.OrangeRed, damage); // optional visual feedback
+        head.SimpleStrikeNPC(damage, direction, false);
+    }
+}
 
         public override void AI()
         {
@@ -64,6 +101,11 @@ namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1
             {
                 NPC.active = false;
             }
+if (head != null && head.active)
+{
+    NPC.life = head.life;
+    NPC.lifeMax = head.lifeMax;
+}
 
 
             // Timer for laser shooting
@@ -184,7 +226,5 @@ public override void OnKill()
         // Prevent segment from being a valid target
         public override bool CheckActive() => false;
 
-        public override bool? CanBeHitByItem(Player player, Item item) => false;
-        public override bool? CanBeHitByProjectile(Projectile projectile) => false;
     }
 }

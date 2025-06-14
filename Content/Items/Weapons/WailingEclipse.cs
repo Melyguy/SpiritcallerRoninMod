@@ -6,6 +6,7 @@ using SpiritcallerRoninMod.Content.Projectiles;
 using System.Collections.Generic;
 using System.Linq;
 using SpiritcallerRoninMod.Content.Items.Placeable;
+using SpiritcallerRoninMod.Content.Tiles.Furniture;
 
 namespace SpiritcallerRoninMod.Content.Items.Weapons
 {
@@ -99,7 +100,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
             recipe.AddIngredient(ItemID.SpectreBar, 20);
             recipe.AddIngredient(ItemID.BrokenHeroSword, 1); // or Tissue Sample
             recipe.AddIngredient(ItemID.DeathSickle, 1); // or Tissue Sample
-            recipe.AddTile(TileID.Anvils); // Or Crimson Altar
+			recipe.AddTile(ModContent.TileType<ZuuniteAnvil>());
             recipe.Register();
         
             

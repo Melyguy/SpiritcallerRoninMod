@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using SpiritcallerRoninMod.Content.Projectiles;
 using System.Collections.Generic;
 using System.Linq;
+using SpiritcallerRoninMod.Content.Tiles.Furniture;
 
 namespace SpiritcallerRoninMod.Content.Items.Weapons
 {
@@ -102,7 +103,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
             recipe.AddIngredient(ItemID.SoulofFright, 10);
             recipe.AddIngredient(ItemID.SoulofSight, 10);
 
-            recipe.AddTile(TileID.LunarCraftingStation);
+			recipe.AddTile(ModContent.TileType<ZuuniteAnvil>());
             recipe.Register();
         }
     }

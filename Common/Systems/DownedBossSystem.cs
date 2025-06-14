@@ -19,6 +19,7 @@ namespace SpiritcallerRoninMod.Common.Systems
 		public static bool downedMagmaGhoul = false;
 		public static bool downedOnryo = false;
 		public static bool downedStratoshade = false;
+		public static bool DownedPrototype = false;
 		
 		// public static bool downedOtherBoss = false;
 
@@ -29,6 +30,8 @@ namespace SpiritcallerRoninMod.Common.Systems
 			downedMagmaGhoul = false;
 			downedOnryo = false;
 			downedStratoshade = false;
+			DownedPrototype = false;
+
 			// downedOtherBoss = false;
 		}
 
@@ -53,7 +56,9 @@ namespace SpiritcallerRoninMod.Common.Systems
 			if(downedStratoshade) {
 				tag["downedStratoshade"] = true;	
 			}
-
+			if(DownedPrototype) {
+				tag["downedPrototype"] = true;	
+			}
 			// if (downedOtherBoss) {
 			//	tag["downedOtherBoss"] = true;
 			// }
@@ -66,6 +71,7 @@ namespace SpiritcallerRoninMod.Common.Systems
 			downedForestGuardian = tag.ContainsKey("downedMagmaGhoul");
 			downedForestGuardian = tag.ContainsKey("downedOnryo");
 			downedForestGuardian = tag.ContainsKey("downedStratoshade");
+			downedForestGuardian = tag.ContainsKey("downedPrototype");
 			// downedOtherBoss = tag.ContainsKey("downedOtherBoss");
 		}
 
@@ -77,6 +83,8 @@ namespace SpiritcallerRoninMod.Common.Systems
 			writer.WriteFlags(downedMagmaGhoul/*, downedOtherBoss*/);
 			writer.WriteFlags(downedOnryo/*, downedOtherBoss*/);
 			writer.WriteFlags(downedStratoshade/*, downedOtherBoss*/);
+			writer.WriteFlags(DownedPrototype/*, downedOtherBoss*/);
+
 			// WriteFlags supports up to 8 entries, if you have more than 8 flags to sync, call WriteFlags again.
 
 			// If you need to send a large number of flags, such as a flag per item type or something similar, BitArray can be used to efficiently send them. See Utils.SendBitArray documentation.
@@ -90,6 +98,7 @@ namespace SpiritcallerRoninMod.Common.Systems
 			reader.ReadFlags(out downedMagmaGhoul/*, out downedOtherBoss*/);
 			reader.ReadFlags(out downedOnryo/*, out downedOtherBoss*/);
 			reader.ReadFlags(out downedStratoshade/*, out downedOtherBoss*/);
+			reader.ReadFlags(out DownedPrototype/*, out downedOtherBoss*/);
 			// ReadFlags supports up to 8 entries, if you have more than 8 flags to sync, call ReadFlags again.
 		}
 	}

@@ -5,7 +5,9 @@ using SpiritcallerRoninMod.Content.Bosses.DesertSpirit;
 using SpiritcallerRoninMod.Content.Bosses.ForestGuardian;
 using SpiritcallerRoninMod.Content.Items.Armor;
 using SpiritcallerRoninMod.Content.Items.Placeable;
+using SpiritcallerRoninMod.Content.Items.Placeable.Furniture;
 using SpiritcallerRoninMod.Content.Items.Weapons;
+using SpiritcallerRoninMod.Content.Tiles.Furniture;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -42,7 +44,7 @@ namespace SpiritcallerRoninMod.Content.Items.Consumables
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			// Guaranteed expert drops
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ZuuniteBar>(), 1, 30, 45));
-			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<TuskOfThePrototype>(), 2));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ZuuniteAnvilItem>(), 1));
 			
 			// Chance-based drops (33% chance each)
 			itemLoot.Add(ItemDropRule.Common(ItemID.AbigailsFlower, 3));

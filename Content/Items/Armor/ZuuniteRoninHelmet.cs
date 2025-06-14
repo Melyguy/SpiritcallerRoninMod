@@ -1,4 +1,5 @@
 using SpiritcallerRoninMod.Content.Items.Placeable;
+using SpiritcallerRoninMod.Content.Tiles.Furniture;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -56,7 +57,7 @@ public override bool IsArmorSet(Item head, Item body, Item legs) {
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ModContent.ItemType<ZuuniteBar>(), 20);
-			recipe.AddTile(TileID.Anvils);
+			recipe.AddTile(ModContent.TileType<ZuuniteAnvil>());
 			recipe.Register();
 		}
 		// Please see Content/ExampleRecipes.cs for a detailed explanation of recipe creation.

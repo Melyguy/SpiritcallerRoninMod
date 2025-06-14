@@ -687,6 +687,11 @@ Mods: {
 				DisplayName: Prototype Relic
 				Tooltip: ""
 			}
+
+			ZuuniteAnvilItem: {
+				DisplayName: Zuunite Anvil Item
+				Tooltip: ""
+			}
 		}
 
 		NPCs: {
@@ -737,6 +742,7 @@ Mods: {
 			SakuraDragonLegs.DisplayName: Sakura Dragon Legs
 			SakuraDragonBody2.DisplayName: Sakura Dragon Body2
 			SakuraDragonBody3.DisplayName: Sakura Dragon Body3
+			PrototypeZR1Tail.DisplayName: Prototype Z R1 Tail
 		}
 
 		Projectiles: {
@@ -791,6 +797,9 @@ Mods: {
 			}
 		}
 
-		Tiles.RustSand.MapEntry: Rust Sand
+		Tiles: {
+			RustSand.MapEntry: Rust Sand
+			ZuuniteAnvil.MapEntry: Zuunite Anvil
+		}
 	}
 }

@@ -6,6 +6,7 @@ using SpiritcallerRoninMod.Content.Projectiles;
 using System.Collections.Generic;
 using System.Linq;
 using SpiritcallerRoninMod.Content.Items.Placeable;
+using SpiritcallerRoninMod.Content.Tiles.Furniture;
 
 namespace SpiritcallerRoninMod.Content.Items.Weapons
 {
@@ -96,7 +97,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
             recipe.AddIngredient(ModContent.ItemType<WailingEclipse>(), 1);
             recipe.AddIngredient(ItemID.FragmentNebula, 10);
             recipe.AddIngredient(ItemID.LunarBar, 8);
-            recipe.AddTile(TileID.LunarCraftingStation);
+			recipe.AddTile(ModContent.TileType<ZuuniteAnvil>());
             recipe.Register();
         }
     }

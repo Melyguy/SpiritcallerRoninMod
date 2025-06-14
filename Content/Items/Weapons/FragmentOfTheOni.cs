@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SpiritcallerRoninMod.Content.Tiles.Furniture;
 
 namespace SpiritcallerRoninMod.Content.Items.Weapons
 {
@@ -159,7 +160,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
             recipe.AddIngredient(ItemID.SoulofFright, 30);
             recipe.AddIngredient(ItemID.SoulofSight, 10);
             recipe.AddIngredient(ItemID.SoulofMight, 10);
-			recipe.AddTile(TileID.LunarCraftingStation);
+			recipe.AddTile(ModContent.TileType<ZuuniteAnvil>());
 			recipe.Register();
             
 		}

@@ -11,6 +11,10 @@ using SpiritcallerRoninMod.Content.Items.Placeable;
 using SpiritcallerRoninMod.Content.Items.Consumables;
 using SpiritcallerRoninMod.Content.Items.Weapons;
 using System;
+using SpiritcallerRoninMod.Content.Tiles;
+using SpiritcallerRoninMod.Content.Items.Placeable;
+using SpiritcallerRoninMod.Content.Items.Placeable.Furniture;
+using SpiritcallerRoninMod.Common.Systems;
 
 namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1;
 [AutoloadBossHead]
@@ -32,9 +36,9 @@ namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1;
         {
             NPC.width = 173;
             NPC.height = 104;
-            NPC.damage = 30;
-            NPC.defense = 10;
-            NPC.lifeMax = 50000;
+            NPC.damage = 100;
+            NPC.defense = 200;
+            NPC.lifeMax = 150000;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
             NPC.noTileCollide = true;
@@ -43,7 +47,7 @@ namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1;
             NPC.netAlways = true;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.Zombie104;
-            Music = MusicID.OtherworldlyCrimson;
+            Music = MusicID.OtherworldlyDungeon;
             Lighting.AddLight(NPC.Center, 1f, 0f, 0f); // red glow
         }
 
@@ -83,7 +87,7 @@ namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1;
                     else
                     {
                         // Start flamethrower phase
-                        NPC.ai[0] = (int)SakuraDragonAI.Flamethrower;
+                        NPC.ai[1] = (int)SakuraDragonAI.Flamethrower;
                         flameTimer = 0;
                         SoundEngine.PlaySound(SoundID.Item34, NPC.position); // flame start sound
                     }
@@ -91,7 +95,7 @@ namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1;
             }
 
             // Flamethrower continuous attack
-            if (NPC.ai[0] == (int)SakuraDragonAI.Flamethrower)
+            if (NPC.ai[1] == (int)SakuraDragonAI.Flamethrower)
             {
                 flameTimer++;
 
@@ -102,7 +106,7 @@ namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1;
 
                 if (flameTimer >= flameDuration)
                 {
-                    NPC.ai[0] = (int)SakuraDragonAI.Idle; // Return to idle or another state
+                    NPC.ai[1] = (int)SakuraDragonAI.Idle; // Return to idle or another state
                     flameTimer = 0;
                 }
 
@@ -158,7 +162,7 @@ namespace SpiritcallerRoninMod.Content.Bosses.PrototypeZR1;
     int previous = NPC.whoAmI;
     for (int i = 0; i < 40; ++i)
     {
-        int type = ModContent.NPCType<PrototypeZR1Body>();
+        int type = (i == 39) ? ModContent.NPCType<PrototypeZR1Tail>() : ModContent.NPCType<PrototypeZR1Body>();
         int segment = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
         Main.npc[segment].ai[1] = previous;
         Main.npc[segment].realLife = NPC.whoAmI;
@@ -200,7 +204,7 @@ if (Main.rand.NextBool(30)) // Very rare, dramatic spark
             Player player = Main.player[NPC.target];
             NPC.TargetClosest();
 
-            float flySpeed = 10f; // Base movement speed
+            float flySpeed = 15f; // Base movement speed
             float turnSpeed = 0.02f; // How quickly it turns (lower = wider turns)
 
             Vector2 toPlayer = player.Center - NPC.Center;
@@ -224,7 +228,7 @@ if (Main.rand.NextBool(30)) // Very rare, dramatic spark
 
             if (Main.rand.NextBool(300))
             {
-                Vector2 chargeDir = (player.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 20f;
+                Vector2 chargeDir = (player.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 40f;
                 NPC.velocity = chargeDir;
                 SoundEngine.PlaySound(SoundID.Item92, NPC.position);
             }
@@ -251,8 +255,10 @@ public void FlamethrowerAttack()
 
             Main.projectile[flame].hostile = true;
             Main.projectile[flame].friendly = false;
-            Main.projectile[flame].tileCollide = false;
-            Main.projectile[flame].timeLeft = 30; // Short life for fast fading
+            Main.projectile[flame].owner = 255; // <-- Mark it as NPC-owned (not by a player)
+            Main.projectile[flame].usesLocalNPCImmunity = true;
+            Main.projectile[flame].localNPCHitCooldown = -1;
+
         }
 
         
@@ -296,7 +302,7 @@ public void FlamethrowerAttack()
 {
     // Play explosion sound
     SoundEngine.PlaySound(SoundID.Item14, NPC.position); // Explosion sound
-
+NPC.SetEventFlagCleared(ref DownedBossSystem.DownedPrototype, -1);
     // Create explosion dust
     for (int i = 0; i < 20; i++)
     {
@@ -342,7 +348,7 @@ public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			
 			// Add some materials with different drop chances
 			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.ChlorophyteBar, 1, 15, 30)); // Drops 15-30 Wood
-			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<TuskOfThePrototype>(), 2)); // 33% chance
+			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ZuuniteAnvilItem>(), 1)); // 33% chance
 			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.LivingWoodWand, 3)); // 33% chance
 			
 			// You can also add coins

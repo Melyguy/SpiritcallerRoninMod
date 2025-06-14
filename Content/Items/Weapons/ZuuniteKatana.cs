@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SpiritcallerRoninMod.Content.Items.Placeable;
+using SpiritcallerRoninMod.Content.Tiles.Furniture;
 
 namespace SpiritcallerRoninMod.Content.Items.Weapons
 {
@@ -145,7 +146,7 @@ namespace SpiritcallerRoninMod.Content.Items.Weapons
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient<TuskOfThePrototype>();
             recipe.AddIngredient(ModContent.ItemType<ZuuniteBar>(), 15);
-			recipe.AddTile(TileID.LunarCraftingStation);
+			recipe.AddTile(ModContent.TileType<ZuuniteAnvil>());
 			recipe.Register();
             
 		}
